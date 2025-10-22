@@ -1,4 +1,4 @@
-import {navbar} from "vuepress-theme-hope";
+import {navbar} from 'vuepress-theme-hope';
 
 export default navbar([
     {
@@ -12,6 +12,7 @@ export default navbar([
             {
                 text: '版本管理',
                 children: [
+                    { text: 'v1.8.3-m2(包含网关尝鲜版)', link: '/v1.8.3/introduction/introduction.md' },
                     { text: 'v1.8.2(正式版)', link: '/master/introduction/introduction.md' },
                     { text: 'v1.8.1', link: '/v1.8.0/introduction/introduction.md' },
                     { text: 'v1.8.0', link: '/v1.8.0/introduction/introduction.md' },
