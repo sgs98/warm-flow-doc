@@ -57,6 +57,12 @@ export default {
         },
       ];
       filterList.value = allList.value = [
+       {
+            "type": "upgrade",
+            "title": "Warm-Flow 1.8.3 新增包含网关和支持外部动态表单", 
+            "url": "./news/upgrade/Warm-Flow_1.8.3.html",    
+            "pushTime": "2025-10-28"
+        },
         {
             "type": "upgrade",
             "title": "Warm-Flow 1.8.2 新增功能和优化", 

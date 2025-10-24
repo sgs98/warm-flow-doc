@@ -56,17 +56,17 @@ export default hopeTheme(
             notice: [
                 {
                     path: "/master",
-                    title: "公告: 1.8.1（正式版）",
+                    title: "公告: 1.8.3-m3（公测版）",
                     content:
                         `
                          <table>
                            <tbody>
                              <tr>
                                <td>
-                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.2.html" target="_blank">🚀 1.8.2版本</a>
+                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.3.html" target="_blank">🚀 1.8.3版本</a>
                                </td>
                                <td>
-                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.2.html" target="_blank">Warm-Flow 1.8.2 新增功能和优化</a>
+                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.3.html" target="_blank">Warm-Flow 1.8.3 新增包含网关和支持外部动态表单</a>
                                </td>
                              </tr>
                              <tr>

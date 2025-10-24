@@ -7,12 +7,15 @@
 
 
 ## 1、网关类型
-- 1、互斥网关：会结合[流程变量](variable.md)和[条件表达式](condition.md)来匹配，匹配成功则执行匹配到的分支。
-- 2、并行网关: 会将所有分支同时执行，都执行完，到达并行网关终点，才继续往下执行。
-- 3、网关最好成对绘制，画了开始开始网关，最好要画结束网关。简单流程图可能没问题，复杂可能会异常
+- 1、互斥网关：会结合[流程变量](variable.md)和[条件表达式](condition.md)来匹配，取匹配过程中<span class="red-no-bg">满足条件</span>的<span class="red-no-bg">第一个分支</span>去执行，
+  到达网关终点，<span class="red-no-bg">不做限制</span>直接往下执行。
+- 2、并行网关: 会将<span class="red-no-bg">所有分支</span>同时执行。当<span class="red-no-bg">所有分支</span>都执行完，到达并行网关终点，才继续往下执行。
+- 2、包容网关: 会结合[流程变量](variable.md)和[条件表达式](condition.md)来匹配，取匹配过程中<span class="red-no-bg">满足条件</span>的<span class="red-no-bg">所有分支</span>去执行。
+  当<span class="red-no-bg">所有满足条件分支</span>都执行完，到达并行网关终点，才继续往下执行。
+- 3、网关最好成对绘制，画了开始网关，最好要画对应的结束网关。<span class="red-no-bg">互斥网关</span>简单流程图可能没问题，复杂可能会异常。<span class="red-no-bg">包含和并行网关</span>一定要成对出现。
 
 
-## 2、互斥网关
+## 2、互斥网关/包含网关
 
 ## 2.1、设计器设置网关的条件
 
