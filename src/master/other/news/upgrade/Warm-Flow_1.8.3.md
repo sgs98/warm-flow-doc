@@ -10,6 +10,7 @@
 
 ### 🎨 功能优化
 - 存入数据库的json格式去掉空格保存
+- 条件表达式选择框支持清空条件
 
 ### 🐛 Bug修复
 - 修正终止任务时，完成任务监听器未能传递流程参数的问题  感谢@yannji
@@ -19,6 +20,7 @@
 
 ![](https://foruda.gitee.com/images/1761270443424943309/a0773df4_2218307.png)
 ![](https://foruda.gitee.com/images/1761270460250130340/ed847f24_2218307.png)
+![](https://foruda.gitee.com/images/1761291310335554919/f73a15c7_2218307.png)
 ![](https://foruda.gitee.com/images/1761269019339921031/8ca35ab8_2218307.png)
 ![](https://foruda.gitee.com/images/1761269060322730851/29f697d6_2218307.png)
 
@@ -34,7 +36,7 @@
 
 ## 🎯 功能全景
 
-![](https://foruda.gitee.com/images/1749458482882123468/1ce24e01_2218307.png)
+![](https://foruda.gitee.com/images/1761292460350107268/59eef0fb_2218307.png)
 
 ![](https://foruda.gitee.com/images/1754530281717340950/b531c256_2218307.png)
 ![](https://foruda.gitee.com/images/1754530582498275502/be3acb55_2218307.png)

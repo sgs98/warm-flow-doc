@@ -12,7 +12,7 @@ export default navbar([
             {
                 text: '版本管理',
                 children: [
-                    { text: 'v1.8.3-m3(公测版)', link: '/master/introduction/introduction.md' },
+                    { text: 'v1.8.3-m4(公测版)', link: '/master/introduction/introduction.md' },
                     { text: 'v1.8.2', link: '/v1.8.2/introduction/introduction.md' },
                     { text: 'v1.8.1', link: '/v1.8.0/introduction/introduction.md' },
                     { text: 'v1.8.0', link: '/v1.8.0/introduction/introduction.md' },
