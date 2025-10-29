@@ -56,7 +56,7 @@ export default hopeTheme(
             notice: [
                 {
                     path: "/master",
-                    title: "公告: 1.8.3）",
+                    title: "公告: 1.8.3",
                     content:
                         `
                          <table>
