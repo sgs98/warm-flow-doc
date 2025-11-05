@@ -260,6 +260,7 @@
 
 ### 转办 
 `boolean transfer(taskId, flowParams)`：转办, 默认删除当前办理用户权限，转办后，当前办理不可办理。flowParams包含如下字段：
+> **注意事项**：转办和委派会删除当前办理人，如果节点配置的是角色，这种情况删除不了，当前办理人还能办理，要解决这种问题，请把角色全部转成用户id-[转换办理人](./permission_handler.html)
 - handler: 当前办理人唯一标识，如用户id，用于记录历史表; 如果通过办理人权限处理器{@link PermissionHandler#getHandler()}传入了，就不需要传 [按需传输]
 - permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
 - addHandlers: 转办对象 [必传]
@@ -268,6 +269,7 @@
 
 ### 委派 
 `boolean depute(taskId, flowParams)`：委派, 默认删除当前办理用户权限，委派后审批完, 重新回到当前办理人。flowParams包含如下字段：
+> **注意事项**：转办和委派会删除当前办理人，如果节点配置的是角色，这种情况删除不了，当前办理人还能办理，要解决这种问题，请把角色全部转成用户id-[转换办理人](./permission_handler.html)
 - handler: 当前办理人唯一标识，如用户id，用于记录历史表; 如果通过办理人权限处理器{@link PermissionHandler#getHandler()}传入了，就不需要传 [按需传输]
 - permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
 - addHandlers: 委托对象 [必传]
@@ -328,7 +330,7 @@
 - definitionId: 流程定义id [必传]
 - nowNodeCode: 当前节点code [必传]
 - 
-### 获取后置置节点-含过滤 
+### 获取下一节点,不一定是后置节点，如果是通过就是后置，如果是驳回就取前置节点-含流程变量过滤
 `getNextNodeList(definitionId, nowNodeCode, anyNodeCode, skipType, variable)`：根据流程定义和当前节点code获取下一节点,如是网关跳过取下一节点,并行网关返回多个节点
 - definitionId: 流程定义id [必传]
 - nowNodeCode: 当前节点code [必传]

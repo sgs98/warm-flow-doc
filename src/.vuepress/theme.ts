@@ -71,6 +71,14 @@ export default hopeTheme(
                              </tr>
                              <tr>
                                <td>
+                                 <a href="https://mp.weixin.qq.com/s/0LmNSA8Yl6yfPthJa5Z3cQ" target="_blank">程序员减肥之路</a>
+                               </td>
+                               <td>
+                                 <a href="https://mp.weixin.qq.com/s/0LmNSA8Yl6yfPthJa5Z3cQ" target="_blank">从 “代码肥” 到 “轻盈咖” ✨</a>
+                               </td>
+                             </tr>
+                             <tr>
+                               <td>
                                  <a href="https://gitee.com/dromara/warm-flow/stargazers" target="_blank">⭐️ Star</a>
                                </td>
                                <td>

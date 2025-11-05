@@ -328,7 +328,7 @@
 - definitionId: 流程定义id [必传]
 - nowNodeCode: 当前节点code [必传]
 - 
-### 获取后置置节点-含过滤 
+### 获取下一节点,不一定是后置节点，如果是通过就是后置，如果是驳回就取前置节点-含流程变量过滤
 `getNextNodeList(definitionId, nowNodeCode, anyNodeCode, skipType, variable)`：根据流程定义和当前节点code获取下一节点,如是网关跳过取下一节点,并行网关返回多个节点
 - definitionId: 流程定义id [必传]
 - nowNodeCode: 当前节点code [必传]

@@ -137,8 +137,9 @@ public class CustomPermissionHandler implements PermissionHandler {
 - ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
 
 ## 5、转办|委派|加签|减签
-
 [接口描述地址](../primary/api.html#转办)
+> **注意事项**：转办和委派会删除当前办理人，如果节点配置的是角色，这种情况删除不了，当前办理人还能办理，要解决这种问题，请把角色全部转成用户id-[转换办理人](../primary/permission_handler.html)
+
 </br>
 
 ::: code-tabs#shell
