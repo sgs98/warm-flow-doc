@@ -9,7 +9,7 @@
 
 ## 3、办理人表达式
 
-- 扩展需要实现`VariableStrategy`接口, 实现`getType和preEval`方法
+- 扩展需要实现`HandlerStrategy`接口, 实现`getType和preEval`方法
 
 ### 3.1、办理人表达式接口
 ```java
@@ -18,7 +18,7 @@
  *
  * @author warm
  */
-public interface VariableStrategy extends ExpressionStrategy<List<String>> {
+public interface HandlerStrategy extends ExpressionStrategy<List<String>> {
 
     /**
      * 办理人表达式策略实现类集合
@@ -59,7 +59,7 @@ public interface VariableStrategy extends ExpressionStrategy<List<String>> {
  *
  * @author warm
  */
-public class DefaultVariableStrategy implements VariableStrategy {
+public class DefaultHandlerStrategy implements HandlerStrategy {
 
     @Override
     public String getType() {

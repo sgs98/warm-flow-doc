@@ -17,7 +17,14 @@
 ## 开发中计划
 
 ### v1.8.4  2025-11-19
-- 会签和票签通过率策略，支持扩展
+[feat] 会签和票签通过率策略，新增固定人数和表达式策略，支持扩展
+[feat] HisTaskService新增listByTaskId接口
+[feat] 条件表达式完善提示
+[feat] MapUtil新增clone工具方法
+[update] nodeRatio字段类型改成字符串
+[update] VariableStrategy办理人表达式策略接口以及子类名称改成更合理的HandlerStrategy
+[update] 完善nodesevice中getNextNodeList相关注释
+[remove] 删除没用字段handler_type和handler_path字段
 - 会签功能支持顺序会签
 
 ## 更新日志

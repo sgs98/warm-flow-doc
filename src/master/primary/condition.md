@@ -67,8 +67,7 @@ public int insertTestLeave(TestLeave testLeave, String flowStatus)
 }
 ```
 ## 3、特别注意
-### 3.1 默认表达式
-字符串和long类型需要特别注意
+表达式中的变量是整形，流程变量也要给整形
 `${createBy == 1357280988086013951L}`: 流程变量里面也要传long类型，不然会报错。
 ```java
 @Test

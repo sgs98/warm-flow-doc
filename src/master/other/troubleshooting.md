@@ -236,3 +236,9 @@ TaskService待办任务
 
 ## 13、 如何解决jar包依赖冲突
 [maven如何解决jar包依赖冲突](./news/experience/7.html)
+
+## 14、 各种数据库支持
+假设现在需要支持国产数据库或者其他数据，步骤如下：
+- orm框架本身支持兼容这种数据库，那就支持。比如目前不修改内核情况下，`warm-flow-mybatis-plus-sb-starter`这个肯定支持的。
+- 从官方提供的四种表结构脚本[warm-flow-all.sql](https://gitee.com/dromara/warm-flow/tree/master/sql)中选出和目标数据最相似，转化成这种数据库就行了。
+- 又比如mybatis需要写sql，内核需要调整，那这个肯定不支持。目前`warm-flow-mybatis-sb-starter`对mysql和oracle支持的比较友好。
