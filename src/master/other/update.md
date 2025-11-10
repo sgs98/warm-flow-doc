@@ -21,6 +21,7 @@
 [feat] HisTaskService新增listByTaskId接口
 [feat] 条件表达式完善提示
 [feat] MapUtil新增clone工具方法
+[feat] 设计器加载路径，新增支持disabled字段，单独控制设计器是否可编辑，比如查看功能
 [update] nodeRatio字段类型改成字符串
 [update] VariableStrategy办理人表达式策略接口以及子类名称改成更合理的HandlerStrategy
 [update] 完善nodesevice中getNextNodeList相关注释

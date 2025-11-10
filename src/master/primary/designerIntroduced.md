@@ -110,6 +110,7 @@ public class ShiroConfig {
 **1、设计器页面入口是访问后端地址(前后端不分离)：`ip:port/warm-flow-ui/index.html?id=${definitionId}&onlyDesignShow=${onlyDesignShow}&Authorization=${token}`**
 - definitionId：流程定义id，<span class="red-font">如果没传，则认定是新增流程，会初始化流程节点，否则则是编辑或者查看</span>
 - onlyDesignShow：是否独显流程设计，不传默认显示基础信息和流程设计tabs
+- disabled：是否可编辑 , true:不可标记 false:可标记 (本身warm-flow工作流内部会通过发布状态自行判断是否可以编辑，但是如果是需要查看的场景可以单独可控制)
 - token：用户token，[共享后端权限(如token)](./designerIntroduced.html#_6-共享后端权限-如token)
 :::
 
@@ -120,10 +121,11 @@ public class ShiroConfig {
 ```vue
 <template>
   <div :style="'height:' + height">
-    <iframe :src="url" style="width: 100%; height: 100%"/>
+    <iframe id="warmChart" :src="url" style="width: 100%; height: 100%"/>
   </div>
 </template>
 <script>
+  import {getToken} from "@/utils/auth";
 
   export default {
     name: "WarmFlow",
@@ -134,29 +136,37 @@ public class ShiroConfig {
       };
     },
     mounted() {
-      this.url = process.env.VUE_APP_BASE_API + `/warm-flow-ui/index.html?id=${definitionId}&onlyDesignShow=${onlyDesignShow}`;
-      this.iframeLoaded();
+      // 流程定义id
+      const id = this.$route.params.id
+      // 是否只显示设计器, true:只显示设计器 false:显示基础信息和设计器
+      const onlyDesignShow = this.$route.query.onlyDesignShow
+      // 是否可编辑 , true:不可标记 false:可标记 (本身warm-flow工作流内部会通过发布状态自行判断是否可以编辑，但是如果是需要查看的场景可以单独可控制)
+      const disabled = this.$route.query.disabled
+      const baseUrl = `${process.env.VUE_APP_FLOW_API}/warm-flow-ui/index.html?id=${id}&onlyDesignShow=${onlyDesignShow}&disabled=${disabled}`;
+      this.url = baseUrl + `&Authorization=Bearer ` + getToken();
+      window.addEventListener("message", this.handleMessage);
+    },
+    beforeDestroy() {
+      window.removeEventListener("message", this.handleMessage);
     },
     methods: {
-      // iframe监听组件内设计器保存事件
-      iframeLoaded() {
-        window.onmessage = (event) => {
-          console.log(event);
-          switch (event.data.method) {
-            case "close":
-              this.close();
-              break;
-          }
+      handleMessage(event) {
+        console.log(event.data.method, event);
+        switch (event.data.method) {
+          case "close":
+            this.close();
+            break;
         }
       },
       close() {
         // 路由参数传递时间戳 来触发页面刷新
         const obj = { path: "/flow/definition", query: { t: Date.now(), pageNum: this.$route.query.pageNum } };
         this.$tab.closeOpenPage(obj);
-      }
+      },
     }
   };
 </script>
+
 ```
 
 @tab vue3
@@ -172,7 +182,7 @@ public class ShiroConfig {
 const { proxy } = getCurrentInstance();
 import { onMounted } from 'vue';
 
-const iframeUrl = ref(import.meta.env.VITE_APP_BASE_API + `/warm-flow-ui/index.html?id=${definitionId}&onlyDesignShow=${onlyDesignShow}`);
+const iframeUrl = ref(import.meta.env.VITE_APP_BASE_API + `/warm-flow-ui/index.html?id=${definitionId}&onlyDesignShow=${onlyDesignShow}&disabled=${disabled}`);
 
 const iframeLoaded = () => {
   // iframe监听组件内设计器保存事件
@@ -340,7 +350,7 @@ spring:
 
 ### 3.2. 前端引入设计器
 ::: tip
-**设计器引入和单体类似，不过要多加一个网关路由`flow`，示例：`ip:port/flow/warm-flow-ui/index.html?id=${definitionId}&onlyDesignShow=${onlyDesignShow}`**
+**设计器引入和单体类似，不过要多加一个网关路由`flow`，示例：`ip:port/flow/warm-flow-ui/index.html?id=${definitionId}&onlyDesignShow=${onlyDesignShow}&disabled=${disabled}`**
 
 :::
 
