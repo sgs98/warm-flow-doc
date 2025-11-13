@@ -12,11 +12,12 @@ export default navbar([
             {
                 text: '版本管理',
                 children: [
-                    { text: 'v1.8.3', link: '/master/introduction/introduction.md' },
+                    { text: 'v1.8.4', link: '/master/introduction/introduction.md' },
+                    { text: 'v1.8.3', link: '/v1.8.3/introduction/introduction.md' },
                     { text: 'v1.8.2', link: '/v1.8.2/introduction/introduction.md' },
                     { text: 'v1.8.1', link: '/v1.8.0/introduction/introduction.md' },
                     { text: 'v1.8.0', link: '/v1.8.0/introduction/introduction.md' },
-                    { text: 'v1.7.7', link: '/v1.7.7/introduction/introduction.md' },
+                    // { text: 'v1.7.7', link: '/v1.7.7/introduction/introduction.md' },
                     // { text: 'v1.7.6', link: '/v1.7.7/introduction/introduction.md' },
                     // { text: 'v1.7.5', link: '/v1.7.7/introduction/introduction.md' },
                     // { text: 'v1.7.4', link: '/v1.7.4/introduction/introduction.md' },
@@ -46,6 +47,7 @@ export default navbar([
             {
                 text: '升级指南',
                 children: [
+                    { text: 'v1.8.3 ⇧ v1.8.4', link: '/master/other/upgrade_guide.html#v1-8-4' },
                     { text: 'v1.8.1 ⇧ v1.8.2', link: '/master/other/upgrade_guide.html#v1-8-2' },
                     { text: 'v1.8.0 ⇧ v1.8.1', link: '/master/other/upgrade_guide.html#v1-8-1' },
                     { text: 'v1.7.7 ⇧ v1.8.0', link: '/master/other/upgrade_guide.html#v1-8-0' },
