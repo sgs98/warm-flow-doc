@@ -12,6 +12,7 @@
 - 动态修改流程
 - 并行任务驳回支持多个任务
 - 设计器可支持新增额外的文本
+- 票签会签功能支持顺序会签
 
 
 ## 开发中计划
@@ -25,9 +26,10 @@
 [update] nodeRatio字段类型改成字符串
 [update] VariableStrategy办理人表达式策略接口以及子类名称改成更合理的HandlerStrategy
 [update] 完善nodesevice中getNextNodeList相关注释
+[fix] 修复并行和互斥网关都是成对出现的时某些问题
 [remove] 删除没用字段handler_type和handler_path字段
+[remove] 移除DefService中saveAndInitNode接口
 [upgrade] 示例项目 solon 升为 3.0.2; mybatis-plus 升为 3.5.12
-- 会签功能支持顺序会签
 
 ## 更新日志
 

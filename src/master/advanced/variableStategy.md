@@ -23,11 +23,18 @@ public class VariableTest {
      */
     @Test
     public void testVariable() {
+        Map<String, Object> variable1 = new HashMap<>();
+        variable1.put("handler", "101");
+        log.info("spel办理人表达式结果:{}", ExpressionUtil.evalVariable("#{@user.evalVar(#handler)}", variable1));
+
+        Map<String, Object> variable2 = new HashMap<>();
+        variable1.put("handler", FlowEngine.newTask().setId(1L));
+        log.info("spel办理人表达式结果:{}", ExpressionUtil.evalVariable("#{@user.evalVar(#handler)}", variable2));
+
         List<Task> addTasks = new ArrayList<>();
         addTasks.add(FlowEngine.newTask().setPermissionList(Arrays.asList("${handler1}"
                 , "#{@user.evalVar(#handler2)}", "${handler3}", "#{@user.evalVar(#handler4)}"
                 , "#{@user.evalVarEntity(#handler5)}", "role:1", "1")));
-        FlowParams flowParams = new FlowParams();
         Map<String, Object> variable = new HashMap<>();
         variable.put("handler1", Arrays.asList(4, "5", 100L));
         variable.put("handler2", 12L);
@@ -36,7 +43,7 @@ public class VariableTest {
         Task task = FlowEngine.newTask();
         variable.put("handler5", task.setId(55L));
 
-        ExpressionUtil.evalVariable(addTasks, variable);
+        ExpressionUtil.evalVariable(addTasks, FlowParams.build().variable(variable));
         addTasks.forEach(p -> p.getPermissionList().forEach(System.out::println));
     }
 }
