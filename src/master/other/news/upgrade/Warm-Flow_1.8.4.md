@@ -1,28 +1,44 @@
 # Warm-Flow 1.8.4 票签新增多种通过率策略！
 
-亲爱的Warm-Flow用户们，我们很高兴地宣布Warm-Flow 1.8.4版本正式发布！本次更新主要聚焦于包含网关和支持外部动态表单，让你的工作流更加强大。
+亲爱的Warm-Flow用户们，我们很高兴地宣布Warm-Flow 1.8.4版本正式发布！本次更新主要聚焦于票签新增多种通过率策略，让你的工作流更加强大。
 
 ## 🔧 本次更新内容
 
 ### 🚀 新增功能
-- 支持外部动态表单，表单路径支持接入外部接口，通过下拉框显示。**👀 官网初级篇-->设计器集成-->动态表单和自定义表单**
-- 新增包容网关。**👀 ️官网初级篇-->网关**
+- 会签和票签通过率策略，新增固定人数和表达式策略，支持扩展
+- 设计器加载路径，新增支持disabled字段，单独控制设计器是否可编辑，比如查看功能
+- HisTaskService新增listByTaskId接口
+- 条件表达式完善提示
+- MapUtil新增clone工具方法
 
 ### 🎨 功能优化
-- 存入数据库的json格式去掉空格保存
-- 条件表达式选择框支持清空条件
+- VariableStrategy办理人表达式策略接口以及子类名称改成更合理的HandlerStrategy
+- 完善nodesevice中getNextNodeList相关注释
 
 ### 🐛 Bug修复
-- 修正终止任务时，完成任务监听器未能传递流程参数的问题  感谢@yannji
-- 修复创建监听器，在并行网关场景下只能获取第一个task的bug  感谢@dev78657
+- 修复并行和互斥网关都是成对出现的时某些问题
 
 ## 🎯 本次新增预览
 
-![](https://foruda.gitee.com/images/1761270443424943309/a0773df4_2218307.png)
-![](https://foruda.gitee.com/images/1761270460250130340/ed847f24_2218307.png)
-![](https://foruda.gitee.com/images/1761291310335554919/f73a15c7_2218307.png)
-![](https://foruda.gitee.com/images/1761269019339921031/8ca35ab8_2218307.png)
-![](https://foruda.gitee.com/images/1761269060322730851/29f697d6_2218307.png)
+<table>
+    <tbody>
+        <tr>
+            <td><img src="https://foruda.gitee.com/images/1763080128080284358/a86fdeb3_2218307.png"/></td>
+        </tr>
+        <tr>
+            <td><img src="https://foruda.gitee.com/images/1763080154885581373/e5a209ea_2218307.png"/></td>
+        </tr>
+        <tr>
+            <td><img src="https://foruda.gitee.com/images/1763080173837682535/c90154b9_2218307.png"/></td>
+        </tr>
+        <tr>
+            <td><img src="https://foruda.gitee.com/images/1763080204929428483/034dd696_2218307.png"/></td>
+        </tr>
+        <tr>
+            <td><img src="https://foruda.gitee.com/images/1763080220404138371/60a850e0_2218307.png"/></td>
+        </tr>
+    </tbody>
+</table>
 
 
 ## 🌟 为什么选择Warm-Flow？
@@ -36,7 +52,7 @@
 
 ## 🎯 功能全景
 
-![](https://foruda.gitee.com/images/1761292460350107268/59eef0fb_2218307.png)
+![](https://foruda.gitee.com/images/1763087731868647632/56aef54f_2218307.png)
 
 ![](https://foruda.gitee.com/images/1754530281717340950/b531c256_2218307.png)
 ![](https://foruda.gitee.com/images/1754530582498275502/be3acb55_2218307.png)

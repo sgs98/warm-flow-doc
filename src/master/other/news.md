@@ -57,19 +57,25 @@ export default {
         },
       ];
       filterList.value = allList.value = [
-      {
+        {
+            "type": "upgrade",
+            "title": "Warm-Flow 1.8.4 票签新增多种通过率策略", 
+            "url": "./news/upgrade/Warm-Flow_1.8.4.html",    
+            "pushTime": "2025-11-19"
+        },
+        {
             "type": "experience",
             "title": "程序员减肥之路：从 “代码肥” 到 “轻盈咖” ✨", 
             "url": "./news/experience/e-8.html",    
             "pushTime": "2025-10-30"
         },
-      {
+        {
             "type": "news",
             "title": "国产工作流黑马！Warm-Flow：轻量易集成，功能超全面 🚀", 
             "url": "./news/news/n-9.html",    
             "pushTime": "2025-10-30"
         },
-       {
+        {
             "type": "upgrade",
             "title": "Warm-Flow 1.8.3 新增包含网关和支持外部动态表单", 
             "url": "./news/upgrade/Warm-Flow_1.8.3.html",    

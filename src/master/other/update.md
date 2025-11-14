@@ -18,24 +18,28 @@
 ## 开发中计划
 
 ### v1.8.4  2025-11-19
-[feat] 会签和票签通过率策略，新增固定人数和表达式策略，支持扩展
-[feat] HisTaskService新增listByTaskId接口
-[feat] 条件表达式完善提示
-[feat] MapUtil新增clone工具方法
-[feat] 设计器加载路径，新增支持disabled字段，单独控制设计器是否可编辑，比如查看功能
-[update] nodeRatio字段类型改成字符串
-[update] VariableStrategy办理人表达式策略接口以及子类名称改成更合理的HandlerStrategy
-[update] 完善nodesevice中getNextNodeList相关注释
-[fix] 修复并行和互斥网关都是成对出现的时某些问题
-[remove] 删除没用字段handler_type和handler_path字段
-[remove] 移除DefService中saveAndInitNode接口
-[upgrade] 示例项目 solon 升为 3.0.2; mybatis-plus 升为 3.5.12
+- [升级指南](./upgrade_guide.md#v1-8-4)
+- [feat] 会签和票签通过率策略，新增固定人数和表达式策略，支持扩展 **【👀 官网初级篇-->或、票、会签】**  
+- [feat] 设计器加载路径，新增支持disabled字段，单独控制设计器是否可编辑，比如查看功能
+- [feat] 条件表达式完善提示
+- [feat] HisTaskService新增listByTaskId接口
+- [feat] MapUtil新增clone工具方法
+- [feat] warm-flow-plugin-json 添加 snack4 适配 **感谢@noear**
+- [update] nodeRatio字段类型改成字符串
+- [update] VariableStrategy办理人表达式策略接口以及子类名称改成更合理的HandlerStrategy
+- [update] 完善nodesevice中getNextNodeList相关注释
+- [update] 改变可视高度warm-flow-ui/index.html **感谢@盈盈**
+- [fix] 修复并行和互斥网关都是成对出现的时某些问题
+- [remove] 删除没用字段handler_type和handler_path字段
+- [remove] 移除DefService中saveAndInitNode接口
+- [style] 优化代码写法；魔法值替换成常量 **感谢@唐亚峰 | battcn**
+- [upgrade] 示例项目 solon 升为 3.0.2; mybatis-plus 升为 3.5.12 **感谢@noear**
 
 ## 更新日志
 
 ### v1.8.3  2025-10-28
-- [feat] 支持外部动态表单，表单路径支持接入外部接口，通过下拉框显示。**👀 官网初级篇-->设计器集成-->动态表单和自定义表单**
-- [feat] 新增包容网关。**👀 ️官网初级篇-->网关**
+- [feat] 支持外部动态表单，表单路径支持接入外部接口，通过下拉框显示。 **【👀 官网初级篇-->设计器集成-->动态表单和自定义表单】**
+- [feat] 新增包容网关。**【👀 ️官网初级篇-->网关】**
 - [update] 存入数据库的json格式去掉空格保存
 - [update] 条件表达式选择框支持清空条件
 - [fix] 修正终止任务时，完成任务监听器未能传递流程参数的问题  感谢@yannji
