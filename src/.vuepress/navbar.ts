@@ -12,7 +12,7 @@ export default navbar([
             {
                 text: '版本管理',
                 children: [
-                    { text: '1.8.4-m3(公测版版-票签新增多种通过率策略)', link: '/master/introduction/introduction.md' },
+                    { text: '1.8.4', link: '/master/introduction/introduction.md' },
                     { text: 'v1.8.3', link: '/v1.8.3/introduction/introduction.md' },
                     { text: 'v1.8.2', link: '/v1.8.2/introduction/introduction.md' },
                     { text: 'v1.8.1', link: '/v1.8.0/introduction/introduction.md' },

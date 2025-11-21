@@ -56,14 +56,14 @@ export default hopeTheme(
             notice: [
                 {
                     path: "/master",
-                    title: "公告: 1.8.4-m3(公测版版-票签新增多种通过率策略)",
+                    title: "公告: 1.8.4(票签新增多种通过率策略)",
                     content:
                         `
                          <table>
                            <tbody>
                              <tr>
                                <td>
-                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.4.html" target="_blank">🚀 1.8.4-m3版本</a>
+                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.4.html" target="_blank">🚀 1.8.4版本</a>
                                </td>
                                <td>
                                  <a href="/master/other/news/upgrade/Warm-Flow_1.8.4.html" target="_blank">Warm-Flow 1.8.4 票签新增多种通过率策略</a>
