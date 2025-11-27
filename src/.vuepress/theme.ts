@@ -55,6 +55,21 @@ export default hopeTheme(
             },
             notice: [
                 {
+                    path: "/",
+                    title: "🙏  请给我支持 🙏 ",
+                    content: "我正在参加 【Gitee 2025 最受欢迎的开源软件】投票活动，快来给我【投票】吧！",
+                    actions: [
+                        {
+                            text: "👉 投票 👈",
+                            link: "https://gitee.com/activity/2025opensource?ident=IWLJ3F",
+                            type: "primary",
+                        },
+                    ],
+                    showOnce: true,
+                    fullscreen: true,
+                    confirm: true
+                },
+                {
                     path: "/master",
                     title: "公告: 1.8.4(票签新增多种通过率策略)",
                     content:
