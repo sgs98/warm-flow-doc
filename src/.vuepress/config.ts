@@ -19,6 +19,7 @@ export default defineUserConfig({
         viteOptions: {},
         vuePluginOptions: {},
     }),
+    dest: "./src/.vuepress/warm-flow-docs",
     head: [
         ['script', {}, `       
             var _hmt = _hmt || [];
