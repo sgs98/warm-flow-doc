@@ -49,7 +49,7 @@
 <div><img src="https://foruda.gitee.com/images/1754532261962167543/23ce23da_2218307.png"/></div>
 
 ## 4、或签策略注意事项
-> 通过策略特别需要讲一下<span class="red-font">默认表达式和spel表达</span>，因为不过通过什么方式，通常需要知道已通过的
+> 通过策略特别需要讲一下<span class="red-font">默认表达式和spel表达</span>，因为不管通过什么方式，通常需要知道已通过的
 <span class="red-font">人数和总人数</span>等，才能在自己的表达式中判断是否满足条件，那么<span class="red-font">如何获取</span>已通过和总人数呢？
 
 - 组件在执行表达式的时候会注入内置变量，如下：
