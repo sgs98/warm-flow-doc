@@ -14,4 +14,4 @@
 | lovefawn   | [SmartFlow](https://gitee.com/iyhk_0/smart-flow)                                                                 | SmartFlow 基于SmartAdmin、Warm-Flow和Ruoyi-Vue-Plus开源项目，实现了流程设计、流程实例、流程审批、流程监控等功能。                               |
 | seven      | [seaflow](https://gitee.com/qq75547276/seaflow)                                                                  | seaflow 是一款 开源仿钉钉工作流 平台， 前端使用 vue3+element plus ， 实现 流程设计和审批功能， 后端基于国产工作流Dromara warm-flow 实现流程控制， 大大缩短了学习成本 |
 | quick      | [quick-boot](https://github.com/csx-bill/quick-boot)                                                             | 基于 Spring Cloud 2022 、Spring Boot 3、React、AMIS 和 APIJSON 的低代码系统的设计和实现。该系统可以帮助企业快速开发和部署高质量的 Web 应用程序          |
-
+nj_wangzhen  | [jeecgboot-warmflow](https://gitee.com/nj_wangzhen/jeecgboot-warmflow)                                            | 演示项目，基于jeecgboot3.8.3集成            
