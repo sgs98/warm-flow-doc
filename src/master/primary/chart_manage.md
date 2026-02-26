@@ -100,7 +100,7 @@ function detail(dictId) {
 **实现ChartExtService接口**
 
 - 实现`ChartExtService`, 才会开启提示框
-- 完上以上步骤后, `initPromptContent`默认方法会自动执行, 初始化提示框和第一行提示信息, 如不满意, 可在`execute`方法中重新设置
+- 完成以上步骤后, `initPromptContent`默认方法会自动执行, 初始化提示框和第一行提示信息, 如不满意, 可在`execute`方法中重新设置
 - 如要返回自定义`节点提示信息`,  请实现`execute`, 可参考以下实现类`ChartExtServiceImpl`
 - 如要返回自定义`顶部提示信息`,  请实现`execute`, 可参考以下实现类`ChartExtServiceImpl`
 
