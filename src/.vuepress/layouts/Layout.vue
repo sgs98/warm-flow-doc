@@ -18,25 +18,12 @@ const sidebarTopArrayLift = [
   `<a href="https://ccflow.org/index.html?frm=warmflow" target="_blank">
     <img className="no-zoom" height="60px" width="200px" src="/ggw/ccflow.png" class="2025-03-03">
   </a>`,
-  `<a href="/master/other/paidservice.html#私人服务" target="_blank">
-    <img className="no-zoom" height="60px" width="200px" src="/ggw/yuui.jpg">
-  </a>`,
-];
-
-const sidebarTopArrayRight = [
-  `<a href="https://www.maxkey.top" target="_blank">
-    <img className="no-zoom" height="60px" width="200px" src="/ggw/MaxKey.png" class="9999">
-  </a>`,
-  `<a href="https://ccflow.org/index.html?frm=warmflow" target="_blank">
-    <img className="no-zoom" height="60px" width="200px" src="/ggw/ccflow.png" class="2025-03-03">
-  </a>`,
-  `<a href="/master/other/paidservice.html#私人服务" target="_blank">
-    <img className="no-zoom" height="60px" width="200px" src="/ggw/yuui.jpg">
+  `<a href="https://el.frsimple.com" target="_blank">
+    <img className="no-zoom" height="60px" width="200px" src="/ggw/frsimple.png" class="2027-03-03">
   </a>`,
 ];
 
 const sidebarContentLift = ref("");
-const sidebarContentRight = ref("");
 
 function shuffle(arr) {
   var l = arr.length;
@@ -56,11 +43,9 @@ watch(
     () => {
       if (page.value.path.startsWith("/en/")) {
         sidebarContentLift.value = "";
-        sidebarContentRight.value = "";
         return;
       }
       shuffle(sidebarTopArrayLift);
-      shuffle(sidebarTopArrayRight);
 
       sidebarContentLift.value = `\
       <div>
@@ -73,17 +58,6 @@ watch(
         ${sidebarTopArrayLift.slice(0, sidebarTopArrayLift.length).join("\n  ")}
       </div>
     `;
-      sidebarContentRight.value = `\
-      <div>
-          <br>
-            <span style="color: #E01E5A;font-size: smaller;font-weight: bolder;">❤️<a href="/master/other/paidservice.html#赞助商广告">成为赞助商</a></span>
-          <br>
-      </div>
-      <div style="width:230px;margin:5px auto;">
-        ${sidebarTopArrayRight.slice(0, sidebarTopArrayRight.length).join("\n  ")}
-      </div>
-    `;
-
     },
 );
 </script>
@@ -99,8 +73,5 @@ watch(
     <template v-if="!frontmatter.home" #contentAfter>
       <DynamicEditLink/>
     </template>
-<!--    <template v-if="!frontmatter.home" #tocBefore >-->
-<!--      <div v-html="sidebarContentRight" />-->
-<!--    </template>-->
   </Layout>
 </template>

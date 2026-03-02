@@ -183,7 +183,7 @@ export default {
     const fetchData = async () => {
 
         qyProjectList.value = [
-            { href: "https://www.xnqys.com", title: "青海青一色电子科技有限公司", src: "/webp/a72490b8_2218307.webp" },
+            { href: "http://www.deercoding.com.cn/", title: "青海米鹿智码软件科技有限公司", src: "https://foruda.gitee.com/images/1772439909989991962/a5834baf_2218307.png" },
             { href: "https://www.xzyccar.com/", title: "广州行者运车运输有限公司", src: "/webp/0c250492_2218307.webp" },
             { href: "https://www.xiangxiang.com/", title: "上海箱箱智能科技有限公司", src: "/webp/b83d8922_2218307.webp" },
             { href: "https://cloud.cdcbys.com", title: "成都易创科兴科技有限公司", src: "/webp/af2lb-2as3k.webp" },
@@ -304,10 +304,10 @@ export default {
             bgColor: "#ba4552"
           },
           {
-            title: '全栈设计UI设计',
-            description: '大屏数据|小程序生态|后台系统',
-            href: '/master/other/paidservice.html#私人服务',
-            src: '/ggw/logo/yuui.png',
+            title: '数字化信创中后台',
+            description: '结合warm-flow国产工作流引擎和自研页面编辑器可零代码开发工作流，提供全部源码和文档，二次开发易上手',
+            href: 'https://el.frsimple.com',
+            src: '/ggw/logo/frsimple.jpg',
             bgColor: "#A6A1F3"
           },
           {

@@ -111,7 +111,7 @@ public class ShiroConfig {
 - definitionId：流程定义id，<span class="red-font">如果没传，则认定是新增流程，会初始化流程节点，否则则是编辑或者查看</span>
 - onlyDesignShow：是否独显流程设计，不传默认显示基础信息和流程设计tabs
 - disabled：是否可编辑 , true:不可标记 false:可标记 (本身warm-flow工作流内部会通过发布状态自行判断是否可以编辑，但是如果是需要查看的场景可以单独可控制)
-- token：用户token，[共享后端权限(如token)](./designerIntroduced.html#_6-共享后端权限-如token)
+- token：用户token，[共享后端权限(如token)](./designerIntroduced.html#_4-共享后端权限-如token)
 :::
 
 ::: code-tabs#shell
