@@ -31,7 +31,7 @@ public void transfer(TaskService taskService) {
  * 委派
  */
 public void depute(TaskService taskService){
-    taskService.transfer(getTaskId(), new FlowParams()
+    taskService.depute(getTaskId(), new FlowParams()
             .handler("1")
             .permissionFlag(Arrays.asList("role:1", "role:2", "user:1"))
             .addHandlers(Arrays.asList("1","2"))

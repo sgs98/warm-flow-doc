@@ -21,6 +21,9 @@ const sidebarTopArrayLift = [
   `<a href="https://el.frsimple.com" target="_blank">
     <img className="no-zoom" height="60px" width="200px" src="/ggw/frsimple.png" class="2027-03-03">
   </a>`,
+  `<a href="https://easysearch.cn" target="_blank">
+    <img className="no-zoom" height="60px" width="200px" src="/ggw/easysearch.webp" class="2027-03-15">
+  </a>`,
 ];
 
 const sidebarContentLift = ref("");

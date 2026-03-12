@@ -317,6 +317,13 @@ export default {
             src: '/ggw/logo/MaxKey.png',
             bgColor: "#302294"
           },
+          {
+            title: 'Easysearch',
+            description: '企业级的分布式搜索型数据库',
+            href: 'https://easysearch.cn',
+            src: '/ggw/logo/easysearch.png',
+            bgColor: "#1784FC"
+          },
         ]
     };
 
