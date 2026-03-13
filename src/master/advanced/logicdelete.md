@@ -1,8 +1,8 @@
 # 逻辑删除
 
-## 1、Mybatis-plus
+## 1、Mybatis-Plus
 ::: tip
-- 如果使用Mybatis-plus的orm框架，只支持自身的逻辑删除方式
+- 如果使用Mybatis-Plus的orm框架，只支持Mybatis-Plus自身的逻辑删除方式
 - 默认逻辑未删除值：0，逻辑已删除值：1， 工作流组件内部通过注解实现
 - 逻辑删除默认开启。 如若关闭, 需高版本比如3.5.3或者以上  
 :::
@@ -68,8 +68,109 @@ public class PlusPostInitTableInfoHandler implements PostInitTableInfoHandler {
 
 ```
 
+## 2、Easy-Query
+::: tip
+- 默认逻辑未开启，如诺需要开启，需高版本比如3.1.79或者以上
+- 如果使用Easy-Query的orm框架，只支持Easy-Query自身的逻辑删除方式
+:::
 
-## 2、通用逻辑删除
+### 2.1、和原系统不共用逻辑删除策略
+
+```java
+@Component
+public class WarmLogicDelStrategy extends AbstractConfigurationLogicDeleteStrategy {
+
+    @Override
+    protected SQLActionExpression1<WherePredicate<Object>> getPredicateFilterExpression() {
+        return o -> o.eq("delFlag", "0");
+    }
+
+    @Override
+    protected SQLActionExpression1<ColumnSetter<Object>> getDeletedSQLExpression() {
+        return o -> o.set("delFlag", "2");
+    }
+
+    @Override
+    public String getStrategy() {
+        return WarmLogicDelStrategy.class.getName();
+    }
+
+    @Override
+    public boolean apply(@NonNull Class<?> entityClass) {
+        // 流程表开启逻辑删除
+        List<String> excludes = List.of("flow_definition", "flow_node", "flow_skip", "flow_instance"
+                , "flow_task", "flow_his_task", "flow_user");
+        // 获取entityClass上的@Table注解的值
+        Table annotation = entityClass.getAnnotation(Table.class);
+        if (annotation == null) {
+            return false;
+        }
+        String tableName = annotation.value();
+        return excludes.contains(tableName);
+    }
+}
+
+```
+
+
+### 2.2、和原系统共用逻辑删除策略
+
+```java
+@Component
+public class WarmLogicDelStrategy extends AbstractConfigurationLogicDeleteStrategy {
+
+    @Override
+    protected SQLActionExpression1<WherePredicate<Object>> getPredicateFilterExpression() {
+        return o -> {
+            Class<?> entityClass = o.getTable().getEntityClass();
+            // 如果流程表和本系统的逻辑删除字段名不一样，则分别配置
+            if (RootEntity.class.isAssignableFrom(entityClass)) {
+                o.eq("delFlag", "0");
+            } else {
+                o.eq("delFlag", "0");
+            }
+        };
+    }
+
+    @Override
+    protected SQLActionExpression1<ColumnSetter<Object>> getDeletedSQLExpression() {
+        return o -> {
+            Class<?> entityClass = o.getTable().getEntityClass();
+            // 如果流程表和本系统的逻辑删除字段名不一样，则分别配置
+            if (RootEntity.class.isAssignableFrom(entityClass)) {
+                o.set("delFlag", "2");
+            } else {
+                o.set("delFlag", "2");
+            }
+        };
+    }
+
+    @Override
+    public String getStrategy() {
+        return WarmLogicDelStrategy.class.getName();
+    }
+
+    @Override
+    public boolean apply(@NonNull Class<?> entityClass) {
+        LogicDelProperties logicDelProperties = Solon.context().getBean(LogicDelProperties.class);
+        if (!logicDelProperties.getEnable()) {
+            return false;
+        }
+        // 不需要开启逻辑删除的表
+        List<String> excludes = logicDelProperties.getExcludes();
+        // 获取entityClass上的@Table注解的值
+        Table annotation = entityClass.getAnnotation(Table.class);
+        if (annotation == null) {
+            return false;
+        }
+        String tableName = annotation.value();
+        return !excludes.contains(tableName);
+    }
+}
+
+```
+
+## 3、通用逻辑删除
 
 ```yaml
 # warm-flow工作流配置

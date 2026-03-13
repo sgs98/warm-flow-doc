@@ -140,7 +140,7 @@ public class ShiroConfig {
       const id = this.$route.params.id
       // 是否只显示设计器, true:只显示设计器 false:显示基础信息和设计器
       const onlyDesignShow = this.$route.query.onlyDesignShow
-      // 是否可编辑 , true:不可标记 false:可标记 (本身warm-flow工作流内部会通过发布状态自行判断是否可以编辑，但是如果是需要查看的场景可以单独可控制)
+      // 是否可编辑 , true:不可编辑  false:可编辑  (本身warm-flow工作流内部会通过发布状态自行判断是否可以编辑，但是如果是需要查看的场景可以单独可控制)
       const disabled = this.$route.query.disabled
       const baseUrl = `${process.env.VUE_APP_FLOW_API}/warm-flow-ui/index.html?id=${id}&onlyDesignShow=${onlyDesignShow}&disabled=${disabled}`;
       this.url = baseUrl + `&Authorization=Bearer ` + getToken();

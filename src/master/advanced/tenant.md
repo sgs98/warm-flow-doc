@@ -157,8 +157,217 @@ public class WarmFlowConfig {
 
 :::
 
+## 2、Easy-Query
+::: tip
+- 默认逻辑未开启，如诺需要开启，需高版本比如3.1.79或者以上
+- 如果使用Easy-Query的orm框架，只支持Easy-Query自身的多租户方式
+:::
 
-## 2、通用多租户
+### 2.1、和原系统不共用多租户拦截器
+
+```java
+public class TenantInterceptor implements EntityInterceptor, PredicateFilterInterceptor {
+
+    @Override
+    public String name() {
+        return TenantInterceptor.class.getName();
+    }
+
+    @Override
+    public boolean apply(@NonNull Class<?> entityClass) {
+        // 流程表开启多租户
+        List<String> excludes = List.of("flow_definition", "flow_node", "flow_skip", "flow_instance"
+                , "flow_task", "flow_his_task", "flow_user");
+        // 获取entityClass上的@Table注解的值
+        Table annotation = entityClass.getAnnotation(Table.class);
+        if (annotation == null) {
+            return false;
+        }
+        String tableName = annotation.value();
+        return excludes.contains(tableName);
+    }
+
+    @Override
+    public void configure(Class<?> entityClass, LambdaEntityExpressionBuilder lambdaEntityExpressionBuilder, WherePredicate<Object> wherePredicate) {
+        // 流程表的租户字段名
+        String tenantName = "tenantId";
+        EntitySegmentComparer tenantIdComparer = new EntitySegmentComparer(entityClass, tenantName);
+        PredicateSegment where = getPredicateSegment(lambdaEntityExpressionBuilder);
+        if (where == null) {
+            return;
+        }
+
+        where.forEach(s -> {
+            if (s.getTable() != null) {
+                tenantIdComparer.visit(s);
+                return tenantIdComparer.isInSegment();
+            }
+            return false;
+        });
+
+        // 如果已经设置了租户字段，则不需要添加
+        if (tenantIdComparer.isInSegment()) {
+            return;
+        }
+
+        // 获取租户值
+        String tenantId = TenantHelper.getDynamic();
+        if (StrUtil.isBlank(tenantId)) {
+            tenantId = LoginHelper.getTenantId();
+        }
+
+        // 设置租户
+        if (StrUtil.isNotEmpty(tenantId)) {
+            wherePredicate.eq(tenantName, tenantId);
+        }
+    }
+
+    @Override
+    public void configureInsert(Class<?> entityClass, EntityInsertExpressionBuilder entityInsertExpressionBuilder, Object entity) {
+        setTenantId(entity);
+    }
+
+    @Override
+    public void configureUpdate(Class<?> entityClass, EntityUpdateExpressionBuilder entityUpdateExpressionBuilder, Object entity) {
+        setTenantId(entity);
+    }
+
+    private void setTenantId(Object entity) {
+        if (ObjectUtil.isNotNull(entity)) {
+            if (entity instanceof RootEntity rootEntity) {
+                if (StrUtil.isEmpty(rootEntity.getTenantId())) {
+                    rootEntity.setTenantId(LoginHelper.getTenantId());
+                }
+            }
+        }
+    }
+
+    private PredicateSegment getPredicateSegment(LambdaEntityExpressionBuilder lambdaEntityExpressionBuilder) {
+        PredicateSegment where = null;
+        if (lambdaEntityExpressionBuilder instanceof QueryExpressionBuilder queryExpressionBuilder) {
+            where = queryExpressionBuilder.getWhere();
+        } else if (lambdaEntityExpressionBuilder instanceof UpdateExpressionBuilder updateExpressionBuilder) {
+            where = updateExpressionBuilder.getWhere();
+        } else if (lambdaEntityExpressionBuilder instanceof DeleteExpressionBuilder deleteExpressionBuilder) {
+            where = deleteExpressionBuilder.getWhere();
+        }
+        return where;
+    }
+}
+
+```
+
+
+### 2.2、和原系统共用多租户拦截器
+
+```java
+@Slf4j
+public class TenantInterceptor implements EntityInterceptor, PredicateFilterInterceptor {
+
+    @Override
+    public String name() {
+        return TenantInterceptor.class.getName();
+    }
+
+    @Override
+    public boolean apply(@NonNull Class<?> entityClass) {
+        TenantProperties tenantProperties = Solon.context().getBean(TenantProperties.class);
+        if (!tenantProperties.getEnable()) {
+            return false;
+        }
+        // 不需开启多租户的表
+        List<String> excludes = tenantProperties.getExcludes();
+        // 获取entityClass上的@Table注解的值
+        Table annotation = entityClass.getAnnotation(Table.class);
+        if (annotation == null) {
+            return false;
+        }
+        String tableName = annotation.value();
+        return !excludes.contains(tableName);
+    }
+
+    @Override
+    public void configure(Class<?> entityClass, LambdaEntityExpressionBuilder lambdaEntityExpressionBuilder, WherePredicate<Object> wherePredicate) {
+        // 本系统的租户字段名
+        String tenantName = TenantConstants.TENANT_OBJECT_NAME;
+        // 如果流程表和本系统的租户字段名不一样，则分别配置
+        if (RootEntity.class.isAssignableFrom(entityClass)) {
+            tenantName = TenantConstants.TENANT_OBJECT_NAME;
+        }
+        EntitySegmentComparer tenantIdComparer = new EntitySegmentComparer(entityClass, tenantName);
+        PredicateSegment where = getPredicateSegment(lambdaEntityExpressionBuilder);
+        if (where == null) {
+            return;
+        }
+
+        where.forEach(s -> {
+            if (s.getTable() != null) {
+                tenantIdComparer.visit(s);
+                return tenantIdComparer.isInSegment();
+            }
+            return false;
+        });
+
+        // 如果已经设置了租户字段，则不需要添加
+        if (tenantIdComparer.isInSegment()) {
+            return;
+        }
+
+        // 获取租户值
+        String tenantId = TenantHelper.getDynamic();
+        if (StrUtil.isBlank(tenantId)) {
+            tenantId = LoginHelper.getTenantId();
+        }
+
+        // 设置租户
+        if (StrUtil.isNotEmpty(tenantId)) {
+            wherePredicate.eq(tenantName, tenantId);
+        }
+    }
+
+    @Override
+    public void configureInsert(Class<?> entityClass, EntityInsertExpressionBuilder entityInsertExpressionBuilder, Object entity) {
+        setTenantId(entity);
+    }
+
+    @Override
+    public void configureUpdate(Class<?> entityClass, EntityUpdateExpressionBuilder entityUpdateExpressionBuilder, Object entity) {
+        setTenantId(entity);
+    }
+
+    private void setTenantId(Object entity) {
+        if (ObjectUtil.isNotNull(entity)) {
+            // 流程表和本系统对象要分别设置
+            if (entity instanceof TenantEntity tenantEntity) {
+                if (StrUtil.isEmpty(tenantEntity.getTenantId())) {
+                    tenantEntity.setTenantId(LoginHelper.getTenantId());
+                }
+            } else if (entity instanceof RootEntity rootEntity) {
+                if (StrUtil.isEmpty(rootEntity.getTenantId())) {
+                    rootEntity.setTenantId(LoginHelper.getTenantId());
+                }
+            }
+        }
+    }
+
+    private PredicateSegment getPredicateSegment(LambdaEntityExpressionBuilder lambdaEntityExpressionBuilder) {
+        PredicateSegment where = null;
+        if (lambdaEntityExpressionBuilder instanceof QueryExpressionBuilder queryExpressionBuilder) {
+            where = queryExpressionBuilder.getWhere();
+        } else if (lambdaEntityExpressionBuilder instanceof UpdateExpressionBuilder updateExpressionBuilder) {
+            where = updateExpressionBuilder.getWhere();
+        } else if (lambdaEntityExpressionBuilder instanceof DeleteExpressionBuilder deleteExpressionBuilder) {
+            where = deleteExpressionBuilder.getWhere();
+        }
+        return where;
+    }
+}
+
+```
+
+:::
+
+## 3、通用多租户
 ::: code-tabs#shell
 
 @tab:active yaml
