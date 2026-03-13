@@ -120,7 +120,7 @@ footer: © 2024 Warm-Flow Project. All Rights Reserved Designed by <a href="http
 
 ---
 <div class="com-box-img flex1">
-    <br><strong style="font-size: 30px;">正在使用 Warm-Flow 的企业 / 个人（44家）</strong><br><br><br>
+    <br><strong style="font-size: 30px;">正在使用 Warm-Flow 的企业 / 个人（49家）</strong><br><br><br>
     <div style="display: flex; flex-wrap: wrap;">
       <el-card shadow="hover" v-for="item in qyProjectList" :key="item.href">
         <a :href="item.href" target="_blank">
@@ -183,6 +183,7 @@ export default {
     const fetchData = async () => {
 
         qyProjectList.value = [
+            { href: "https://www.cnwik.com", title: "杭州微葵科技有限责任公司", src: "https://foruda.gitee.com/images/1773367032158414924/f7300789_1347713.png" },
             { href: "http://www.deercoding.com.cn/", title: "青海米鹿智码软件科技有限公司", src: "https://foruda.gitee.com/images/1772439909989991962/a5834baf_2218307.png" },
             { href: "https://www.xzyccar.com/", title: "广州行者运车运输有限公司", src: "/webp/0c250492_2218307.webp" },
             { href: "https://www.xiangxiang.com/", title: "上海箱箱智能科技有限公司", src: "/webp/b83d8922_2218307.webp" },
@@ -207,7 +208,11 @@ export default {
             { href: "", title: "昆明世科计算机网络有限公司", src: "/webp/0207b2aa_2218307.webp" },
             { href: "", title: "湖北公众信息产业有限责任公司", src: "/webp/fdf305da_2218307.webp" },
             { href: "http://www.wenshengkeji.com/", title: "南京文盛科技有限公司", src: "/webp/d94c502d_2218307.webp" },
-            // { href: "", title: "", src: "/logo.png" },
+            { href: "", title: "", src: "/logo.png" },
+            { href: "", title: "", src: "/logo.png" },
+            { href: "", title: "", src: "/logo.png" },
+            { href: "", title: "", src: "/logo.png" },
+            { href: "", title: "", src: "/logo.png" },
         ];
 
         kyProjectList.value = [
