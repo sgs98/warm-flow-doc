@@ -243,19 +243,36 @@
 
 ### 根据流程实例id终止流程
 `Instance terminationByInsId(instanceId, flowParams)`：传入流程任务id，终止流程。flowParams包含如下字段：
-- message: 审批意见 [按需传输]
 - handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
 - permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
+- flowStatus: 流程状态，自定义流程状态 [按需传输]
+- message: 审批意见 [按需传输]
 - ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
 
 
 ### 终止流程 
 `Instance termination(taskId, flowParams)`：传入流程任务id，终止流程。flowParams包含如下字段：
-- message: 审批意见 [按需传输]
 - handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
 - permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
+- flowStatus: 流程状态，自定义流程状态 [按需传输]
+- message: 审批意见 [按需传输]
+- ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
+
+### 根据流程实例id暂存任务
+`Instance pendingByInsId(instanceId, flowParams)`：传入流程任务id，暂存任务。flowParams包含如下字段：
+- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
+- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
+- flowStatus: 流程状态，自定义流程状态 [按需传输]
+- message: 审批意见 [按需传输]
+- ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
+
+
+### 根据任务实例id暂存任务
+`Instance pending(taskId, flowParams)`：传入流程任务id，暂存任务。flowParams包含如下字段：
+- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
+- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
+- flowStatus: 流程状态，自定义流程状态 [按需传输]
+- message: 审批意见 [按需传输]
 - ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
 
 ### 转办 

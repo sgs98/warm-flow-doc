@@ -93,15 +93,15 @@
 
 **git提交规范**
 ```
-[init] 初始化  
-[feat] 增加新功能  
-[fix] 修复问题/BUG  
-[perf] 优化/性能提升  
-[refactor] 重构  
-[revert] 撤销修改  
-[style] 代码风格相关无影响运行结果的  
-[update] 其他修改
-[upgrade] 升级版本 
+init: 初始化  
+feat: 增加新功能  
+fix: 修复问题/BUG  
+perf: 优化/性能提升  
+refactor: 重构  
+revert: 撤销修改  
+style: 代码风格相关无影响运行结果的  
+update: 其他修改
+upgrade: 升级版本 
 ```
 
 ### 步骤七 创建PR申请(此操作在自己仓库或者要PR的仓库都可以)

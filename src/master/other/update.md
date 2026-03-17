@@ -5,7 +5,6 @@
 
 ### vx.x.x
 
-- 事件
 - 流程图合法性检验
 - 子流程
 - 重启流程
@@ -20,20 +19,22 @@
 ## 更新日志
 ### v1.8.5  2026-03-26
 - [升级指南](./upgrade_guide.md#v1-8-5)
-- [feat] 新增easy-query orm插件包
-- [feat] SpringBoot4 适配 - IDN609    @唐亚峰 | battcn
-- [feat] GlobalListener和PermissionHandler支持通过yml中配置路径注入
-- [feat] 设计器页面保存增加延时关闭页面
-- [feat] 新增Jackson3支持    @唐亚峰 | battcn
-- [update] 优化代码注释和静态属性    @唐亚峰 | battcn
-- [update] 暗黑模式体验优化
-- [update] 审批表单空字符串不保存
-- [remove] 排除冲突的依赖
-- [fix] 如果外部传递 null , 就忽略 , 维持节点本身审批,防止 null 数据变成null    @唐亚峰 | battcn
-- [fix] 修复solon版本下，BeanConfig被重复执行的问题
-- [fix] 解决设计器高度被锁死800px问题
-- [fix] solon版本支持通过@Bean或者@Compone方式注入处理器和监听器
-- [upgrade] logic-flow升级2.2.0-alpha.4
+- feat: 事件
+- feat: 新增暂存功能，TaskService.pendingByInsId和pending
+- feat: 新增easy-query orm插件包
+- feat: SpringBoot4 适配 - IDN609    @唐亚峰 | battcn
+- feat: GlobalListener和PermissionHandler支持通过yml中配置路径注入
+- feat: 设计器页面保存增加延时关闭页面
+- feat: 新增Jackson3支持    @唐亚峰 | battcn
+- update: 优化代码注释和静态属性    @唐亚峰 | battcn
+- update: 暗黑模式体验优化
+- update: 审批表单空字符串不保存
+- remove: 排除冲突的依赖
+- fix: 如果外部传递 null , 就忽略 , 维持节点本身审批,防止 null 数据变成null    @唐亚峰 | battcn
+- fix: 修复solon版本下，BeanConfig被重复执行的问题
+- fix: 解决设计器高度被锁死800px问题
+- fix: solon版本支持通过@Bean或者@Compone方式注入处理器和监听器
+- upgrade: logic-flow升级2.2.0-alpha.4
 
 
 ### v1.8.4  2025-11-21

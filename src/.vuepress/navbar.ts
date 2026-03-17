@@ -48,6 +48,7 @@ export default navbar([
             {
                 text: '升级指南',
                 children: [
+                    { text: 'v1.8.4 ⇧ v1.8.5', link: '/master/other/upgrade_guide.html#v1-8-5' },
                     { text: 'v1.8.3 ⇧ v1.8.4', link: '/master/other/upgrade_guide.html#v1-8-4' },
                     { text: 'v1.8.1 ⇧ v1.8.2', link: '/master/other/upgrade_guide.html#v1-8-2' },
                     { text: 'v1.8.0 ⇧ v1.8.1', link: '/master/other/upgrade_guide.html#v1-8-1' },
