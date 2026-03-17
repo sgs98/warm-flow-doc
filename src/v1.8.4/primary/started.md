@@ -64,16 +64,6 @@ td {
 </dependency>
 ```
 
-@tab springboot4
-
-```xml
-<dependency>
-    <groupId>org.dromara.warm</groupId>
-    <artifactId>warm-flow-mybatis-sb4-starter</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-
 @tab solon
 
 ```xml
@@ -111,16 +101,6 @@ td {
 </dependency>
 ```
 
-@tab springboot4
-
-```xml
-<dependency>
-    <groupId>org.dromara.warm</groupId>
-    <artifactId>warm-flow-mybatis-plus-sb4-starter</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-
 @tab solon
 
 ```xml
@@ -133,61 +113,20 @@ td {
 
 :::
 
-### **3.3、easy-query**
 
-::: code-tabs#shell
-
-@tab:active springboot2
-
-```xml
-<dependency>
-    <groupId>org.dromara.warm</groupId>
-    <artifactId>warm-flow-easy-query-sb-starter</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-
-@tab springboot3
-
-```xml
-<dependency>
-    <groupId>org.dromara.warm</groupId>
-    <artifactId>warm-flow-easy-query-sb3-starter</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-
-@tab springboot4
-
-```xml
-<dependency>
-    <groupId>org.dromara.warm</groupId>
-    <artifactId>warm-flow-easy-query-sb4-starter</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-
-@tab solon
-
-```xml
-<dependency>
-    <groupId>org.dromara.warm</groupId>
-    <artifactId>warm-flow-easy-query-solon-plugin</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-
-:::
-
-### **3.4、jpa**
+### **3.3、jpa**
 
 <span class="big-font">[https://gitee.com/vanlin/warm-flow-jpa.git](https://gitee.com/vanlin/warm-flow-jpa.git)</span>
 
 
-### **3.5、mybatis-flex**
+### **3.4、mybatis-flex**
 
 <span class="big-font">[https://gitee.com/rigangxia/warm-flow-mybatis-flex.git](https://gitee.com/rigangxia/warm-flow-mybatis-flex.git)</span>
 
+
+### **3.5、easy-query**
+
+<span class="big-font">[https://gitee.com/link2fun/warm-flow-easy-query.git](https://gitee.com/link2fun/warm-flow-easy-query.git)</span>
 
 ### **3.6、BeetlSql**
 
