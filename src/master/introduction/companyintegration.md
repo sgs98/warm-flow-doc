@@ -50,4 +50,6 @@
 | starrydesert      | 基于SSM的职工管理系统        | 毕业设计                                                                         |                                                                                                                                                                                          |
 | zyflzz            | 基于机器学习的只能停车管理系统     | 毕业设计                                                                         |                                                                                                                                                                                          |
 | 南山客               | 基于SpringBoot的财务管理系统 | 本科毕业设计                                                                       |                                                                                                                                                                                          |
-| 北京坚果科技有限公司               | 绩效考核平台 | 公司内部绩效考核管理系统集成工作流                                                                       |            
+| 北京坚果科技有限公司               | 绩效考核平台 | 公司内部绩效考核管理系统集成工作流                                                                       |  
+| 君合百安仓储科技(北京)有限公司             | 基于springboot 的综合管理平台 专注于每一份认真 |            <a href="https://cckj.com.cn/" target="_blank"><img src="https://gitee.com/daodiyc/public/raw/master/monitor/image/jhba.png" width="300" height="100"></a>                                                             |   
+          
