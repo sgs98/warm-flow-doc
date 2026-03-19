@@ -25,30 +25,37 @@ public interface NodeExtService {
 
 @tab:active 模型规则
 
-```shell
+```
 [
   {
     "code": "base",                         -- 编码，此json中唯一
     "name": "按钮权限",		                -- 名称，如果type为新页签时，作为页签名称
-    "desc": "基础设置扩展属性",                -- 描述
+    "desc": "基础设置扩展属性",              -- 描述
     "type": 1,                              -- 1：基础设置 2：新页签
     "childs": [                             -- 子集
       {
-        "code": "base1",                -- 编码，此json中唯一
-        "label": "输入框",               -- label名称
-        "desc": "基础设置扩展属性1",       -- 描述
-        "type": 1,                      -- 1：输入框 2：文本域 3：下拉框 4：选择框 5：人员选择弹框（需结合设计器办理人选择框接入）
-        "must": true,                   -- 是否必填
-        "multiple": true,               -- 是否多选
-        "dict": [                       -- 字典，下拉框和复选框时用到
+        "code": "base1",                    -- 编码，此json中唯一
+        "label": "输入框",                   --  label名称
+        "desc": "基础设置扩展属性1",         -- 描述    
+        "type": 1,                          -- 1：输入框 2：文本域 3：下拉框 4：选择框 
+                                               5：人员选择弹框（需结合设计器办理人选择框接入） 
+                                               6：数字框 7：时间选择
+                                               
+        "must": true,                       -- 是否必填
+        "multiple": true,                   -- 是否多选
+        "precision": 2,                     -- 精度，以上type数字框6时用到
+        "step": "0.1",                      -- 步长，以上type数字框6时用到
+        "min": "0",                        -- 步长，以上type数字框6时用到
+        "dateType": "datetime",             -- 时间选择，以上type时间选择7时用到: 
+                                               year/month/date/week/datetime/datetimerange/daterange/timepicker
+                                               
+        "dateFormat": "YYYY-MM-DD HH:mm:ss",    -- 时间格式，以上type时间选择7时用到
+                                            
+        "dict": [                           -- 字典，下拉框和复选框时用到
           {
-            "label": "选项A",        -- 选项label
-            "selected": true,       -- 是否默认选中
-            "value": "1"             -- 选项值"
-          },
-          {
-            "label": "选项B",
-            "value": "2"
+            "label": "选项A",               -- 选项label
+            "selected": true,               -- 是否默认选中
+            "value": "1"                    -- 选项值"
           }
         ]
       }
