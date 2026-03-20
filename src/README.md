@@ -19,7 +19,7 @@ highlights:
 
       - title: 🤏 审批功能
         link: /master/primary/started.html#_4%E3%80%81%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B
-        details: 支持通过、退回、驳回到上一个任务、撤销、拿回、任意跳转、转办、终止、会签、票签、委派和加减签、互斥和并行网关
+        details: 支持通过、退回、撤销、拿回、任意跳转、终止、转办、票签、委派和加减签、互斥、并行、自动审批、远程访问和脚本执行服务等
 
       - title: 🎐 流程变量
         link: /master/primary/variable.md

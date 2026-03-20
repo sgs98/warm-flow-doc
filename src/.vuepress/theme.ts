@@ -71,17 +71,17 @@ export default hopeTheme(
                 // },
                 {
                     path: "/master",
-                    title: "公告: 1.8.4(票签新增多种通过率策略)",
+                    title: "公告: 1.8.5(超时自动审批、暂存功能来了)",
                     content:
                         `
                          <table>
                            <tbody>
                              <tr>
                                <td>
-                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.4.html" target="_blank">🚀 1.8.4版本</a>
+                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.5.html" target="_blank">🚀 1.8.5版本</a>
                                </td>
                                <td>
-                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.4.html" target="_blank">Warm-Flow 1.8.4 票签新增多种通过率策略</a>
+                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.5.html" target="_blank">Warm-Flow 1.8.5 超时自动审批、暂存功能来了</a>
                                </td>
                              </tr>
                              <tr>
@@ -139,11 +139,6 @@ export default hopeTheme(
                         {
                             text: "⭐️star⭐️",
                             link: "https://gitee.com/dromara/warm-flow/stargazers",
-                            type: "primary",
-                        },
-                        {
-                            text: "学习视频地址",
-                            link: "'/master/other/videos.html",
                             type: "primary",
                         },
                         { text: "取消" },

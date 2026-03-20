@@ -59,6 +59,12 @@ export default {
       filterList.value = allList.value = [
         {
             "type": "upgrade",
+            "title": "Warm-Flow 1.8.5 新增超时自动审批和暂存等", 
+            "url": "./news/upgrade/Warm-Flow_1.8.5.html",    
+            "pushTime": "2025-03-26"
+        },
+        {
+            "type": "upgrade",
             "title": "Warm-Flow 1.8.4 票签新增多种通过率策略", 
             "url": "./news/upgrade/Warm-Flow_1.8.4.html",    
             "pushTime": "2025-11-19"
