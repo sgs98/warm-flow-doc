@@ -2,7 +2,7 @@
 
 ### 注意事项
 ::: warning
-- 更新脚本在项目里面的sql文件下，对应数据库类型，对应版本号
+- 更新脚本在项目里面的 [Sql](https://gitee.com/dromara/warm-flow/tree/master/sql/mysql/v1-upgrade)文件下，对应数据库类型，对应版本号
 - 只提供mysql升级脚本和全量脚本，其他升级脚本的自行由mysql升级脚本转换
 - 如果二开设计器，请自行手动同步
 - 未提到的版本号升级，就只需要改动jar包版本号，如v1.7.6 --> v1.7.7
