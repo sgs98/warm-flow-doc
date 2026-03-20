@@ -20,6 +20,7 @@
 ### v1.8.5  2026-03-26
 - [升级指南](./upgrade_guide.md#v1-8-5)
 - feat: 新增超时自动审批案例
+- feat: 监听器支持下拉选，新增获取监听器列表接口ListenerListService.listenerList
 - feat: 新增暂存功能，TaskService.pendingByInsId和pending
 - feat: 节点扩展属性新增数字框和时间选择器
 - feat: 新增获取节点扩展属性接口，NodeService.getExt
