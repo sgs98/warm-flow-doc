@@ -662,8 +662,12 @@ public class HandlerSelectServiceImpl implements HandlerSelectService {
 ## 7. 基础信息类别
 > 流程类别通常是业务系统用来做细分的，比如请假，出差，项目，采购，销售，等等流程
 
-### 7.1 实现接口获取类别信息
-#### 7.1.1 CategoryService接口
+### 7.1 基础信息类别设置
+<div><img src="https://foruda.gitee.com/images/1750865204014479953/75d003e7_2218307.png"></div>
+<br>
+
+### 7.2 实现接口获取类别信息
+#### 7.2.1 CategoryService接口
 - 实现`queryCategory()`接口方法，返回`List<Tree>`集合
 
 ```java
@@ -685,7 +689,7 @@ public interface CategoryService {
 
 ```
 
-#### 7.1.2 CategoryServiceImpl实现类
+#### 7.2.2 CategoryServiceImpl实现类
 - 如果返回的数据是树状结构，那请多设置`parentId`字段，组件会自动构建成树状，否则会显示成单选
 
 ```java
@@ -714,16 +718,17 @@ public class CategoryServiceImpl implements CategoryService {
 ```
 <br>
 
-### 7.2 基础信息类别设置
-<div><img src="https://foruda.gitee.com/images/1750865204014479953/75d003e7_2218307.png"></div>
-<br>
-
 
 ## 8. 动态表单和自定义表单
 > 本工作流引擎只提供接入外部表单的能力，具体表单的实现，请自行实现
 
-### 8.1 实现接口获取自定义表单路径信息
-#### 8.1.1 FormPathService接口
+### 8.1 基础和节点信息设置页面
+<div><img src="https://foruda.gitee.com/images/1761269019339921031/8ca35ab8_2218307.png"></div>
+<div><img src="https://foruda.gitee.com/images/1761269060322730851/29f697d6_2218307.png"></div>
+<br>
+
+### 8.2 实现接口获取自定义表单路径信息
+#### 8.2.1 FormPathService接口
 - 实现`queryFormPath()`接口方法，返回`List<Tree>`集合
 
 ```java
@@ -744,7 +749,7 @@ public interface FormPathService {
 }
 ```
 
-#### 8.1.2 FormPathServiceImpl实现类
+#### 8.2.2 FormPathServiceImpl实现类
 - 如果返回的数据是树状结构，那请多设置`parentId`字段，组件会自动构建成树状，否则会显示成单选
 
 ```java
@@ -773,7 +778,3 @@ public class FormPathServiceImpl implements FormPathService {
 ```
 <br>
 
-### 8.2 基础和节点信息设置页面
-<div><img src="https://foruda.gitee.com/images/1761269019339921031/8ca35ab8_2218307.png"></div>
-<div><img src="https://foruda.gitee.com/images/1761269060322730851/29f697d6_2218307.png"></div>
-<br>

@@ -381,6 +381,9 @@
 ### 根据流程定义id和节点编码查询节点跳转线
 `getByDefIdAndNowNodeCode(definitionId, nowNodeCode)`：根据流程定义id和节点编码查询节点跳转线
 
+### 获取节点扩展信息
+`getExt(node)`：根据流程节点获取节点扩展信息
+
 ## HisTaskService历史记录 
 ### 根据任务id和协作类型查询 
 `listByTaskIdAndCooperateTypes(taskId, Integer... cooperateTypes)`：根据任务id和协作类型查询

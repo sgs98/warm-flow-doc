@@ -45,7 +45,7 @@ public interface NodeExtService {
         "multiple": true,                   -- 是否多选
         "precision": 2,                     -- 精度，以上type数字框6时用到
         "step": "0.1",                      -- 步长，以上type数字框6时用到
-        "min": "0",                        -- 步长，以上type数字框6时用到
+        "min": "0",                        -- 最小值，以上type数字框6时用到
         "dateType": "datetime",             -- 时间选择，以上type时间选择7时用到: 
                                                year/month/date/week/datetime/datetimerange/daterange/timepicker
                                                

@@ -19,11 +19,11 @@
 ## 更新日志
 ### v1.8.5  2026-03-26
 - [升级指南](./upgrade_guide.md#v1-8-5)
-- feat: 新增超时自动审批案例
-- feat: 监听器支持下拉选，新增获取监听器列表接口ListenerListService.listenerList
-- feat: 新增暂存功能，TaskService.pendingByInsId和pending
+- feat: 新增[超时自动审批案例](../enhance/listenerAndNode.md#_1、超时自动审批)
+- feat: 监听器[支持下拉选](../advanced/listener.md#7-监听器下拉框)，新增获取监听器列表接口ListenerListService.listenerList
+- feat: 新增[暂存功能](../primary/api.md#根据任务实例id暂存任务)，TaskService.pendingByInsId和pending
 - feat: 节点扩展属性新增数字框和时间选择器
-- feat: 新增获取节点扩展属性接口，NodeService.getExt
+- feat: 新增[获取节点扩展属性接口](../primary/api.md#获取节点扩展信息)，NodeService.getExt
 - feat: 新增easy-query orm插件包
 - feat: SpringBoot4 适配 - IDN609    @唐亚峰 | battcn
 - feat: GlobalListener和PermissionHandler支持通过yml中配置路径注入

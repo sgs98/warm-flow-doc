@@ -57,6 +57,7 @@ export default sidebar({
             collapsible: true,
             expanded: true,
             children: [
+                'enhance/listenerAndNode.md',
                 'enhance/designer_two_open.md',
                 'enhance/condition_two_open',
                 'enhance/variableStatey_two_open',

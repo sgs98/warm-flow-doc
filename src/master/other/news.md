@@ -58,12 +58,6 @@ export default {
       ];
       filterList.value = allList.value = [
         {
-            "type": "experience",
-            "title": "监听器+节点扩展属性的妙用(自动审批...)", 
-            "url": "./news/experience/e-9.html",    
-            "pushTime": "2026-03-26"
-        },
-        {
             "type": "upgrade",
             "title": "Warm-Flow 1.8.4 票签新增多种通过率策略", 
             "url": "./news/upgrade/Warm-Flow_1.8.4.html",    

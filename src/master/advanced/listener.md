@@ -266,7 +266,55 @@ public class CustomGlobalListener implements GlobalListener {
 }
 ```
 
-## 7、监听器参数使用
+## 7. 监听器下拉框
+> 通过配置监听器下拉框，可以方便选择，而不是手动输入
+
+### 7.1 监听器信息设置页面
+<div><img src="https://foruda.gitee.com/images/1773978545571972576/2f631819_2218307.png" width="800px"></div>
+<br>
+
+### 7.2 实现接口获取监听器列表
+#### 7.2.1 ListenerListService接口
+- 实现`listenerList()`接口方法，返回`List<ListenerVo>`集合
+
+```java
+public interface ListenerListService {
+
+  List<ListenerVo> listenerList();
+  
+}
+```
+
+#### 7.2.2 ListenerListServiceImpl实现类
+
+```java
+/**
+ * 获取监听器列表
+ *
+ * @author warm
+ * @since 2026/3/20
+ */
+@Service
+public class ListenerListServiceImpl implements ListenerListService {
+
+  @Override
+  public List<ListenerVo> listenerList() {
+    List<ListenerVo> listenerList = new ArrayList<>();
+    listenerList.add(new ListenerVo("create", "com.ruoyi.system.listener.AutoApprovalListener", "超时自动审批监听器"));
+    listenerList.add(new ListenerVo("finish", "com.ruoyi.system.listener.HttplListener", "远程请求监听器"));
+    listenerList.add(new ListenerVo("finish", "com.ruoyi.system.listener.ScriptlListener", "脚本监听器"));
+    listenerList.add(new ListenerVo("start", "com.ruoyi.system.listener.StartListener", "开始监听器"));
+    listenerList.add(new ListenerVo("assignment", "com.ruoyi.system.listener.AssignmentListener", "分派监听器"));
+    listenerList.add(new ListenerVo("finish", "com.ruoyi.system.listener.FinishListener", "完成监听器"));
+    listenerList.add(new ListenerVo("creat", "com.ruoyi.system.listener.CreateListener", "创建监听器"));
+    return listenerList;
+  }
+}
+
+```
+<br>
+
+## 8、监听器参数使用
 
 - 页面配置监听器时加上类路径
 
