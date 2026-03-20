@@ -71,7 +71,7 @@ export default hopeTheme(
                 // },
                 {
                     path: "/master",
-                    title: "公告: 1.8.5(超时自动审批、暂存功能来了)",
+                    title: "公告: 1.8.5-m3 公测版(超时自动审批、暂存功能来了)",
                     content:
                         `
                          <table>
