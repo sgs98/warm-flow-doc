@@ -42,7 +42,7 @@ td {
 ## **3、maven依赖**
 - <span class="big-font">springboot 支持2、3、4版本</span>
 
-- <span class="red-font">solon 支持3.9.6以上版本</span>
+- <span class="red-font">solon 支持3.10.0以上版本</span>
 
 
 ### **3.1、mybatis**
