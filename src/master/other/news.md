@@ -61,7 +61,7 @@ export default {
             "type": "upgrade",
             "title": "Warm-Flow 1.8.5 新增超时自动审批和暂存等", 
             "url": "./news/upgrade/Warm-Flow_1.8.5.html",    
-            "pushTime": "2025-03-26"
+            "pushTime": "2025-03-25"
         },
         {
             "type": "upgrade",

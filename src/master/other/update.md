@@ -15,9 +15,15 @@
 
 
 ## 开发中计划
+### v2.0.0  2026-06-xx
+- feat: 子流程
+
+### v1.8.6  2026-04-xx
+- update: 设计器ui美化
+
 
 ## 更新日志
-### v1.8.5  2026-03-26
+### v1.8.5  2026-03-25
 - [升级指南](./upgrade_guide.md#v1-8-5)
 - feat: 新增[超时自动审批案例](../enhance/listenerAndNode.md#_1、超时自动审批)
 - feat: 监听器[支持下拉选](../advanced/listener.md#7-监听器下拉框)，新增获取监听器列表接口ListenerListService.listenerList
