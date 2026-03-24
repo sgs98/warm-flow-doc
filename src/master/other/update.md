@@ -24,6 +24,7 @@
 - feat: 新增[暂存功能](../primary/api.md#根据任务实例id暂存任务)，TaskService.pendingByInsId和pending
 - feat: 节点扩展属性新增数字框和时间选择器
 - feat: 新增[获取节点扩展属性接口](../primary/api.md#获取节点扩展信息)，NodeService.getExt
+- feat: 新增支持Solon Expression表达式
 - feat: 新增easy-query orm插件包
 - feat: SpringBoot4 适配 - IDN609    @唐亚峰 | battcn
 - feat: GlobalListener和PermissionHandler支持通过yml中配置路径注入

@@ -6,30 +6,32 @@
 :::
 
 ## 1、特点
-- 1、内置常见表达式，同时支持功能强大的spel表达，支持扩展
+- 1、内置常见表达式，同时支持功能强大的spel和snel表达，支持扩展
 - 2、支持一对一替换，同时支持多对一的替换，替换集合
 
 
 ## 2、内置表达式
 - 1、默认办理人变量策略: `${handler1}`， `$`前缀表示默认办理人变量策略
-- 2、spel办理人变量策略: `#{@user.evalVar(#handler2)}`，`#`前缀表示spel办理人变量策略
+- 2、spel（Spring Expression Language）办理人变量策略: `#{@user.evalVar(#handler2)}`，`#`前缀表示spel办理人变量策略
+- 3、snel（Solon Expression）办理人变量策略: `#{@user.evalVar(handler2)}`，`handler2`表示snel办理人变量策略
+
+::: code-tabs#shell
+
+@tab:active springboot
 
 ```java
+
  @SpringBootTest
 public class VariableTest {
 
-    /**
-     * 办理人表达式测试
-     */
     @Test
     public void testVariable() {
         Map<String, Object> variable1 = new HashMap<>();
         variable1.put("handler", "101");
         log.info("spel办理人表达式结果:{}", ExpressionUtil.evalVariable("#{@user.evalVar(#handler)}", variable1));
 
-        Map<String, Object> variable2 = new HashMap<>();
         variable1.put("handler", FlowEngine.newTask().setId(1L));
-        log.info("spel办理人表达式结果:{}", ExpressionUtil.evalVariable("#{@user.evalVar(#handler)}", variable2));
+        log.info("spel办理人表达式结果:{}", ExpressionUtil.evalVariable("#{@user.evalVarEntity(#handler)}", variable1));
 
         List<Task> addTasks = new ArrayList<>();
         addTasks.add(FlowEngine.newTask().setPermissionList(Arrays.asList("${handler1}"
@@ -48,6 +50,46 @@ public class VariableTest {
     }
 }
 ```
+
+@tab solon
+
+```java
+@SolonTest(value = SolonApp.class)
+public class ExpressionTest extends FlowBaseTest {
+    /**
+     * 办理人表达式测试
+     */
+    @Test
+    public void testVariable() {
+        Map<String, Object> variable1 = new HashMap<>();
+        variable1.put("handler", "101");
+        log.info("snel办理人表达式结果:{}", ExpressionUtil.evalVariable("#{@user.evalVar(handler)}", variable1));
+        log.info("snel办理人表达式结果:{}", ExpressionUtil.evalVariable("role:1", variable1));
+
+        variable1.put("handler", FlowEngine.newTask().setId(1L));
+        log.info("snel办理人表达式结果:{}", ExpressionUtil.evalVariable("#{@user.evalVarEntity(handler)}", variable1));
+
+        List<Task> addTasks = new ArrayList<>();
+        addTasks.add(FlowEngine.newTask().setPermissionList(Arrays.asList("${handler1}"
+                , "#{@user.evalVar(handler2)}", "${handler3}", "#{@user.evalVar(handler4)}"
+                , "#{@user.evalVarEntity(handler5)}", "role:1", "1")));
+        Map<String, Object> variable = new HashMap<>();
+        variable.put("handler1", Arrays.asList(4, "5", 100L));
+        variable.put("handler2", "12L");
+        variable.put("handler3", new Object[]{9, "10", 102L});
+        variable.put("handler4", "15");
+        Task task = FlowEngine.newTask();
+        variable.put("handler5", task.setId(55L));
+
+        ExpressionUtil.evalVariable(addTasks, FlowParams.build().variable(variable));
+        addTasks.forEach(p -> p.getPermissionList().forEach(System.out::println));
+    }
+}
+```
+
+:::
+
+
 
 ## 3、匹配规则
 - 1、默认按照注入策略顺序，倒叙匹配。比如最后注入spel策略，就先遍历spel策略，匹配上就执行。

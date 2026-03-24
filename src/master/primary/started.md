@@ -40,6 +40,11 @@ td {
 
 
 ## **3、maven依赖**
+- <span class="big-font">springboot 支持2、3、4版本</span>
+
+- <span class="red-font">solon 支持3.9.6以上版本</span>
+
+
 ### **3.1、mybatis**
 
 ::: code-tabs#shell
@@ -134,6 +139,10 @@ td {
 :::
 
 ### **3.3、easy-query**
+
+::: tip
+最低支持3.1.79版本，低于这个版本没有测试过
+:::
 
 ::: code-tabs#shell
 

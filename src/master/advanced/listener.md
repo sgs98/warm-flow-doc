@@ -26,7 +26,7 @@
 - 监听器设置：设置节点表的`listener_type`和`listener_path`字段，如果有多个监听器，用`,`分隔，并且两个字段对应  
 - listener_type：监听器类型，如`start,assignment,finish,create`等  
 - listener_path：监听器路径，支持配置类包名和表达式，如`包名1,表达式1,包名2,表达式2`等  
-- 监听器路径：默认支持内置spel表达式，支持扩展，比如：`#{@assignmentExpListener.notify(#listenerVariable)}`  
+- 监听器路径：默认支持内置spel或者snel表达式，支持扩展，比如：`#{@assignmentExpListener.notify(#listenerVariable)}` 或者`#{@assignmentExpListener.notify(listenerVariable)}`
 
 ## 5、匹配规则
 - 默认先判断是否是监听器表达式，然后再去尝试加载类路径
