@@ -1,7 +1,7 @@
 # 监听器+节点扩展属性的妙用
 
 ::: tip
-需要了解[监听器](../../../advanced/listener.md)和[节点扩展属性](../../../advanced/node_ext.md)的基本知识点
+需要了解[监听器](https://www.warm-flow.com/master/advanced/listener.html)和[节点扩展属性](https://www.warm-flow.com/master/advanced/node_ext.html)的基本知识点
 - 如监听器种类、监听器生命周期和监听器的实现等
 - 节点扩展属性种类和实现等
 :::
@@ -49,7 +49,7 @@ childs3.add(childNode12);
 - 判断该节点任务是否已经执行，未执行则自动审批
 
 **注：这里需要特别提醒，超时自动审批最好用创建监听器。** 比如A--->B，A节点办理的时候，会触发触发B配置的创建监听器
-（[需要理解创建监听器的生命周期](../../../advanced/listener.md#_3、监听器生命周期图)）
+（[需要理解创建监听器的生命周期](https://www.warm-flow.com/master/advanced/listener.html#_3、监听器生命周期图)）
 
 ```java
 @Component
@@ -75,14 +75,17 @@ public class AutoApprovalListener implements Listener {
             // 通过jdk的定时任务，自动审批
             Task task = listenerVariable.getTask();
             executor.schedule(() -> {
-                log.info("超时自动审批监听器开始执行......");
-                // 判断需要超时自动执行的任务，是否已经被主动执行，如果还存在则开始自动执行
-                Task taskTemp = taskService.getById(task.getId());
-                if (taskTemp != null) {
-                    taskService.skip(task.getId(), flowParams);
-                    return;
+                Long instanceId = task.getInstanceId();
+                synchronized (("会签超时自动审批：" + instanceId).intern()) {
+                    log.info("超时自动审批监听器开始执行......");
+                    // 判断需要超时自动执行的任务，是否已经被主动执行，如果还存在则开始自动执行
+                    Task taskTemp = taskService.getById(task.getId());
+                    if (taskTemp != null) {
+                        taskService.skip(task.getId(), flowParams);
+                        return;
+                    }
+                    log.info("超时自动审批监听器执行结束......");
                 }
-                log.info("超时自动审批监听器执行结束......");
             }, seconds, TimeUnit.SECONDS);
         }
     }
@@ -196,4 +199,4 @@ public class ScriptlListener implements Listener {
 
 ## 4、其他
 - 监听器 + 节点扩展属性的上限非常高，在这里希望大家活学活用
-- 如果还有什么使用案例，可以在左下脚 **编辑此页** pr给作者，或者私聊给作者
+- 如果还有什么使用案例，可以在左下脚 **编辑此页** pr给作者，或者私聊给作者wx【warm-houhou】

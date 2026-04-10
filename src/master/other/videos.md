@@ -3,9 +3,6 @@
 ## **从零精通**
 本套课程叫：<span class="red-font">【从零精通: 全流程开发与源码解读】</span>手把手带着从零集成，打造自己的工作流
 
-- 给作者一些支持，一键三连，<span class="red-font">点赞+关注+评论666</span>，这对作者很重要，谢谢🤞
-
-- <span class="red-font">附带RuoYi-Vue-Plus工作流部分的课程</span>
 
 ### **课程核心价值**
 🚀 你将获得：
@@ -14,6 +11,7 @@
 - **【源码级精讲】** 深入Warm-Flow内核，解析流程编排、节点调度等核心模块设计
 - **【高效学习路径】** <span class="red-font">先跑通再改造</span>的科学路径：<span class="red-font">60%</span>应用实践 → <span class="red-font">20%</span>源码剖析 → <span class="red-font">20%</span>架构扩展
 - **【终身查阅手册】** 按照<span class="red-font">知识点</span>划分课程，随用随查
+- <span class="red-font">附带RuoYi-Vue-Plus工作流部分的课程</span>
 
 ------
 
@@ -30,7 +28,7 @@
 
 
 ### **课程价格**
-> **课程出售中🎉🎉🎉 优惠价: <span class="red-font-bold">399</span>**
+> **课程出售中🎉🎉🎉 优惠中: <span class="red-font-bold">399</span>，从五月一号开始恢复原价：<span class="red-font-bold">480</span>**
 
 ------
 
@@ -44,21 +42,27 @@
 * [8.3. 待办任务列表查询](https://www.bilibili.com/video/BV1JeZGYHEao/?vd_source=1be886ace16159801f6ed0106df215d9)
 * [25.1.1. 案例合同签订-需求分析](https://www.bilibili.com/video/BV1WCV8zkEec)
 * [25.2.1. 企业采购流程-需求分析](https://www.bilibili.com/video/BV1rCEizeEcT)
+* [26.监听器+节点扩展属性的妙用(自动审批)](https://www.bilibili.com/video/BV1R4DvBEERz)
+
+- 给作者一些支持，一键三连，<span class="red-font">点赞+关注+评论666</span>，这对作者很重要，谢谢🤞
 
 ------
 
 ### **课程目录**
-- 已更新到<span class="red-font-bold">134</span>集，后续有新增功能，还会多
-- **总时长**：	38:00:14
-- **平均值**：	0:17:01
-- **0-10分钟**：	16	个视频，占比 	11.94%
-- **10-20分钟**：	84	个视频，占比 	62.69%
-- **20-30分钟**：	27	个视频，占比 	20.15%
-- **30-40分钟**：	7	个视频，占比 	5.22%
+- 已更新到<span class="red-font-bold">139</span>集，后续有新增功能，只会更多
+
+| **视频总数**：    | 139      |        |        |
+|--------------|----------|--------|--------|
+| **总时长**：     | 39:13:04 |        |        |
+| **平均值**：     | 0:16:54  |        |        |
+| **0-10分钟**：  | 18       | 个视频，占比 | 12.95% |
+| **10-20分钟**： | 86       | 个视频，占比 | 61.87% |
+| **20-30分钟**： | 27       | 个视频，占比 | 19.42% |
+| **30-40分钟**： | 8        | 个视频，占比 | 5.76%  |
 
 
 **【从零精通: 全流程开发与源码解读】**：
-<div><img src="https://foruda.gitee.com/images/1749628179256149258/f473aef5_2218307.png"></div>
+<div><img src="https://foruda.gitee.com/images/1775613662496232208/ca9b60db_2218307.png"></div>
 
 **【RuoYi-Vue-Plus: 工作流视频】**：
 <div><img src="https://foruda.gitee.com/images/1749628207116541144/0ff94fdf_2218307.png"></div>

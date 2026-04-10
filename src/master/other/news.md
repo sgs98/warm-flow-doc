@@ -58,6 +58,12 @@ export default {
       ];
       filterList.value = allList.value = [
         {
+            "type": "news",
+            "title": "Warm-Flow新增几条重要教学视频", 
+            "url": "./news/news/n-10.html",    
+            "pushTime": "2026-04-08"
+        },
+        {
             "type": "upgrade",
             "title": "Warm-Flow 1.8.5 新增超时自动审批和暂存等", 
             "url": "./news/upgrade/Warm-Flow_1.8.5.html",    

@@ -73,10 +73,6 @@ export default navbar([
         link: '/master/other/team.md',
     },
     {
-        text: "有偿服务",
-        link: "/master/other/paidservice.md",
-    },
-    {
         text: "教学视频",
         link: "/master/other/videos.md",
     },
@@ -87,5 +83,9 @@ export default navbar([
     {
         text: '计划/日志',
         link: '/master/other/update.md'
+    },
+    {
+        text: "有偿服务",
+        link: "/master/other/paidservice.md",
     },
 ]);

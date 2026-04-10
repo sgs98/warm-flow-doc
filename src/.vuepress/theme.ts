@@ -71,27 +71,35 @@ export default hopeTheme(
                 // },
                 {
                     path: "/master",
-                    title: "公告: 1.8.5(超时自动审批、暂存功能来了)",
+                    title: "公告: 教学视频5月1号开始恢复原价：480",
                     content:
                         `
                          <table>
                            <tbody>
                              <tr>
                                <td>
-                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.5.html" target="_blank">🚀 1.8.5版本</a>
+                                 <a href="/master/other/videos.html">👍教学视频</a>
                                </td>
                                <td>
-                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.5.html" target="_blank">Warm-Flow 1.8.5 超时自动审批、暂存功能来了</a>
+                                 <a href="/master/other/videos.html">手把手带着从零集成，打造自己的工作流</a>
                                </td>
                              </tr>
                              <tr>
                                <td>
-                                 <a href="https://mp.weixin.qq.com/s/0LmNSA8Yl6yfPthJa5Z3cQ" target="_blank">程序员减肥之路</a>
+                                 <a href="/master/other/jionqun.html#_2、vip群-付费加群-提供问题解答、技术支持、技术分享">🍍新增vip群</a>
                                </td>
                                <td>
-                                 <a href="https://mp.weixin.qq.com/s/0LmNSA8Yl6yfPthJa5Z3cQ" target="_blank">从 “代码肥” 到 “轻盈咖” ✨</a>
+                                 <a href="/master/other/jionqun.html#_2、vip群-付费加群-提供问题解答、技术支持、技术分享">付费加群，提供问题解答和技术支持等</a>
                                </td>
                              </tr>
+<!--                             <tr>-->
+<!--                               <td>-->
+<!--                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.5.html">🚀 1.8.5版本</a>-->
+<!--                               </td>-->
+<!--                               <td>-->
+<!--                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.5.html">Warm-Flow 1.8.5 超时自动审批、暂存功能来了</a>-->
+<!--                               </td>-->
+<!--                             </tr>-->
                              <tr>
                                <td>
                                  <a href="https://gitee.com/dromara/warm-flow/stargazers" target="_blank">⭐️ Star</a>
@@ -110,18 +118,18 @@ export default hopeTheme(
                              </tr>
                              <tr>
                                <td>
-                                 <a href="/master/introduction/introduction.html" target="_blank">📖 使用文档</a>
+                                 <a href="/master/introduction/introduction.html">📖 使用文档</a>
                                </td>
                                <td>
-                                 <a href="/master/introduction/introduction.html" target="_blank">集成前先快速浏览，大概知道有功能和注意事项</a>
+                                 <a href="/master/introduction/introduction.html">集成前先快速浏览，大概知道有功能和注意事项</a>
                                </td>
                              </tr>
                              <tr>
                                <td>
-                                 <a href="/master/other/upgrade_guide.html" target="_blank">🌟 升级指南</a>
+                                 <a href="/master/other/upgrade_guide.html">🌟 升级指南</a>
                                </td>
                                <td>
-                                 <a href="/master/other/upgrade_guide.html" target="_blank">如发布新版本，请查看</a>
+                                 <a href="/master/other/upgrade_guide.html">如发布新版本，请查看</a>
                                </td>
                              </tr>
                              <tr>
