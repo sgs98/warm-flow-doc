@@ -6,9 +6,9 @@
 - 设计原理采取不分离的方式，把设计器打包的jar包中,以接口和静态资源的方式引入
 :::
 
-<div class="yat"><img src="https://foruda.gitee.com/images/1776741276337447902/c7997b56_2218307.png"/></div>
-<div class="yat"><div><img src="https://foruda.gitee.com/images/1776738528839847061/d5db8f23_2218307.png"/></div></div>
-<div class="yat"><div><img src="https://foruda.gitee.com/images/1776738347146941820/ffac4456_2218307.png"/></div></div>
+<div class="yat"><img src="https://foruda.gitee.com/images/1750866311675627647/4fff1881_2218307.png"/></div>
+<div class="yat"><div><img src="https://foruda.gitee.com/images/1754530281717340950/b531c256_2218307.png"/></div></div>
+<div class="yat"><div><img src="https://foruda.gitee.com/images/1754530582498275502/be3acb55_2218307.png"/></div></div>
 
 
 
@@ -375,8 +375,8 @@ warm-flow:
 
 ### 5.1 办理人权限选择弹框页面
 
-<div><img src="https://foruda.gitee.com/images/1776740107354127927/2f87ee6b_2218307.png"></div>
-<div><img src="https://foruda.gitee.com/images/1776739731748668439/747440f8_2218307.png"></div>
+<div><img src="https://foruda.gitee.com/images/1745571554195473679/ca966032_2218307.png"></div>
+<div><img src="https://foruda.gitee.com/images/1742804225175791843/02ddc1bd_2218307.png"></div>
 <br>
 
 ### 5.2 实现接口获取办理人列表数据
@@ -540,7 +540,7 @@ public class HandlerSelectServiceImpl implements HandlerSelectService {
 > 回显该节点权限办理人名称，比如上一步选择后保存入库主键，下一次重新打开以下页面
 
 ### 6.1 设计器办理人列表页面
-<div><img src="https://foruda.gitee.com/images/1776740107354127927/2f87ee6b_2218307.png" width="700"></div>
+<div><img src="https://foruda.gitee.com/images/1745570346631861131/f5ba4bf7_2218307.png" width="700"></div>
 <br>
 
 ### 6.2 实现接口获取办理人列表回显

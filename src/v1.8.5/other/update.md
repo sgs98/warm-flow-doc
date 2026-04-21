@@ -18,19 +18,11 @@
 ### v2.0.0  2026-06-xx
 - feat: 子流程
 
+### v1.8.6  2026-04-xx
+- update: 设计器ui美化
+
+
 ## 更新日志
-### v1.8.6  2026-04-27
-- [升级指南](./upgrade_guide.md#v1-8-6)
-- feat: 设计器流程图适配手机端
-- feat: 暗黑模式新增通过请求地址参数设置
-- update: 修改拖拽面板的实现方式，方便后续自定义
-- update: 经典模式双击节点改成单击
-- update: 当flowParams.ignore设置true，会签和票签规则取消，按照或签执行
-- fix: 修复spel危险代码注入问题
-- fix: 终止方法，增加校验流程实例id不为空
-- style: 美化设计器ui
-
-
 ### v1.8.5  2026-03-25
 - [升级指南](./upgrade_guide.md#v1-8-5)
 - feat: 新增[超时自动审批案例](../enhance/listenerAndNode.md#_1、超时自动审批)

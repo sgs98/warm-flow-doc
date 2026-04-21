@@ -58,12 +58,6 @@ export default {
       ];
       filterList.value = allList.value = [
         {
-            "type": "upgrade",
-            "title": "Warm-Flow 1.8.6 ui全面升级，支持移动端", 
-            "url": "./news/upgrade/Warm-Flow_1.8.6.html",    
-            "pushTime": "2024-06-27"
-        },
-        {
             "type": "news",
             "title": "Warm-Flow新增几条重要教学视频", 
             "url": "./news/news/n-10.html",    
@@ -73,7 +67,7 @@ export default {
             "type": "upgrade",
             "title": "Warm-Flow 1.8.5 新增超时自动审批和暂存等", 
             "url": "./news/upgrade/Warm-Flow_1.8.5.html",    
-            "pushTime": "2026-03-25"
+            "pushTime": "2025-03-25"
         },
         {
             "type": "upgrade",
