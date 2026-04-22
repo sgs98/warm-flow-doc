@@ -180,7 +180,7 @@ spring:
 热部署插件jrebel或者devtools导致的问题，检查是否使用热部署插件，比如spring.devtools，可以把插件关了，或者加上配置spring-devtools.properties
 
 ```properties
-restart.include.flow=/org.dromara.warm.*.jar
+restart.include.flow=/org[.]dromara[.]warm
 ```
 
 ## 5、类型转换异常或bean注入失败

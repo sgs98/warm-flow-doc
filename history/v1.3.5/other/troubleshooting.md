@@ -186,7 +186,7 @@ spring:
 热部署插件jrebel或者devtools导致问题，检查是否使用热部署插件，比如spring.devtools，可以把插件关了，或者加上排除配置spring-devtools.properties
 
 ```properties
-restart.include.flow=/org.dromara.warm.*.jar
+restart.include.flow=/org[.]dromara[.]warm
 ```
 :::
 
