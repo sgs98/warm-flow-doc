@@ -111,7 +111,8 @@ public class ShiroConfig {
 - definitionId：流程定义id，<span class="red-font">如果没传，则认定是新增流程，会初始化流程节点，否则则是编辑或者查看</span>
 - onlyDesignShow：是否独显流程设计，传true单独访问流程设计器，不显示流程基础信息
 - disabled：是否可编辑 , true:不可标记 false:可标记 (本身warm-flow工作流内部会通过发布状态自行判断是否可以编辑，但是如果是需要查看的场景可以单独可控制)
-- theme： 主题，默认是theme-light， 可选值：theme-light,theme-dark
+- theme： 主题，默认是theme-light， 可选值：theme-light：浅色, theme-dark：深色
+- darkColors：深色主题颜色，比如想要使用#111827作为背景颜色，可以传入darkColors=111827
 - token：用户token，[共享后端权限(如token)](./designerIntroduced.html#_4-共享后端权限-如token)
 :::
 

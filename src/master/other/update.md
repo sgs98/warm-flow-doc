@@ -23,6 +23,7 @@
 - [升级指南](./upgrade_guide.md#v1-8-6)
 - feat: 设计器流程图适配手机端
 - feat: 暗黑模式新增通过请求地址参数设置
+- feat: 暗黑模式支持传递自定义颜色
 - update: 修改拖拽面板的实现方式，方便后续自定义
 - update: 经典模式双击节点改成单击
 - update: 当flowParams.ignore设置true，会签和票签规则取消，按照或签执行
