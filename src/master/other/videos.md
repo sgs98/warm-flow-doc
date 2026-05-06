@@ -28,7 +28,7 @@
 
 
 ### **课程价格**
-> **课程出售中🎉🎉🎉 优惠中: <span class="red-font-bold">399</span>，从五月一号开始恢复原价：<span class="red-font-bold">480</span>**
+> **课程出售中🎉🎉🎉 ：<span class="red-font-bold">480</span>**
 
 ------
 
