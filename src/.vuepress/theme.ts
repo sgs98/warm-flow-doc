@@ -71,35 +71,27 @@ export default hopeTheme(
                 // },
                 {
                     path: "/master",
-                    title: "公告: 教学视频5月1号开始恢复原价：480",
+                    title: "公告: 发布1.8.7版本",
                     content:
                         `
                          <table>
                            <tbody>
+                            <tr>
+                               <td>
+                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.7.html">🚀 1.8.7版本</a>
+                               </td>
+                               <td>
+                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.7.html">ui全面升级，支持移动端！</a>
+                               </td>
+                             </tr>
                              <tr>
                                <td>
                                  <a href="/master/other/videos.html">👍教学视频</a>
                                </td>
                                <td>
-                                 <a href="/master/other/videos.html">手把手带着从零集成，打造自己的工作流</a>
+                                 <a href="/master/other/jionqun.html#_2、vip群-付费加群-提供问题解答、技术支持、技术分享">🍍vip群</a>
                                </td>
                              </tr>
-                             <tr>
-                               <td>
-                                 <a href="/master/other/jionqun.html#_2、vip群-付费加群-提供问题解答、技术支持、技术分享">🍍新增vip群</a>
-                               </td>
-                               <td>
-                                 <a href="/master/other/jionqun.html#_2、vip群-付费加群-提供问题解答、技术支持、技术分享">付费加群，提供问题解答和技术支持等</a>
-                               </td>
-                             </tr>
-<!--                             <tr>-->
-<!--                               <td>-->
-<!--                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.5.html">🚀 1.8.5版本</a>-->
-<!--                               </td>-->
-<!--                               <td>-->
-<!--                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.5.html">Warm-Flow 1.8.5 超时自动审批、暂存功能来了</a>-->
-<!--                               </td>-->
-<!--                             </tr>-->
                              <tr>
                                <td>
                                  <a href="https://gitee.com/dromara/warm-flow/stargazers" target="_blank">⭐️ Star</a>

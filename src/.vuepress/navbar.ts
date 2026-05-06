@@ -12,7 +12,7 @@ export default navbar([
             {
                 text: '版本管理',
                 children: [
-                    { text: 'v1.8.6-m1(公测版)', link: '/master/introduction/introduction.md' },
+                    { text: 'v1.8.7', link: '/master/introduction/introduction.md' },
                     { text: 'v1.8.5', link: '/v1.8.5/introduction/introduction.md' },
                     { text: 'v1.8.4', link: '/v1.8.4/introduction/introduction.md' },
                     { text: 'v1.8.3', link: '/v1.8.3/introduction/introduction.md' },
@@ -49,11 +49,12 @@ export default navbar([
             {
                 text: '升级指南',
                 children: [
+                    { text: 'v1.8.5 ⇧ v1.8.7', link: '/master/other/upgrade_guide.html#v1-8-7' },
                     { text: 'v1.8.4 ⇧ v1.8.5', link: '/master/other/upgrade_guide.html#v1-8-5' },
                     { text: 'v1.8.3 ⇧ v1.8.4', link: '/master/other/upgrade_guide.html#v1-8-4' },
                     { text: 'v1.8.1 ⇧ v1.8.2', link: '/master/other/upgrade_guide.html#v1-8-2' },
                     { text: 'v1.8.0 ⇧ v1.8.1', link: '/master/other/upgrade_guide.html#v1-8-1' },
-                    { text: 'v1.7.7 ⇧ v1.8.0', link: '/master/other/upgrade_guide.html#v1-8-0' },
+                    // { text: 'v1.7.7 ⇧ v1.8.0', link: '/master/other/upgrade_guide.html#v1-8-0' },
                     // { text: 'v1.7.5 ⇧ v1.7.6', link: '/master/other/upgrade_guide.html#v1-7-6' },
                     // { text: 'v1.7.3 ⇧ v1.7.4', link: '/master/other/upgrade_guide.html#v1-7-4' },
                     { text: '升级事项 ⇧ 更多...', link: '/master/other/upgrade_guide.html#注意事项' },

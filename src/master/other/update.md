@@ -29,6 +29,7 @@
 - update: 当flowParams.ignore设置true，会签和票签规则取消，按照或签执行
 - fix: 修复spel危险代码注入问题
 - fix: 终止方法，增加校验流程实例id不为空
+- fix: 修复节点扩展属性页面循环报错问题
 - style: 美化设计器ui
 
 
