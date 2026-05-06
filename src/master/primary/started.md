@@ -193,12 +193,7 @@ td {
 <span class="big-font">[https://gitee.com/vanlin/warm-flow-jpa.git](https://gitee.com/vanlin/warm-flow-jpa.git)</span>
 
 
-### **3.5、mybatis-flex**
-
-<span class="big-font">[https://gitee.com/rigangxia/warm-flow-mybatis-flex.git](https://gitee.com/rigangxia/warm-flow-mybatis-flex.git)</span>
-
-
-### **3.6、BeetlSql**
+### **3.5、BeetlSql**
 
 <span class="big-font">[https://gitee.com/smartcity/warm-flow-beetlsql-solon.git](https://gitee.com/smartcity/warm-flow-beetlsql-solon.git)</span>
 

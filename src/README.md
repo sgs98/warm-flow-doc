@@ -47,7 +47,7 @@ highlights:
 
       - title: 🌎 orm框架支持
         link: /master/introduction/introduction.html#_6%E3%80%81%E6%94%AF%E6%8C%81orm%E6%A1%86%E6%9E%B6%E7%B1%BB%E5%9E%8B
-        details: 目前支持MyBatis、Mybatis-Plus、Mybatis-Flex、Jpa、Easy-Query和BeetlSql，后续会由社区提供其他支持，扩展方便
+        details: 目前支持MyBatis、Mybatis-Plus、Jpa、Easy-Query和BeetlSql，后续会由社区提供其他支持，扩展方便
 
       - title: 🎬 数据库支持
         link: /master/introduction/introduction.html#_5%E3%80%81%E6%94%AF%E6%8C%81%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B
