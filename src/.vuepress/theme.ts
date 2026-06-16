@@ -71,19 +71,19 @@ export default hopeTheme(
                 // },
                 {
                     path: "/master",
-                    title: "公告: 发布1.8.7版本",
+                    title: "公告: 发布1.8.8版本",
                     content:
                         `
                          <table>
                            <tbody>
-                            <tr>
-                               <td>
-                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.7.html">🚀 1.8.7版本</a>
-                               </td>
-                               <td>
-                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.7.html">ui全面升级，支持移动端！</a>
-                               </td>
-                             </tr>
+<!--                            <tr>-->
+<!--                               <td>-->
+<!--                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.7.html">🚀 1.8.8版本</a>-->
+<!--                               </td>-->
+<!--                               <td>-->
+<!--                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.7.html">ui全面升级，支持移动端！</a>-->
+<!--                               </td>-->
+<!--                             </tr>-->
                              <tr>
                                <td>
                                  <a href="/master/other/videos.html">👍教学视频</a>

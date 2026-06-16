@@ -12,7 +12,8 @@ export default navbar([
             {
                 text: '版本管理',
                 children: [
-                    { text: 'v1.8.7', link: '/master/introduction/introduction.md' },
+                    { text: 'v1.8.8', link: '/master/introduction/introduction.md' },
+                    { text: 'v1.8.7', link: '/v1.8.7/introduction/introduction.md' },
                     { text: 'v1.8.5', link: '/v1.8.5/introduction/introduction.md' },
                     { text: 'v1.8.4', link: '/v1.8.4/introduction/introduction.md' },
                     { text: 'v1.8.3', link: '/v1.8.3/introduction/introduction.md' },
@@ -49,6 +50,7 @@ export default navbar([
             {
                 text: '升级指南',
                 children: [
+                    { text: 'v1.8.7 ⇧ v1.8.8', link: '/master/other/upgrade_guide.html#v1-8-8' },
                     { text: 'v1.8.5 ⇧ v1.8.7', link: '/master/other/upgrade_guide.html#v1-8-7' },
                     { text: 'v1.8.4 ⇧ v1.8.5', link: '/master/other/upgrade_guide.html#v1-8-5' },
                     { text: 'v1.8.3 ⇧ v1.8.4', link: '/master/other/upgrade_guide.html#v1-8-4' },
