@@ -69,6 +69,7 @@ watch(
       sidebarContentLift.value = renderSponsorAds("warm-flow-sidebar-ads");
       tocContentRight.value = renderSponsorAds("warm-flow-right-ads");
     },
+    { immediate: true },
 );
 </script>
 
@@ -77,8 +78,11 @@ watch(
     <template v-if="!frontmatter.home" #sidebarTop>
       <div v-html="sidebarContentLift" />
     </template>
-    <template v-if="!frontmatter.home" #tocBefore>
-      <div v-html="tocContentRight" />
+<!--    <template v-if="!frontmatter.home" #tocBefore>-->
+<!--      <div v-html="tocContentRight" />-->
+<!--    </template>-->
+    <template v-if="!frontmatter.home" #tocAfter>
+      <div class="wwads-cn wwads-horizontal fixed-banner" data-id="349"></div>
     </template>
     <template v-if="!frontmatter.home" #contentBefore>
       <Between/>
@@ -118,6 +122,11 @@ watch(
 
 .warm-flow-right-ads .warm-flow-ads-list {
   margin-inline: 0;
+}
+
+.vp-toc-wrapper {
+  height: auto;
+  max-height: 50vh;
 }
 
 @media (max-width: 1439px) {

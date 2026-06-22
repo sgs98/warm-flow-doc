@@ -65,7 +65,6 @@ highlights:
 copyright: false
 footer: © 2024 Warm-Flow Project. All Rights Reserved Designed by <a href="https://gitee.com/min290">xiaohua</a> Member of <a href="https://dromara.org.cn/">Dromara</a> <br><a href="https://beian.miit.gov.cn/">赣ICP备2021008655号-3</a>
 ---
-
   <div class="sponsorList">
     <strong style="font-size: 30px;">❤️特别赞助</strong><br><br><br>
     <div class="cardList">
@@ -92,13 +91,6 @@ footer: © 2024 Warm-Flow Project. All Rights Reserved Designed by <a href="http
     </p>
   </div>
 
-<div class="wwads-cn wwads-horizontal fixed-banner" data-id="349"></div>
-
-<style lang="scss">
-.wwads-horizontal {
- max-width: 1155px;
-}
-</style>
 ---
 
 <div class="com-box-f">
@@ -127,7 +119,7 @@ footer: © 2024 Warm-Flow Project. All Rights Reserved Designed by <a href="http
 
 ---
 <div class="com-box-img flex1">
-    <br><strong style="font-size: 30px;">正在使用 Warm-Flow 的企业 / 个人（49家）</strong><br><br><br>
+    <br><strong style="font-size: 30px;">正在使用 Warm-Flow 的企业 / 个人（52家）</strong><br><br><br>
     <div style="display: flex; flex-wrap: wrap;">
       <el-card shadow="hover" v-for="item in qyProjectList" :key="item.href">
         <a :href="item.href" target="_blank">
@@ -190,6 +182,7 @@ export default {
     const fetchData = async () => {
 
         qyProjectList.value = [
+            { href: "http://www.yndsjj.com/index1.php", title: "云南得胜家居企业集团有限公司", src: "https://foruda.gitee.com/images/1782145373387433321/1ef4755d_2218307.png" },
             { href: "https://www.zafac.com/", title: "中安供应链管理有限公司", src: "https://foruda.gitee.com/images/1781753522396380789/bb5e75e4_2218307.png" },
             { href: "https://www.cnwik.com", title: "杭州微葵科技有限责任公司", src: "https://foruda.gitee.com/images/1773367032158414924/f7300789_1347713.png" },
             { href: "http://www.deercoding.com.cn/", title: "青海米鹿智码软件科技有限公司", src: "https://foruda.gitee.com/images/1772439909989991962/a5834baf_2218307.png" },
@@ -219,7 +212,6 @@ export default {
             { href: "", title: "", src: "/logo.png" },
             { href: "", title: "", src: "/logo.png" },
             { href: "", title: "", src: "/logo.png" },
-            { href: "", title: "", src: "/logo.png" },
         ];
 
         kyProjectList.value = [
@@ -229,7 +221,7 @@ export default {
             { href: "https://gitee.com/lframework/xingyun", title: "星云ERP", src: "/webp/ax942-2pk52.webp", author: "lframework", intro: "为中小企业提供开源免费、优质体验的进销存ERP系统，解决开店、管理、数据统计难等问题，实现业务线上化、透明化、简易化等目标" }, 
             { href: "https://gitee.com/xlsea/ruoyi-plus-soybean", title: "ruoyi-plus-soybean", src: "/webp/884d93f4_5601833.webp", author: "马铃薯头&Elio", intro: "基于Soybean Admin的现代化前端特性的RuoYi-Vue-Plus的前端项目，提供了完整的企业、多租户管理解决方案" }, 
             { href: "https://gitee.com/battcn/wemirr-platform", title: "WEMIRR-PLATFORM", src: "/webp/wemirr-platform.webp", author: "battcn", intro: "一款纯为爱发电的开源多租户、SAAS、系统，SpringCloud2024、Mysql、Mybatis-Plus、Spring Cloud Alibaba2023" }, 
-            { href: "https://gitee.com/iyhk_0/smart-flow", title: "SmartFlow", src: "/webp/1c9ce726_2218307.webp", author: "lovefawn", intro: "SmartFlow 基于SmartAdmin、Warm-Flow和Ruoyi-Vue-Plus开源项目，实现了流程设计、流程实例、流程审批、流程监控等功能" }, 
+            { href: "https://gitee.com/leekeep/lite-admin", title: "LiteAdmin", src: "https://foruda.gitee.com/images/1782145996788072507/7d786ba4_2218307.png", author: "LiteAdmin", intro: "基于 SmartAdmin V3 构建，集成了warm-flow审批流引擎、在线表单设计、文件预览、AI智能助手等能力，适合学习参考与技术交流" },
             { href: "https://gitee.com/liangliyun/RuoYi-Cloud", title: "Ruoyi-Cloud", src: "/warm-flow.png", author: "梁小梁/Zhen", intro: "基于Ruoyi-Cloud集成的跑批系统：spring-cloud(nacos)+vue3" },
             { href: "https://gitee.com/qq75547276/seaflow", title: "seaflow", src: "/webp/ef07a979_2218307.webp", author: "seven", intro: "seaflow仿钉钉工作流平台，vue3、elementPlus，实现流程设计和审批功能" },
         ];

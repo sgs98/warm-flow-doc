@@ -2,9 +2,6 @@
 </script>
 <template>
   <div class="between-wrapper">
-    <div class="between-header">
-      <div class="wwads-cn wwads-horizontal fixed-banner" data-id="349"></div>
-    </div>
     <div style="position: relative; display: flex;">
       <div class="between-left"  style="display: flex; align-items: center; justify-content: flex-end;">
         <a class="removeAfter" href="https://gitee.com/dromara/warm-flow">
@@ -23,11 +20,10 @@
 /* 固定显示在顶部的容器 */
 .between-wrapper {
   position: sticky;
-  max-height: 185px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  top: 0;
-  z-index: 100;
+  top: var(--navbar-height);
+  z-index: 150;
+  transform: translateZ(0);
+  will-change: transform;
   background: var(--bg-color, #fff);
   padding: 8px 0;
   border-bottom: 1px solid var(--border-color, #e2e2e2);
@@ -57,39 +53,6 @@
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
-}
-
-.wwads-horizontal {
-  max-width: 793px;
-  padding: 0 !important;
-  min-height: 0 !important;
-  align-items: center;
-  .wwads-content {
-    .wwads-text {
-      min-height: 50px;
-      display: block;
-      padding: 5px;
-    }
-  }
-  .wwads-logo {
-    width: 0 !important;
-  }
-  .wwads-img {
-    margin: 0px !important;
-    height: 70px;
-    img {
-      width: 90px !important;
-    }
-  }
-  .wwads-poweredby {
-    width: 40px;
-    position: absolute;
-    right: 25px;
-    bottom: 3px;
-  }
-  .wwads-logo-text {
-      font-size: 12px !important;
-  }
 }
 
 .removeAfter::after {
