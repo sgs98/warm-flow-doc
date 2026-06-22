@@ -15,4 +15,4 @@
 | seven      | [seaflow](https://gitee.com/qq75547276/seaflow)                                                                  | seaflow 是一款 开源仿钉钉工作流 平台， 前端使用 vue3+element plus ， 实现 流程设计和审批功能， 后端基于国产工作流Dromara warm-flow 实现流程控制， 大大缩短了学习成本 |
 | quick      | [quick-boot](https://github.com/csx-bill/quick-boot)                                                             | 基于 Spring Cloud 2022 、Spring Boot 3、React、AMIS 和 APIJSON 的低代码系统的设计和实现。该系统可以帮助企业快速开发和部署高质量的 Web 应用程序          |
 nj_wangzhen  | [jeecgboot-warmflow](https://gitee.com/nj_wangzhen/jeecgboot-warmflow)                                            | 演示项目，基于jeecgboot3.8.3集成            
-LiteAdmin  | [LiteAdmin](https://gitee.com/leekeep/LiteAdmin)                                            | 基于 SmartAdmin V3 构建，集成了warm-flow审批流引擎、在线表单设计、文件预览、AI 智能助手等能力，适合学习参考与技术交流。
+LiteAdmin  | [LiteAdmin](https://gitee.com/leekeep/lite-admin)                                            | 基于 SmartAdmin V3 构建，集成了warm-flow审批流引擎、在线表单设计、文件预览、AI智能助手等能力，适合学习参考与技术交流。
