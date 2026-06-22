@@ -1,61 +1,39 @@
+<script setup lang="ts">
+</script>
 <template>
-  <div v-show="isVisible" class="wwads-cn wwads-horizontal" data-id="349"></div>
-  <div v-show="isVisible" class="between-header">
-    <a class="removeAfter" href="https://gitee.com/dromara/warm-flow">
-      <img src="/ggw/bewteenone.png" alt="warm-flow Logo">
-    </a>
-  </div>
-
-  <div v-show="isVisible" style="position: relative; display: flex;">
-    <!-- 左侧图片 -->
-    <div class="between-left">
-      <a class="removeAfter" href="https://gitee.com/dromara/warm-flow">
-        <img src="/ggw/bewteentwo.png" alt="warm-flow Logo">
-      </a>
+  <div class="between-wrapper">
+    <div class="between-header">
+      <div class="wwads-cn wwads-horizontal fixed-banner" data-id="349"></div>
     </div>
-    <!-- 右侧图片 -->
-    <div class="between-right" style="display: flex; align-items: center; justify-content: flex-end;">
-      <a class="removeAfter" href="https://gitee.com/dromara/warm-flow">
-        <img src="/ggw/bewteentwo.png" alt="warm-flow Logo">
-      </a>
-      <el-link
-          :href="dynamicHref"
-          target="_blank"
-          class="warm-edit removeAfter"
-      >
-        <el-icon><img src="/icons/gitee_home.svg" alt="编辑图标"></el-icon>
-        <span style="font-size: 18px">编辑此页</span>
-      </el-link>
+    <div style="position: relative; display: flex;">
+      <div class="between-left"  style="display: flex; align-items: center; justify-content: flex-end;">
+        <a class="removeAfter" href="https://gitee.com/dromara/warm-flow">
+          <img src="/ggw/bewteent1.png" alt="warm-flow Logo">
+        </a>
+      </div>
+      <div class="between-right" style="display: flex; align-items: center; justify-content: flex-end;">
+        <a class="removeAfter" href="https://shaiwz.com/home">
+          <img src="/ggw/bewteent2.png" alt="2027-06-20">
+        </a>
+      </div>
     </div>
   </div>
 </template>
-<script setup>
-import {computed, ref} from 'vue';
-
-const isVisible = ref(true);
-
-function hideBanner() {
-  isVisible.value = false
+<style lang="scss">
+/* 固定显示在顶部的容器 */
+.between-wrapper {
+  position: sticky;
+  max-height: 185px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-color, #fff);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color, #e2e2e2);
+  margin-bottom: 10px;
 }
 
-// 获取当前页面路径并替换 .html => .md
-const currentPageUrl = computed(() => {
-  if (typeof window === 'undefined') return '';
-  const url = window.location.href;
-  const baseUrl = url.split('#')[0]; // 去掉锚点
-  const path = new URL(baseUrl, location.origin).pathname; // 获取路径部分
-  return path.replace(/\.html$/, '.md'); // 替换 .html => .md
-});
-
-// 构建最终链接
-const dynamicHref = computed(() => {
-  const baseHref = 'https://gitee.com/warm_4/warm-flow-doc/edit/main/src';
-  if (!currentPageUrl.value) return baseHref;
-  return baseHref + currentPageUrl.value;
-});
-</script>
-
-<style lang="scss">
 /* 定义样式 */
 .between-header {
   margin-bottom: 5px;
@@ -70,7 +48,7 @@ const dynamicHref = computed(() => {
 
 .between-left img, .between-right img {
   height: 40px;
-  margin-right: 1px;
+  margin-right: 5px;
   border-radius: 4px;
 }
 
@@ -78,7 +56,7 @@ const dynamicHref = computed(() => {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px; /* 图片和按钮之间的间距 */
+  gap: 10px;
 }
 
 .wwads-horizontal {
@@ -115,15 +93,16 @@ const dynamicHref = computed(() => {
 }
 
 .removeAfter::after {
-  content: none !important; /* 移除伪元素内容 */
+  content: none !important;
 }
 
 .warm-edit {
   display: inline-flex;
   align-items: center;
-  color: #1E90FF; /* 链接颜色 */
+  color: #1E90FF;
   text-decoration: none;
   padding: 5px 10px;
+  margin-left: 10px;
   border-radius: 4px;
   transition: background-color 0.3s, color 0.3s;
   margin-top: 0;
@@ -140,6 +119,6 @@ const dynamicHref = computed(() => {
 }
 
 .removeAfter::after {
-  content: none !important; /* 移除伪元素内容 */
+  content: none !important;
 }
 </style>

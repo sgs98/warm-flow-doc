@@ -12,6 +12,7 @@ export default hopeTheme(
         logo: "/logo.png",
         docsDir: "src",
         print: false,
+        pageInfo: false,
         locales: {
             "/": {
                 navbar,

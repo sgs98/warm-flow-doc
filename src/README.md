@@ -92,6 +92,13 @@ footer: © 2024 Warm-Flow Project. All Rights Reserved Designed by <a href="http
     </p>
   </div>
 
+<div class="wwads-cn wwads-horizontal fixed-banner" data-id="349"></div>
+
+<style lang="scss">
+.wwads-horizontal {
+ max-width: 1155px;
+}
+</style>
 ---
 
 <div class="com-box-f">
@@ -183,6 +190,7 @@ export default {
     const fetchData = async () => {
 
         qyProjectList.value = [
+            { href: "https://www.zafac.com/", title: "中安供应链管理有限公司", src: "https://foruda.gitee.com/images/1781753522396380789/bb5e75e4_2218307.png" },
             { href: "https://www.cnwik.com", title: "杭州微葵科技有限责任公司", src: "https://foruda.gitee.com/images/1773367032158414924/f7300789_1347713.png" },
             { href: "http://www.deercoding.com.cn/", title: "青海米鹿智码软件科技有限公司", src: "https://foruda.gitee.com/images/1772439909989991962/a5834baf_2218307.png" },
             { href: "https://www.xzyccar.com/", title: "广州行者运车运输有限公司", src: "/webp/0c250492_2218307.webp" },
@@ -208,7 +216,6 @@ export default {
             { href: "", title: "昆明世科计算机网络有限公司", src: "/webp/0207b2aa_2218307.webp" },
             { href: "", title: "湖北公众信息产业有限责任公司", src: "/webp/fdf305da_2218307.webp" },
             { href: "http://www.wenshengkeji.com/", title: "南京文盛科技有限公司", src: "/webp/d94c502d_2218307.webp" },
-            { href: "", title: "", src: "/logo.png" },
             { href: "", title: "", src: "/logo.png" },
             { href: "", title: "", src: "/logo.png" },
             { href: "", title: "", src: "/logo.png" },
@@ -328,6 +335,13 @@ export default {
             href: 'https://easysearch.cn',
             src: '/ggw/logo/easysearch.png',
             bgColor: "#1784FC"
+          },
+        {
+            title: 'Data Platform',
+            description: '数海文舟,大数据集成,像画流程图一样,零代码搞定数据清洗与同步',
+            href: 'https://shaiwz.com/home',
+            src: '/ggw/logo/shaiwz.png',
+            bgColor: "rgb(244, 181, 200)"
           },
         ]
     };

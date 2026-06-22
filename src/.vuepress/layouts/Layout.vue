@@ -16,7 +16,7 @@ const sidebarTopArrayLift = [
     <img className="no-zoom" height="60px" width="200px" src="/ggw/MaxKey.png" class="9999">
   </a>`,
   `<a href="https://ccflow.org/index.html?frm=warmflow" target="_blank">
-    <img className="no-zoom" height="60px" width="200px" src="/ggw/ccflow.png" class="2025-03-03">
+    <img className="no-zoom" height="60px" width="200px" src="/ggw/ccflow.png" class="2028-03-03">
   </a>`,
   `<a href="https://el.frsimple.com" target="_blank">
     <img className="no-zoom" height="60px" width="200px" src="/ggw/frsimple.png" class="2027-03-03">
@@ -27,6 +27,21 @@ const sidebarTopArrayLift = [
 ];
 
 const sidebarContentLift = ref("");
+const tocContentRight = ref("");
+
+function renderSponsorAds(containerClass: string) {
+  return `\
+      <div class="${containerClass}">
+          <div class="warm-flow-ads-title">
+            <span>广告采用随机轮播方式显示</span>
+            <span class="warm-flow-ads-sponsor">❤️<a href="/master/other/paidservice.html#赞助商广告">成为赞助商</a></span>
+          </div>
+          <div class="warm-flow-ads-list">
+            ${sidebarTopArrayLift.slice(0, sidebarTopArrayLift.length).join("\n  ")}
+          </div>
+      </div>
+    `;
+}
 
 function shuffle(arr) {
   var l = arr.length;
@@ -46,21 +61,13 @@ watch(
     () => {
       if (page.value.path.startsWith("/en/")) {
         sidebarContentLift.value = "";
+        tocContentRight.value = "";
         return;
       }
       shuffle(sidebarTopArrayLift);
 
-      sidebarContentLift.value = `\
-      <div>
-          <br>
-            <span style="color: gray;font-size: smaller;">广告采用随机轮播方式显示</span>
-            <span style="color: #E01E5A;font-size: smaller;font-weight: bolder;float: right">❤️<a href="/master/other/paidservice.html#赞助商广告">成为赞助商</a></span>
-          <br>
-      </div>
-      <div style="width:230px;margin:5px auto;">
-        ${sidebarTopArrayLift.slice(0, sidebarTopArrayLift.length).join("\n  ")}
-      </div>
-    `;
+      sidebarContentLift.value = renderSponsorAds("warm-flow-sidebar-ads");
+      tocContentRight.value = renderSponsorAds("warm-flow-right-ads");
     },
 );
 </script>
@@ -70,6 +77,9 @@ watch(
     <template v-if="!frontmatter.home" #sidebarTop>
       <div v-html="sidebarContentLift" />
     </template>
+    <template v-if="!frontmatter.home" #tocBefore>
+      <div v-html="tocContentRight" />
+    </template>
     <template v-if="!frontmatter.home" #contentBefore>
       <Between/>
     </template>
@@ -78,3 +88,41 @@ watch(
     </template>
   </Layout>
 </template>
+
+<style lang="scss">
+.warm-flow-ads-title {
+  margin: 12px 0 6px;
+  color: gray;
+  font-size: smaller;
+  line-height: 1.4;
+}
+
+.warm-flow-ads-sponsor {
+  float: right;
+  color: #E01E5A;
+  font-weight: bolder;
+}
+
+.warm-flow-ads-list {
+  width: 230px;
+  margin: 5px auto;
+}
+
+.warm-flow-right-ads {
+  margin-bottom: 1rem;
+}
+
+.warm-flow-right-ads .warm-flow-ads-title {
+  margin-top: 0;
+}
+
+.warm-flow-right-ads .warm-flow-ads-list {
+  margin-inline: 0;
+}
+
+@media (max-width: 1439px) {
+  .warm-flow-right-ads {
+    display: none;
+  }
+}
+</style>
