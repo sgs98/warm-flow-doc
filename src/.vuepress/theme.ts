@@ -72,7 +72,7 @@ export default hopeTheme(
                 // },
                 {
                     path: "/master",
-                    title: "公告: 发布1.8.8版本",
+                    title: "公告: 发布1.8.9版本",
                     content:
                         `
                          <table>
