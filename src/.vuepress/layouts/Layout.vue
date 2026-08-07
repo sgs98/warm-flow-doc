@@ -24,6 +24,9 @@ const sidebarTopArrayLift = [
   `<a href="https://easysearch.cn" target="_blank">
     <img className="no-zoom" height="60px" width="200px" src="/ggw/easysearch.webp" class="2027-03-15">
   </a>`,
+  `<a href="https://www.oarsai.com" target="_blank">
+    <img className="no-zoom" height="60px" width="200px" src="https://www.oarsai.com/assets/ad-banner.webp" class="2027-08-08">
+  </a>`,
 ];
 
 const sidebarContentLift = ref("");
@@ -37,7 +40,7 @@ function renderSponsorAds(containerClass: string) {
             <span class="warm-flow-ads-sponsor">❤️<a href="/master/other/paidservice.html#赞助商广告">成为赞助商</a></span>
           </div>
           <div class="warm-flow-ads-list">
-            ${sidebarTopArrayLift.slice(0, sidebarTopArrayLift.length).join("\n  ")}
+            ${sidebarTopArrayLift.slice(0, sidebarTopArrayLift.length-1).join("\n  ")}
           </div>
       </div>
     `;

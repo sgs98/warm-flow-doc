@@ -335,6 +335,13 @@ export default {
             src: '/ggw/logo/shaiwz.png',
             bgColor: "rgb(244, 181, 200)"
           },
+         {
+            title: 'OARS',
+            description: 'OARS — 低代码为基，AI 助力个性化扩展，定制为王',
+            href: 'https://www.oarsai.com',
+            src: 'https://www.oarsai.com/assets/logo.png',
+            bgColor: "rgb(244, 181, 22)"
+          },
         ]
     };
 
