@@ -18,7 +18,7 @@ highlights:
         details: 只有7张表，代码量少，可快速上手和集成
 
       - title: 🤏 审批功能
-        link: /master/primary/started.html#_4%E3%80%81%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B
+        link: /master/primary/started.html#_3%E3%80%81%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B
         details: 支持通过、退回、撤销、拿回、任意跳转、终止、转办、票签、委派和加减签、互斥、并行、自动审批、远程访问和脚本执行服务等
 
       - title: 🎐 流程变量
@@ -34,7 +34,7 @@ highlights:
         details: 通过jar包形式快速集成到项目，支持节点属性扩展，原生支持经典和仿钉钉双模式
 
       - title: 👍 流程图
-        link: /master/advanced/chart_manage.md
+        link: /master/primary/chart_manage.md
         details: 自带流程图查看，通过jar包快速集，功能扩展，原生支持经典和仿钉钉双模式
 
       - title: 🔦 条件表达式
@@ -109,7 +109,7 @@ copyright: false
     </div>
     <div style="height: 10px; clear: both;"></div>
     <p>
-    	（如果您的开源项目也使用了 Warm-Flow，您可以 <a href="https://github.com/dromara/warm-flow/issues" target="_blank">在此</a> 提交）
+    	（如果您的开源项目也使用了 Warm-Flow，您可以 <a href="https://github.com/sgs98/warm-flow/issues" target="_blank">在此</a> 提交）
     </p>
     <p>
     	（更多开源项目详情，您可以 <a href="master/introduction/projectexample.html">在此</a> 查看）
@@ -130,7 +130,7 @@ copyright: false
     </div>
     <div style="height: 10px; clear: both;"></div>
     <p>
-    	（如果您的企业也使用了 Warm-Flow，您可以 <a href="https://github.com/dromara/warm-flow/issues" target="_blank">在此</a> 提交）
+    	（如果您的企业也使用了 Warm-Flow，您可以 <a href="https://github.com/sgs98/warm-flow/issues" target="_blank">在此</a> 提交）
     </p>
     <p>
     	（更多使用企业/个人详情，您可以 <a href="master/introduction/companyintegration.html">在此</a> 查看）
@@ -186,10 +186,10 @@ export default {
             { href: "http://www.smartby.cn/", title: "北京白杨医疗科技有限公司", src: base + "webp/91de6ed0_2218307.webp" },
             { href: "https://www.damanjinfu.com/", title: "湖南达漫电子商务有限公司", src: base + "webp/25a5649871724e339cfdc5efe7696e59.webp" },
             { href: "https://www.kmbit.cn", title: "昆明倍特技术服务", src: base + "webp/90c14a90_2218307.webp" },
-            { href: "www.hxhorae.com.cn", title: "华夏好瑞（天津）科技有限公司", src: base + "webp/54cdfdc0fcd3afd8f31c457803bcaa36.webp" },
+            { href: "", title: "华夏好瑞（天津）科技有限公司", src: base + "webp/54cdfdc0fcd3afd8f31c457803bcaa36.webp" },
             { href: "http://www.bjruike.com/", title: "北京瑞科科技", src: base + "webp/49903c01_2218307.webp" },
             { href: "https://www.jrkjsoft.com/", title: "哈尔滨金睿科技有限公司", src: base + "webp/42b11c67_2218307.webp" },
-            { href: "https://www.sneb.com.cn/zhgj/index_2578.html", title: "中交武汉智行国际", src: base + "webp/3e444f08_2218307.webp" },
+            { href: "https://www.sneb.com.cn/", title: "中交武汉智行国际", src: base + "webp/3e444f08_2218307.webp" },
             { href: "https://www.xly-net.com/login", title: "新理益智慧网络科技（重庆）有限公司", src: base + "webp/b685e15c_2218307.webp" },
             { href: "https://www.ctcemti.com", title: "安徽数智建造研究院有限公司", src: base + "webp/f5925815_2218307.webp" },
             { href: "http://www.3into1.cn", title: "杭州三之一智联科技有限公司", src: base + "webp/05712913_2218307.webp" },
@@ -213,7 +213,7 @@ export default {
             { href: "https://gitee.com/xlsea/ruoyi-plus-soybean", title: "ruoyi-plus-soybean", src: base + "webp/884d93f4_5601833.webp", author: "马铃薯头&Elio", intro: "基于Soybean Admin的现代化前端特性的RuoYi-Vue-Plus的前端项目，提供了完整的企业、多租户管理解决方案" }, 
             { href: "https://gitee.com/battcn/wemirr-platform", title: "WEMIRR-PLATFORM", src: base + "webp/wemirr-platform.webp", author: "battcn", intro: "一款纯为爱发电的开源多租户、SAAS、系统，SpringCloud2024、Mysql、Mybatis-Plus、Spring Cloud Alibaba2023" }, 
             { href: "https://gitee.com/leekeep/lite-admin", title: "LiteAdmin", src: "https://foruda.gitee.com/images/1782145996788072507/7d786ba4_2218307.png", author: "LiteAdmin", intro: "基于 SmartAdmin V3 构建，集成了warm-flow审批流引擎、在线表单设计、文件预览、AI智能助手等能力，适合学习参考与技术交流" },
-            { href: "https://gitee.com/liangliyun/RuoYi-Cloud", title: "Ruoyi-Cloud", src: base + "warm-flow.png", author: "梁小梁/Zhen", intro: "基于Ruoyi-Cloud集成的跑批系统：spring-cloud(nacos)+vue3" },
+            { href: "", title: "Ruoyi-Cloud", src: base + "warm-flow.png", author: "梁小梁/Zhen", intro: "基于Ruoyi-Cloud集成的跑批系统：spring-cloud(nacos)+vue3" },
             { href: "https://gitee.com/qq75547276/seaflow", title: "seaflow", src: base + "webp/ef07a979_2218307.webp", author: "seven", intro: "seaflow仿钉钉工作流平台，vue3、elementPlus，实现流程设计和审批功能" },
         ];
     
@@ -232,13 +232,13 @@ export default {
             {title: "面向 REST API 的高性能认证鉴权框架", href: "https://su.usthe.com/", src: base + "webp/sureness.webp"},
             {title: "傻瓜级ElasticSearch搜索引擎ORM框架", href: "https://easy-es.cn/", src: base + "webp/easy-es2.webp"},
             {title: "Northstar盈富量化交易平台", href: "https://gitee.com/dromara/northstar", src: base + "webp/northstar_logo.webp"},
-            {title: "Idea 版 Postman，为简化调试API而生", href: "https://dromara.gitee.io/fast-request/", src: base + "webp/fast-request.webp"},
+            {title: "Idea 版 Postman，为简化调试API而生", href: "https://gitee.com/dromara/fast-request", src: base + "webp/fast-request.webp"},
             {title: "开源分布式云原生架构一站式解决方案", href: "https://www.jeesuite.com/", src: base + "webp/mendmix.webp"},
             {title: "企业生产级百亿日PV高可用可拓展的RPC框架。", href: "https://gitee.com/dromara/koalas-rpc", src: base + "webp/koalas-rpc2.webp"},
             {title: "配置极简功能强大的异步任务动态编排框架", href: "https://async.sizegang.cn/", src: base + "webp/gobrs-async.webp"},
             {title: "基于配置中心的轻量级动态可监控线程池", href: "https://dynamictp.cn/", src: base + "webp/dynamic-tp.webp"},
             {title: "一个用搭积木的方式构建pdf的框架（基于pdfbox）", href: "https://www.x-easypdf.cn", src: base + "webp/x-easypdf.webp"},
-            {title: "一个专门用于图片合成的工具，没有很复杂的功能，简单实用，却不失强大", href: "http://dromara.gitee.io/image-combiner", src: base + "webp/image-combiner.webp"},
+            {title: "一个专门用于图片合成的工具，没有很复杂的功能，简单实用，却不失强大", href: "https://gitee.com/dromara/image-combiner", src: base + "webp/image-combiner.webp"},
             {title: "Dante-Cloud 是一款企业级微服务架构和服务能力开发平台。", href: "https://www.herodotus.cn/", src: base + "webp/dante-cloud2.webp"},
             {title: "低代码数据可视化开发平台", href: "http://www.mtruning.club", src: base + "webp/go-view.webp"},
             {title: "微服务中后台快速开发平台，支持租户(SaaS)模式、非租户模式", href: "https://tangyh.top/", src: base + "webp/lamp-cloud.webp"},
@@ -336,7 +336,7 @@ export default {
 
       var contentToAppend = `<p><a href="https://gitee.com/sgs98/warm-flow" style="margin-left: 12px;"><img src="https://gitee.com/sgs98/warm-flow/badge/star.svg?theme=dark"></a>
           <a href='https://gitee.com/sgs98/warm-flow'><img src='https://gitee.com/sgs98/warm-flow/badge/fork.svg?theme=dark' alt='fork'></a>
-          <a href='https://github.com/dromara/warm-flow/blob/master/LICENSE'><img src='https://img.shields.io/github/license/dromara/warm-flow' alt='fork'></a>
+          <a href='https://github.com/sgs98/warm-flow/blob/main/LICENSE'><img src='https://img.shields.io/github/license/sgs98/warm-flow' alt='fork'></a>
         </p>
       `;
 

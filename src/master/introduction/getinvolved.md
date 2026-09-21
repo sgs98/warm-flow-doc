@@ -13,7 +13,7 @@
 
 ![输入图片说明](https://foruda.gitee.com/images/1724129834206431978/55f7deea_2218307.png "屏幕截图")
 <br>
-**[github地址](https://github.com/dromara/warm-flow.git)**
+**[github地址](https://github.com/sgs98/warm-flow)**
 
 ### 为社区处理问题
 
@@ -27,7 +27,7 @@
 
 ![输入图片说明](https://foruda.gitee.com/images/1724133031890454337/d0fa52fd_2218307.png "屏幕截图")
 
-### 改进社区文档:[文档仓库](https://gitee.com/warm_4/warm-flow-doc)
+### 改进社区文档:[文档仓库](https://github.com/sgs98/warm-flow-doc)
 
 - 大家都知道 我们程序员都不擅长写作<br>
 - 有时候作者把文档写完了也不知道用户是什么感觉 是否能看懂<br>

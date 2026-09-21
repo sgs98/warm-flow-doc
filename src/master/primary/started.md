@@ -15,8 +15,8 @@
 ## **1、导入sql，按需求执行**
 
 - 开始学习前，请先了解<span class="big-font">[表结构](./table.md)</span>，不迷路
-- 首次导入，先创建数据库，找到对应数据库的全量脚本<span class="big-font">[warm-flow-all.sql](https://github.com/dromara/warm-flow/tree/master/sql/mysql)</span>，执行  
-- 如果版本更新，找到对应数据库的更新版本，比如xx-upgrade，<span class="big-font">[warm-flow_x.x.x.sql](https://github.com/dromara/warm-flow/tree/master/sql/mysql/v1-upgrade)</span>，执行
+- 首次导入，先创建数据库，找到对应数据库的全量脚本<span class="big-font">[warm-flow-all.sql](https://github.com/sgs98/warm-flow/tree/main/sql/mysql)</span>，执行  
+- 如果版本更新，找到对应数据库的更新版本，比如xx-upgrade，<span class="big-font">[warm-flow_x.x.x.sql](https://github.com/sgs98/warm-flow/tree/main/sql/mysql/v1-upgrade)</span>，执行
 
 <table>
     <tbody>
@@ -33,17 +33,11 @@ td {
 }
 </style>
 
-## **2、官网流程定义案例xml**
-<span class="big-font">[官网流程定义案例xml](https://gitee.com/dromara/warm-flow-test/tree/master/warm-flow-core-test/src/main/resources)</span>
-
-<span class="red-font">有典型的流程案例，可以发给我json文件</span>
-
-
-## **3、maven依赖**
+## **2、maven依赖**
 - <span class="big-font">springboot 支持3、4版本（v2.0.0起已移除 springboot2 与 solon 适配）</span>
 
 
-### **3.1、mybatis**
+### **2.1、mybatis**
 
 ::: code-tabs#shell
 
@@ -70,7 +64,7 @@ td {
 :::
 
 
-### **3.2、mybatis-plus**
+### **2.2、mybatis-plus**
 
 ::: code-tabs#shell
 
@@ -96,21 +90,20 @@ td {
 
 :::
 
-### **3.3、jpa**
+### **2.3、jpa**
 
 <span class="big-font">[https://gitee.com/vanlin/warm-flow-jpa.git](https://gitee.com/vanlin/warm-flow-jpa.git)</span>
 
 
-### **3.4、BeetlSql**
+### **2.4、BeetlSql**
 
 <span class="big-font">[https://gitee.com/smartcity/warm-flow-beetlsql-solon.git](https://gitee.com/smartcity/warm-flow-beetlsql-solon.git)</span>
 
 
 > **有想扩展其他orm框架和数据库的可加qq群联系群主**
 
-## **4、代码示例**
+## **3、代码示例**
 
-> <span class="big-font">详细案例测试代码[warm-flow-test](https://gitee.com/dromara/warm-flow-test)项目中，warm-flow-xxx-test模块的测类</span>
 
 <br>
 
@@ -189,5 +182,5 @@ public void jumpAnyNode() throws Exception {
 
 :::
 
-## **5、设计器引入**
+## **4、设计器引入**
 > <span class="big-font">通过jar包引入：[文档地址](./designerIntroduced.md)</span>

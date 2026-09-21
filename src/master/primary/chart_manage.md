@@ -1,7 +1,7 @@
 # 流程图管理
 
 ::: tip
-**前提条件：仔细阅读[设计器集成](./designerIntroduced.html#流程图介绍)**
+**前提条件：仔细阅读[设计器集成]./designerIntroduced.html**
 :::
 
 ## 1. 查看流程图
@@ -9,7 +9,7 @@
 **1、流程图页面入口是访问后端地址(前后端不分离)：`ip:port/warm-flow-ui/index.html?id=${insId}&type=FlowChart&Authorization=token`**
 - insId：流程实例id
 - type：查看流程图类型，固定写法
-- token：用户token，[共享后端权限(如token)](./designerIntroduced.html#_6-共享后端权限-如token)
+- token：用户token，[共享后端权限(如token)]./designerIntroduced.html#_4-共享后端权限-如token
 :::
 
 ::: code-tabs#shell
