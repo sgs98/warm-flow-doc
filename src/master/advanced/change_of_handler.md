@@ -2,38 +2,48 @@
 
 ::: tip
 - 审批任务的办理人，通常是在流程设计器中预先设定好办理人，那如果想要在办理过程中修改办理人呢？
-
 :::
 
-## 1、变更的时机
-- 1、修改下个任务的办理人
-  - <span class="red-no-bg">动态指定办理人：</span> 办理人表达式(或[分派监听器](./listener.html#_5-3、分派监听器))，动态修改下个任务的办理人
-  - <span class="red-no-bg">角色|部门id转用户id：</span> 办理人权限处理器转换接口，角色/部门id转成用户id
-  - <span class="red-no-bg">流程操作命令设置nextHandlers：</span> 比如CompleteCommand、RejectCommand、JumpCommand的nextHandlers、nextHandlerAppend设置值，直接指定下个任务的办理人
-- 2、修改当前任务的办理人
-  - <span class="red-no-bg">转办：</span> 任务转给其他人办理
-  - <span class="red-no-bg">委派：</span> 求助其他人审批，然后参照他的意见决定是否审批通过
-  - <span class="red-no-bg">加签：</span> 办理中途，希望其他人一起参与办理
-  - <span class="red-no-bg">减签：</span> 办理中途，希望某些人不参与办理
+## 1、概念模型
 
-    
-## 2、动态指定办理人
+<a id="_1、变更的时机"></a>
 
-**背景**
+办理人变更分两维：<span class="red-no-bg">改下个任务</span> 还是 <span class="red-no-bg">改当前任务</span>。
 
-审批任务的办理人，通常是在流程设计器中预先设定好办理人，那如果想要在办理过程中指定办理人呢？
+**修改下个任务的办理人**
 
-**解决思路**
+| 方式 | 说明 |
+| :--- | :--- |
+| 动态指定办理人 | [办理人表达式](./variableStategy.md) 或 [分派监听器](./listener.html#_5-3、分派监听器)，动态修改下个任务的办理人 |
+| 角色\|部门 id 转用户 id | [办理人权限处理器](../primary/permission_handler.md) 转换接口，把角色 / 部门 id 转成用户 id |
+| 流程操作命令设置 `nextHandlers` | `StartCommand`、`CompleteCommand`、`RejectCommand`、`JumpCommand` 的 `nextHandlers`、`nextHandlerAppend`，指定下个任务的办理人 |
 
-- 1、流程设计时，需要动态指定办理人的节点，配置办理人表达式`${handler1}`
-- 2、本节点前任意节点办理时设置，在流程变量的变量中传入`${handler1}`的值
-- 3、办理完成会生成本节点任务，并且替换`flow_user`表中的表达式
+**修改当前任务的办理人**
 
+| 方式 | 说明 |
+| :--- | :--- |
+| 转办 | 任务转给其他人办理 |
+| 委派 | 求助其他人审批，然后参照他的意见决定是否审批通过 |
+| 加签 | 办理中途，希望其他人一起参与办理 |
+| 减签 | 办理中途，希望某些人不参与办理 |
 
+## 2、修改下个任务的办理人
+
+### 2.1、动态指定办理人
+
+<a id="_2、动态指定办理人"></a>
+
+流程设计时还不确定谁来办，可以先挂办理人表达式，在本节点之前办理时再传入变量。
+
+- 流程设计时，需要动态指定办理人的节点，配置办理人表达式 `${handler1}`
+- 本节点前任意节点办理时，在流程变量中传入 `${handler1}` 的值
+- 办理完成会生成本节点任务，并且替换 `flow_user` 表中的表达式
 
 <div><img src="https://foruda.gitee.com/images/1745558346409798689/0bc86581_2218307.png" width="500" /></div>
 
-后端代码设置变量
+::: code-tabs#handler-variable
+
+@tab:active 指定一人
 
 ```java
 // 流程变量
@@ -46,17 +56,9 @@ command.setVariables(variable);
 FlowEngine.workflow().complete(command);
 ```
 
+@tab 指定一群人
 
-
-**高级玩法**
-
-- 支持动态指定一群人
-- 支持spel表达式
-- 支持表达式扩展
-
-
-
-把如上代码`"100"`改成`Arrays.asList(4, "5", 100L)`，就可以动态指定一群人
+把 `"100"` 改成集合即可：
 
 ```java
 // 流程变量
@@ -68,9 +70,10 @@ command.setTaskId(taskId);
 command.setVariables(variable);
 FlowEngine.workflow().complete(command);
 ```
-<br>
 
-比如设计器配置了`#{@user.evalVar(#handler2)}`spel表达式，`#handler2`是方法入参，通过流程变量传递，就会表达式，执行`user.evalVar`方法
+@tab SpEL 表达式
+
+设计器配置 `#{@user.evalVar(#handler2)}` 时，`#handler2` 是方法入参，通过流程变量传递，就会执行该表达式，调用 `user.evalVar` 方法。表达式扩展见 [办理人表达式](./variableStategy.md)。
 
 ```java
 /**
@@ -99,16 +102,19 @@ command.setVariables(variable);
 FlowEngine.workflow().complete(command);
 ```
 
-## 3、角色|部门id转用户id
+:::
+
+### 2.2、角色|部门 id 转用户 id
+
+<a id="_3、角色|部门id转用户id"></a>
 
 ```java
-
-@Component
 /**
  * 办理人权限处理器（可通过配置文件注入，也可用@Bean/@Component方式）
  *
  * @author shadow
  */
+@Component
 public class CustomPermissionHandler implements PermissionHandler {
 
     /**
@@ -117,37 +123,58 @@ public class CustomPermissionHandler implements PermissionHandler {
      */
     @Override
     public List<String> convertPermissions(List<String> permissions) {
-        // 把角色部门转换成用户
-        // permissions：{role:1,dept:1} ---> {1,2,100}
+        // 把角色、部门转换成用户
+        // permissions：{role:1, dept:1} ---> {1, 2, 100}
         ......
-        return "{1,2,100}";
+        return Arrays.asList("1", "2", "100");
     }
 }
-
 ```
 
-## 4、流程操作命令设置nextHandlers
-在[接口文档中](../primary/api.html)，CompleteCommand、RejectCommand、JumpCommand这些命令中都有(nextHandlers, nextHandlerAppend)，设置了nextHandlers，会跳转到指定节点，
-并把nextHandlers的值作为下一个任务的办理人。同理只要接口中有nextHandlers，就可以设置。
+完整接口说明见 [办理人权限处理器](../primary/permission_handler.md)。
 
-`WorkflowResult complete(CompleteCommand command)`：完成当前待办并推动流程继续执行。command包含如下字段：
-- operator: 操作者（handler办理人唯一标识 + permissions办理人权限标识）[按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](../primary/permission_handler.md)
-- taskId: 流程任务id [必传]
-- targetNodeCode: 目标节点编码，[任意跳转](./api.html)时使用 [按需传输]
-- message: 审批意见 [按需传输]
-- variables: 流程变量 [按需传输]
-- instanceStatus: 流程实例状态，自定义流程状态 [按需传输]
-- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
-- nextHandlers: 执行的下个任务的办理人 [按需传输]
-- nextHandlerAppend: 下个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
+### 2.3、流程操作命令设置 nextHandlers
 
-## 5、转办|委派|加签|减签
-[接口描述地址](../primary/api.html#转办)
-> **注意事项**：转办和委派会删除当前办理人，如果节点配置的是角色，这种情况删除不了，当前办理人还能办理，要解决这种问题，请把角色全部转成用户id-[转换办理人](../primary/permission_handler.html)
+<a id="_4、流程操作命令设置nextHandlers"></a>
 
-</br>
+`StartCommand`、`CompleteCommand`、`RejectCommand`、`JumpCommand` 都有 `nextHandlers`、`nextHandlerAppend`。它只指定**下一个任务的办理人**，不会改变跳转目标。
 
-::: code-tabs#shell
+引擎生成下个任务办理人时的顺序：先替换办理人表达式，再走 `PermissionHandler.convertPermissions`，最后应用 `nextHandlers`。`nextHandlerAppend` 为 `false`（默认）时覆盖前面算出的办理人，为 `true` 时追加。
+
+跳转目标节点用 `JumpCommand.targetNodeCode`（必传），退回目标用 `RejectCommand.targetNodeCode`（按需）。完整字段见 [接口文档](../primary/api.md)。
+
+```java
+CompleteCommand command = new CompleteCommand();
+command.setTaskId(taskId);
+command.setNextHandlers(Arrays.asList("100"));
+command.setNextHandlerAppend(false);
+FlowEngine.workflow().complete(command);
+```
+
+`CompleteCommand` 字段：
+
+| 字段 | 说明 |
+| :--- | :--- |
+| `operator` | 操作者（`handler` + `permissions`）[按需传输]；实现了 [办理人权限处理器](../primary/permission_handler.md) 后可以不传 |
+| `taskId` | 流程任务 id [必传] |
+| `message` | 审批意见 [按需传输] |
+| `variables` | 流程变量 [按需传输] |
+| `instanceStatus` | 流程实例状态 [按需传输] |
+| `historyTaskStatus` | 历史任务状态 [按需传输] |
+| `nextHandlers` | 下个任务的办理人 [按需传输] |
+| `nextHandlerAppend` | `true` 追加，`false` 覆盖，默认 `false` |
+
+## 3、修改当前任务的办理人
+
+<a id="_5、转办|委派|加签|减签"></a>
+
+接口描述见 [转办](../primary/api.md#转办)。
+
+::: warning 注意事项
+转办和委派会删除当前办理人。如果节点配置的是角色，这种情况删除不了，当前办理人还能办理。要解决这种问题，请把角色全部转成用户 id，见 [转换办理人](../primary/permission_handler.md)。
+:::
+
+::: code-tabs#handler-current
 
 @tab:active 转办
 

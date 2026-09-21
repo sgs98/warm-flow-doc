@@ -11,6 +11,9 @@ const frontmatter = usePageFrontmatter<ThemeBasePageFrontmatter>();
 
 const page = usePageData();
 
+/** 文档页赞助广告展示开关。数据、轮播与组件都保留，需要展示时改回 true */
+const SHOW_SPONSOR_ADS = false;
+
 // 部署基路径，子路径部署时广告位等硬编码资源需带前缀
 const base = import.meta.env.BASE_URL;
 
@@ -65,7 +68,7 @@ function shuffle(arr) {
 watch(
     () => page.value.path,
     () => {
-      if (page.value.path.startsWith("/en/")) {
+      if (!SHOW_SPONSOR_ADS || page.value.path.startsWith("/en/")) {
         sidebarContentLift.value = "";
         tocContentRight.value = "";
         return;
@@ -81,7 +84,7 @@ watch(
 
 <template>
   <Layout>
-    <template v-if="!frontmatter.home" #sidebarTop>
+    <template v-if="SHOW_SPONSOR_ADS && !frontmatter.home" #sidebarTop>
       <div v-html="sidebarContentLift" />
     </template>
 <!--    <template v-if="!frontmatter.home" #tocBefore>-->
@@ -90,7 +93,7 @@ watch(
     <template v-if="!frontmatter.home" #tocAfter>
       <div class="wwads-cn wwads-horizontal fixed-banner" data-id="349"></div>
     </template>
-    <template v-if="!frontmatter.home" #contentBefore>
+    <template v-if="SHOW_SPONSOR_ADS && !frontmatter.home" #contentBefore>
       <Between/>
     </template>
     <template v-if="!frontmatter.home" #contentAfter>
