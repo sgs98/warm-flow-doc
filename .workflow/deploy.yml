@@ -27,7 +27,7 @@ stages:
         artifacts:
           - name: doc_dist
             path:
-              - ./src/.vuepress/dist
+              - ./src/.vuepress/warm-flow-docs
         caches:
           - ~/.npm
           - ~/.yarn
@@ -58,7 +58,7 @@ stages:
           - ''
           - rm -rf /home/nginx/html/warm-flow
           - tar zxvf ~/gitee_go/deploy/warm-flow.tar.gz -C /home/nginx/html
-          - mv /home/nginx/html/dist /home/nginx/html/warm-flow
+          - mv /home/nginx/html/warm-flow-docs /home/nginx/html/warm-flow
           - docker restart nginx
           - echo 'Hello Gitee Go!'
         notify: []
