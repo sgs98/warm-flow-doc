@@ -12,3 +12,5 @@ package-lock.json
 *.iml
 *.ipr
 
+### macOS ###
+.DS_Store
