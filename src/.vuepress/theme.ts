@@ -1,6 +1,7 @@
 import { hopeTheme } from "vuepress-theme-hope";
 import navbar from "./navbar.js";
 import sidebar from "./sidebar.js";
+import { base } from "./base.js";
 
 export default hopeTheme(
     {
@@ -87,10 +88,10 @@ export default hopeTheme(
 <!--                             </tr>-->
                              <tr>
                                <td>
-                                 <a href="/master/other/videos.html">👍教学视频</a>
+                                 <a href="${base}master/other/videos.html">👍教学视频</a>
                                </td>
                                <td>
-                                 <a href="/master/other/jionqun.html#_2、vip群-付费加群-提供问题解答、技术支持、技术分享">🍍vip群</a>
+                                 <a href="${base}master/other/jionqun.html#_2、vip群-付费加群-提供问题解答、技术支持、技术分享">🍍vip群</a>
                                </td>
                              </tr>
                              <tr>
@@ -111,18 +112,18 @@ export default hopeTheme(
                              </tr>
                              <tr>
                                <td>
-                                 <a href="/master/introduction/introduction.html">📖 使用文档</a>
+                                 <a href="${base}master/introduction/introduction.html">📖 使用文档</a>
                                </td>
                                <td>
-                                 <a href="/master/introduction/introduction.html">集成前先快速浏览，大概知道有功能和注意事项</a>
+                                 <a href="${base}master/introduction/introduction.html">集成前先快速浏览，大概知道有功能和注意事项</a>
                                </td>
                              </tr>
                              <tr>
                                <td>
-                                 <a href="/master/other/upgrade_guide.html">🌟 升级指南</a>
+                                 <a href="${base}master/other/upgrade_guide.html">🌟 升级指南</a>
                                </td>
                                <td>
-                                 <a href="/master/other/upgrade_guide.html">如发布新版本，请查看</a>
+                                 <a href="${base}master/other/upgrade_guide.html">如发布新版本，请查看</a>
                                </td>
                              </tr>
                              <tr>

@@ -175,7 +175,7 @@ function getList() {
 
 ### v1.7.0
 - 执行升级脚本1.7.0版本[warm-flow_1.7.0.sql](https://gitee.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.7.0.sql)
-- 设计器原办理人输入改成列表，使用`HandlerSelectService.handlerFeedback`接口回显名称，他内部是利用`HandlerSelectService.getHandlerSelect`接口，但是性能会差，如果有特别要求 ，可以重写`HandlerSelectService.handlerFeedback`，[重写文档](/master/primary/designerIntroduced.html#_5-设计器办理人列表回显)
+- 设计器原办理人输入改成列表，使用`HandlerSelectService.handlerFeedback`接口回显名称，他内部是利用`HandlerSelectService.getHandlerSelect`接口，但是性能会差，如果有特别要求 ，可以重写`HandlerSelectService.handlerFeedback`，[重写文档](../../master/primary/designerIntroduced.html#_5-设计器办理人列表回显)
 <div><img src="https://foruda.gitee.com/images/1745570346631861131/f5ba4bf7_2218307.png" width="500"></div>
 
 - InsService的skipByInsId接口标识为即将删除，请使用TaskService.skipByInsId代替

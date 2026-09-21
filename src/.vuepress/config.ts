@@ -4,8 +4,10 @@ import {viteBundler} from '@vuepress/bundler-vite'
 
 import theme from "./theme.js";
 
+import {base} from "./base.js";
+
 export default defineUserConfig({
-    base: "/",
+    base,
     port: 8081,
     locales: {
         "/": {
@@ -35,4 +37,3 @@ export default defineUserConfig({
         ],
     ],
 });
-

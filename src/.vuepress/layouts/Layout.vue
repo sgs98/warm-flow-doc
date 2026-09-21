@@ -11,18 +11,21 @@ const frontmatter = usePageFrontmatter<ThemeBasePageFrontmatter>();
 
 const page = usePageData();
 
+// 部署基路径，子路径部署时广告位等硬编码资源需带前缀
+const base = import.meta.env.BASE_URL;
+
 const sidebarTopArrayLift = [
   `<a href="https://www.maxkey.top" target="_blank">
-    <img className="no-zoom" height="60px" width="200px" src="/ggw/MaxKey.png" class="9999">
+    <img className="no-zoom" height="60px" width="200px" src="${base}ggw/MaxKey.png" class="9999">
   </a>`,
   `<a href="https://ccflow.org/index.html?frm=warmflow" target="_blank">
-    <img className="no-zoom" height="60px" width="200px" src="/ggw/ccflow.png" class="2028-03-03">
+    <img className="no-zoom" height="60px" width="200px" src="${base}ggw/ccflow.png" class="2028-03-03">
   </a>`,
   `<a href="https://el.frsimple.com" target="_blank">
-    <img className="no-zoom" height="60px" width="200px" src="/ggw/frsimple.png" class="2027-03-03">
+    <img className="no-zoom" height="60px" width="200px" src="${base}ggw/frsimple.png" class="2027-03-03">
   </a>`,
   `<a href="https://easysearch.cn" target="_blank">
-    <img className="no-zoom" height="60px" width="200px" src="/ggw/easysearch.webp" class="2027-03-15">
+    <img className="no-zoom" height="60px" width="200px" src="${base}ggw/easysearch.webp" class="2027-03-15">
   </a>`,
   `<a href="https://www.oarsai.com" target="_blank">
     <img className="no-zoom" height="60px" width="200px" src="https://www.oarsai.com/assets/ad-banner.webp" class="2027-08-08">
@@ -37,7 +40,7 @@ function renderSponsorAds(containerClass: string) {
       <div class="${containerClass}">
           <div class="warm-flow-ads-title">
             <span>广告采用随机轮播方式显示</span>
-            <span class="warm-flow-ads-sponsor">❤️<a href="/master/other/paidservice.html#赞助商广告">成为赞助商</a></span>
+            <span class="warm-flow-ads-sponsor">❤️<a href="${base}master/other/paidservice.html#赞助商广告">成为赞助商</a></span>
           </div>
           <div class="warm-flow-ads-list">
             ${sidebarTopArrayLift.slice(0, sidebarTopArrayLift.length-1).join("\n  ")}
