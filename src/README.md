@@ -63,7 +63,6 @@ highlights:
 
 
 copyright: false
-footer: © 2024 Warm-Flow Project. All Rights Reserved Designed by <a href="https://gitee.com/min290">xiaohua</a> Member of <a href="https://dromara.org.cn/">Dromara</a> <br><a href="https://beian.miit.gov.cn/">赣ICP备2021008655号-3</a>
 ---
   <div class="sponsorList">
     <strong style="font-size: 30px;">❤️特别赞助</strong><br><br><br>

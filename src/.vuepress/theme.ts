@@ -18,7 +18,7 @@ export default hopeTheme(
             "/": {
                 navbar,
                 sidebar,
-                displayFooter: true,
+                displayFooter: false,
                 metaLocales: {
                     editLink: "前往 Gitee 编辑此页",
                 },
