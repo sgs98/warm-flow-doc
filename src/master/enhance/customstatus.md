@@ -2,8 +2,8 @@
 
 
 ::: tip
-- flowStatus：流程实例表状态，当前流程状态    
-- hisStatus：历史任务表状态，过程状态记录，按照自身业务要求，可以与流程实例状态不同  
+- instanceStatus：流程实例表状态，当前流程状态    
+- historyTaskStatus：历史任务表状态，过程状态记录，按照自身业务要求，可以与流程实例状态不同  
 
 :::
 
@@ -17,34 +17,37 @@
         String id = IdUtils.nextIdStr();
         testLeave.setId(id);
         LoginUser user = SecurityUtils.getLoginUser();
-        FlowParams flowParams = FlowParams.build().flowCode(getFlowType(testLeave))
-                .handler(user.getUser().getUserId().toString());
-        
-        // 自定义流程状态扩展，flowStatus与hisStatus可以不同
+
+        StartCommand command = new StartCommand();
+        command.setOperator(new OperatorContext(user.getUser().getUserId().toString(), null));
+        command.setBusinessId(id);
+        command.setFlowCode(getFlowType(testLeave));
+
+        // 自定义流程状态扩展，instanceStatus与historyTaskStatus可以不同
         if (Objects.nonNull(flowStatus)) {
-            flowParams.flowStatus(flowStatus).hisStatus(flowStatus);
+            command.setInstanceStatus(flowStatus).setHistoryTaskStatus(flowStatus);
         }
 
-        Instance instance = insService.start(id, flowParams);
+        WorkflowResult result = FlowEngine.workflow().start(command);
     }
 ```
 
 ## 2、流程跳转
 
 ```java
-        // 自定义流程状态扩展，flowStatus与hisStatus可以不同
+        // 自定义流程状态扩展，instanceStatus与historyTaskStatus可以不同
         if (Objects.nonNull(flowStatus)) {
-            flowParams.flowStatus(flowStatus).hisStatus(flowStatus);
+            command.setInstanceStatus(flowStatus).setHistoryTaskStatus(flowStatus);
         }
-        Instance instance = insService.skipByInsId(testLeave.getInstanceId(), flowParams);
+        WorkflowResult result = FlowEngine.workflow().complete(command);
 ```
 
 ```java
-        // 自定义流程状态扩展，flowStatus与hisStatus可以不同
+        // 自定义流程状态扩展，instanceStatus与historyTaskStatus可以不同
         if (Objects.nonNull(flowStatus)) {
-            flowParams.flowStatus(flowStatus).hisStatus(flowStatus);
+            command.setInstanceStatus(flowStatus).setHistoryTaskStatus(flowStatus);
         }
-        Instance instance = taskService.skip(taskId, flowParams);
+        WorkflowResult result = FlowEngine.workflow().reject(command);
 ```
 
 ## 3、其他请查阅核心api

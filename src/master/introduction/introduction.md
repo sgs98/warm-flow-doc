@@ -11,10 +11,10 @@
 - **办理人变量表达式**‌：内置${handler}和spel格式的表达式，满足不同场景需求，灵活可扩展。
 - **监听器**‌：提供四种监听器，支持不同作用范围和spel表达式，参数传递灵活，支持动态权限。
 - **流程变量**‌：在整个流程办理过程起到重要的角色，如办理人表达式中，传入变量进行动态指定办理人。
-- **ORM框架支持**‌：支持MyBatis、Mybatis-Plus、Jpa、Easy-Query和BeetlSql，后续将扩展支持其他框架
+- **ORM框架支持**‌：官方支持MyBatis、Mybatis-Plus，Jpa、BeetlSql等其他框架可由社区扩展
 - **数据库支持**‌：支持MySQL、Oracle、PostgreSQL和SQL Server，其他数据库只需要转换表结构即可支持。
 - **多租户与软删除**‌：流程引擎自身维护多租户和软删除实现，也可使用对应ORM框架的实现方式。
-- **兼容性**‌：同时支持Spring和Solon，兼容Java8、Java17、Java21。
+- **兼容性**‌：支持Spring Boot 3、Spring Boot 4，JDK 17起步，兼容Java17、Java21。
 - **实战项目**‌：官方提供基于Ruoyi-Vue封装的实战项目，极具参考价值。
 
 ```shell
@@ -62,7 +62,7 @@ Dromara Warm-Flow作为一个国产的工作流引擎，其设计简洁轻量但
 7. 合规性和风险管理：帮助企业在遵守法规和标准的同时，管理风险和合规流程。
 
 ## 5、支持数据库类型
-::: tip 目前支持MySQL 、Oracle、PostgreSQL和SQL Server，其他数据库只需要转换表结构，使用Mybatis-Plus、BeetlSql和Easy-Query即可兼容
+::: tip 目前支持MySQL 、Oracle、PostgreSQL和SQL Server，其他数据库只需要转换表结构，使用MyBatis或MyBatis-Plus即可兼容
 :::
 * [x] MySQL
 * [x] Oracle
@@ -75,6 +75,5 @@ Dromara Warm-Flow作为一个国产的工作流引擎，其设计简洁轻量但
 * [x] mybatis
 * [x] mybatis-plus
 * [x] jpa
-* [x] easy-query
 * [x] BeetlSql
 * [ ] ......

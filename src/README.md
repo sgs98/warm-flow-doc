@@ -47,7 +47,7 @@ highlights:
 
       - title: 🌎 orm框架支持
         link: /master/introduction/introduction.html#_6%E3%80%81%E6%94%AF%E6%8C%81orm%E6%A1%86%E6%9E%B6%E7%B1%BB%E5%9E%8B
-        details: 目前支持MyBatis、Mybatis-Plus、Jpa、Easy-Query和BeetlSql，后续会由社区提供其他支持，扩展方便
+        details: 官方支持MyBatis、Mybatis-Plus，Jpa、BeetlSql等其他框架可由社区扩展
 
       - title: 🎬 数据库支持
         link: /master/introduction/introduction.html#_5%E3%80%81%E6%94%AF%E6%8C%81%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B
@@ -63,7 +63,7 @@ highlights:
 
 
 copyright: false
-footer: © 2024 Warm-Flow Project. All Rights Reserved Designed by <a href="https://gitee.com/min290">xiaohua</a> Member of <a href="https://dromara.org.cn/">Dromara</a> <br><a href="https://beian.miit.gov.cn/">赣ICP备2021008655号-3</a>
+footer: © 2024 Warm-Flow Project  data-category-id. All Rights Reserved Designed by <a href="https://gitee.com/min290">xiaohua</a> Member of <a href="https://dromara.org.cn/">Dromara</a> <br><a href="https://beian.miit.gov.cn/">赣ICP备2021008655号-3</a>
 ---
   <div class="sponsorList">
     <strong style="font-size: 30px;">❤️特别赞助</strong><br><br><br>
@@ -110,7 +110,7 @@ footer: © 2024 Warm-Flow Project. All Rights Reserved Designed by <a href="http
     </div>
     <div style="height: 10px; clear: both;"></div>
     <p>
-    	（如果您的开源项目也使用了 Warm-Flow，您可以 <a href="https://gitee.com/dromara/warm-flow/issues/IBB37F" target="_blank">在此</a> 提交）
+    	（如果您的开源项目也使用了 Warm-Flow，您可以 <a href="https://github.com/dromara/warm-flow/issues" target="_blank">在此</a> 提交）
     </p>
     <p>
     	（更多开源项目详情，您可以 <a href="master/introduction/projectexample.html">在此</a> 查看）
@@ -131,7 +131,7 @@ footer: © 2024 Warm-Flow Project. All Rights Reserved Designed by <a href="http
     </div>
     <div style="height: 10px; clear: both;"></div>
     <p>
-    	（如果您的企业也使用了 Warm-Flow，您可以 <a href="https://gitee.com/dromara/warm-flow/issues/I7Y57D" target="_blank">在此</a> 提交）
+    	（如果您的企业也使用了 Warm-Flow，您可以 <a href="https://github.com/dromara/warm-flow/issues" target="_blank">在此</a> 提交）
     </p>
     <p>
     	（更多使用企业/个人详情，您可以 <a href="master/introduction/companyintegration.html">在此</a> 查看）
@@ -157,16 +157,6 @@ footer: © 2024 Warm-Flow Project. All Rights Reserved Designed by <a href="http
 </div>
 
 
----
-<div style="padding: 1em 1em; padding-bottom: 30px; text-align: center;max-width: var(--content-width, 740px);margin: 0 auto;">
-	<br><strong style="font-size: 30px;">👍友情链接</strong><br><br><br>
-    <div class="links ">
-            <a :href="item.href" target="_blank" v-for="item in projectList" :key="item.href">
-              <img :src="item.src" :alt="item.alt" :title="item.title">
-            </a>
-    </div>
-</div>
-
 <script>
 
 import { ref, onMounted } from 'vue'; 
@@ -176,7 +166,6 @@ export default {
     // 部署基路径，子路径部署时静态资源需带前缀
     const base = import.meta.env.BASE_URL;
 
-    const projectList = ref([]);
     const qyProjectList = ref([]);
     const kyProjectList = ref([]);
     const dromaraList = ref([]);
@@ -227,11 +216,6 @@ export default {
             { href: "https://gitee.com/leekeep/lite-admin", title: "LiteAdmin", src: "https://foruda.gitee.com/images/1782145996788072507/7d786ba4_2218307.png", author: "LiteAdmin", intro: "基于 SmartAdmin V3 构建，集成了warm-flow审批流引擎、在线表单设计、文件预览、AI智能助手等能力，适合学习参考与技术交流" },
             { href: "https://gitee.com/liangliyun/RuoYi-Cloud", title: "Ruoyi-Cloud", src: base + "warm-flow.png", author: "梁小梁/Zhen", intro: "基于Ruoyi-Cloud集成的跑批系统：spring-cloud(nacos)+vue3" },
             { href: "https://gitee.com/qq75547276/seaflow", title: "seaflow", src: base + "webp/ef07a979_2218307.webp", author: "seven", intro: "seaflow仿钉钉工作流平台，vue3、elementPlus，实现流程设计和审批功能" },
-        ];
-    
-        projectList.value = [
-            { href: "https://item.jd.com/13928958.html", src: base + "yqlj/flowableHb.jpg", alt: "open-capacity-platform", title: "对flowable有兴趣的朋友可以购买贺波老师的书《深入flowable流程引擎》" },
-            { href: "http://www.easy-query.com/easy-query-doc/", src: base + "yqlj/easy-query.png", alt: "open-capacity-platform", title: "java下唯一一款同时支持强类型对象关系查询和强类型SQL语法查询的ORM,拥有对象模型筛选、隐式子查询、隐式join、显式子查询、显式join,支持Java/Kotlin" },
         ];
     
         dromaraList.value = [
@@ -351,12 +335,9 @@ export default {
     const navigateTo = () => {
       const pElement = document.querySelector('#main-description');
 
-      var contentToAppend = `<p><a href="https://gitee.com/dromara/warm-flow.git" style="margin-left: 12px;"><img src="https://gitee.com/dromara/warm-flow/badge/star.svg?theme=dark"></a>
-          <a href='https://gitee.com/dromara/warm-flow/members'><img src='https://gitee.com/dromara/warm-flow/badge/fork.svg?theme=dark' alt='fork'></a>
-          <a href='https://github.com/dromara/warm-flow.git'><img src='https://img.shields.io/github/stars/dromara/warm-flow.svg' alt='fork'></a>
-          <a href='https://github.com/dromara/warm-flow.git'><img src='https://img.shields.io/github/forks/dromara/warm-flow.svg' alt='fork'></a>
-          <a href='https://gitcode.com/dromara/warm-flow'><img src='https://gitcode.com/dromara/warm-flow/star/badge.svg' alt='fork'></a>
-          <a href='https://gitee.com/dromara/warm-flow/blob/master/LICENSE'><img src='https://img.shields.io/github/license/dromara/warm-flow' alt='fork'></a>
+      var contentToAppend = `<p><a href="https://gitee.com/sgs98/warm-flow" style="margin-left: 12px;"><img src="https://gitee.com/sgs98/warm-flow/badge/star.svg?theme=dark"></a>
+          <a href='https://gitee.com/sgs98/warm-flow'><img src='https://gitee.com/sgs98/warm-flow/badge/fork.svg?theme=dark' alt='fork'></a>
+          <a href='https://github.com/dromara/warm-flow/blob/master/LICENSE'><img src='https://img.shields.io/github/license/dromara/warm-flow' alt='fork'></a>
         </p>
       `;
 
@@ -400,7 +381,6 @@ export default {
     };
 
     return {
-      projectList,
       qyProjectList,
       kyProjectList,
       dromaraList,

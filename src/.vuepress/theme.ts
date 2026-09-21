@@ -48,13 +48,6 @@ export default hopeTheme(
                 assets: "https://at.alicdn.com/t/c/font_4043253_v7nldr3uv7.css",
                 prefix: "iconfont icon-",
             },
-            comment: {
-                provider: "Giscus",
-                repo: "dromara/warm-flow",
-                repoId: "R_kgDOK_2R_w",
-                category: "Announcements",
-                categoryId: "DIC_kwDOK_2R_84ClNey",
-            },
             notice: [
                 // {
                 //     path: "/",
@@ -73,7 +66,7 @@ export default hopeTheme(
                 // },
                 {
                     path: "/master",
-                    title: "公告: 发布1.8.9版本",
+                    title: "公告: 发布2.0.0版本",
                     content:
                         `
                          <table>
@@ -88,26 +81,18 @@ export default hopeTheme(
 <!--                             </tr>-->
                              <tr>
                                <td>
-                                 <a href="${base}master/other/videos.html">👍教学视频</a>
+                                 <a href="https://gitee.com/sgs98/warm-flow/stargazers" target="_blank">⭐️ Star</a>
                                </td>
                                <td>
-                                 <a href="${base}master/other/jionqun.html#_2、vip群-付费加群-提供问题解答、技术支持、技术分享">🍍vip群</a>
-                               </td>
-                             </tr>
-                             <tr>
-                               <td>
-                                 <a href="https://gitee.com/dromara/warm-flow/stargazers" target="_blank">⭐️ Star</a>
-                               </td>
-                               <td>
-                                 <a href="https://gitee.com/dromara/warm-flow/stargazers" target="_blank">一键三连，你的Star是我持续开发的动力</a>
+                                 <a href="https://gitee.com/sgs98/warm-flow/stargazers" target="_blank">一键三连，你的Star是我持续开发的动力</a>
                                </td>
                              </tr>
                              <tr>
                                <td>
-                                 <a href="https://gitee.com/dromara/warm-flow/issues" target="_blank">❓ 疑问</a>
+                                 <a href="https://gitee.com/sgs98/warm-flow/issues" target="_blank">❓ 疑问</a>
                                </td>
                                <td>
-                                 <a href="https://gitee.com/dromara/warm-flow/issues" target="_blank">先看常见问题和issue，然后再是提👉 issue 👈</a>
+                                 <a href="https://gitee.com/sgs98/warm-flow/issues" target="_blank">先看常见问题和issue，然后再是提👉 issue 👈</a>
                                </td>
                              </tr>
                              <tr>
@@ -128,10 +113,10 @@ export default hopeTheme(
                              </tr>
                              <tr>
                                <td>
-                                 <a href="https://gitee.com/warm_4/warm-flow-doc" target="_blank">🚀 本地部署文档</a>
+                                 <a href="https://github.com/sgs98/warm-flow-doc" target="_blank">🚀 本地部署文档</a>
                                </td>
                                <td>
-                                 <a href="https://gitee.com/warm_4/warm-flow-doc" target="_blank">如部分地方访问不了，可本地部署文档</a>
+                                 <a href="https://github.com/sgs98/warm-flow-doc" target="_blank">如部分地方访问不了，可本地部署文档</a>
                                </td>
                              </tr>
                            </tbody>
@@ -140,7 +125,7 @@ export default hopeTheme(
                     actions: [
                         {
                             text: "⭐️star⭐️",
-                            link: "https://gitee.com/dromara/warm-flow/stargazers",
+                            link: "https://gitee.com/sgs98/warm-flow/stargazers",
                             type: "primary",
                         },
                         { text: "取消" },

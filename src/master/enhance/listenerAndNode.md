@@ -65,13 +65,7 @@ public class AutoApprovalListener implements Listener {
             // value为保留两位小数的时间，单位为小时，转成秒，如1.1小时转成3960秒
             long seconds = (long) (Double.parseDouble(autoApprovalTime) * 60 * 60);
             // 自动审批不需要校验办理人权限, 默认审批通过
-            FlowParams flowParams = FlowParams.build().ignore(true)
-                    .skipType(SkipType.PASS.getKey())
-                    .message("超时自动审批");
-            // 获取超时后执行动作，通过还是退回
-            if (!SkipType.isPass(extMap.get("autoApproval_skipType"))) {
-                flowParams.skipType(SkipType.REJECT.getKey());
-            }
+            boolean pass = SkipType.isPass(extMap.get("autoApproval_skipType"));
             // 通过jdk的定时任务，自动审批
             Task task = listenerVariable.getTask();
             executor.schedule(() -> {
@@ -81,7 +75,23 @@ public class AutoApprovalListener implements Listener {
                     // 判断需要超时自动执行的任务，是否已经被主动执行，如果还存在则开始自动执行
                     Task taskTemp = taskService.getById(task.getId());
                     if (taskTemp != null) {
-                        taskService.skip(task.getId(), flowParams);
+                        // 自动审批：通过走complete，退回走reject，ignore表示忽略权限校验
+                        if (pass) {
+                            CompleteCommand command = new CompleteCommand();
+                            command.setOperator(new OperatorContext(null, null));
+                            command.setIgnore(true);
+                            command.setTaskId(task.getId());
+                            command.setMessage("超时自动审批");
+                            FlowEngine.workflow().complete(command);
+                        } else {
+                            RejectCommand command = new RejectCommand();
+                            command.setOperator(new OperatorContext(null, null));
+                            command.setIgnore(true);
+                            command.setTaskId(task.getId());
+                            command.setTargetNodeCode(extMap.get("autoApproval_skipNode"));
+                            command.setMessage("超时自动审批");
+                            FlowEngine.workflow().reject(command);
+                        }
                         return;
                     }
                     log.info("超时自动审批监听器执行结束......");

@@ -27,14 +27,15 @@
 @Override
 public int insertTestLeave(TestLeave testLeave, String flowStatus)
 {
-    FlowParams flowParams = FlowParams.build().flowCode(getFlowType(testLeave));
+    StartCommand command = new StartCommand();
+    // 流程编码
+    command.setFlowCode(getFlowType(testLeave));
     // 流程变量
     Map<String, Object> variable = new HashMap<>();
     variable.put("flag", String.valueOf(testLeave.getDay()));
-    flowParams.variable(variable);
+    command.setVariables(variable);
 
-    Instance instance = insService.start(id, flowParams);
-    return instance != null? 1 : 0;
+    WorkflowResult result = FlowEngine.workflow().start(command);
+    return result.isSuccess() ? 1 : 0;
 }
 ```
-

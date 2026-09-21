@@ -224,7 +224,7 @@ public class CustomGlobalListener implements GlobalListener {
       DefJson defJson = FlowEngine.jsonConvert.strToBean(defJsonStr, DefJson.class);
       for (NodeJson nodeJson : defJson.getNodeList()) {
         if (nodeJson.getNodeCode().equals(listenerVariable.getNode().getNodeCode())) {
-          Long userId = Long.valueOf(listenerVariable.getFlowParams().getHandler());
+          Long userId = Long.valueOf(listenerVariable.getContext().getHandler());
           SysUser sysUser = userService.selectUserById(userId);
           if (sysUser != null && StringUtils.isNotEmpty(sysUser.getNickName())) {
             nodeJson.getExtMap().put("办理人", sysUser.getNickName());

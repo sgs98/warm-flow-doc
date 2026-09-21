@@ -18,7 +18,18 @@ export default defineUserConfig({
     theme,
     shouldPrefetch: false,
     bundler: viteBundler({
-        viteOptions: {},
+        viteOptions: {
+            css: {
+                preprocessorOptions: {
+                    scss: {
+                        // theme-hope / sass-palette 内部仍在使用废弃的 sass if() 语法，
+                        // 这里屏蔽依赖方告警，避免构建日志被弃用警告刷屏
+                        quietDeps: true,
+                        silenceDeprecations: ["if-function"],
+                    },
+                },
+            },
+        },
         vuePluginOptions: {},
     }),
     dest: "./src/.vuepress/warm-flow-docs",

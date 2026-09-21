@@ -7,7 +7,7 @@
 
 - 熟悉 关系型 数据库，比如 MySQL  
 
-- 熟悉 Spring Boot或者Solon 及相关框架  
+- 熟悉 Spring Boot 及相关框架  
 
 - 熟悉 Java 构建工具，比如 Maven  
 :::
@@ -15,8 +15,8 @@
 ## **1、导入sql，按需求执行**
 
 - 开始学习前，请先了解<span class="big-font">[表结构](./table.md)</span>，不迷路
-- 首次导入，先创建数据库，找到对应数据库的全量脚本<span class="big-font">[warm-flow-all.sql](https://gitee.com/dromara/warm-flow/tree/master/sql/mysql)</span>，执行  
-- 如果版本更新，找到对应数据库的更新版本，比如xx-upgrade，<span class="big-font">[warm-flow_x.x.x.sql](https://gitee.com/dromara/warm-flow/tree/master/sql/mysql/v1-upgrade)</span>，执行
+- 首次导入，先创建数据库，找到对应数据库的全量脚本<span class="big-font">[warm-flow-all.sql](https://github.com/dromara/warm-flow/tree/master/sql/mysql)</span>，执行  
+- 如果版本更新，找到对应数据库的更新版本，比如xx-upgrade，<span class="big-font">[warm-flow_x.x.x.sql](https://github.com/dromara/warm-flow/tree/master/sql/mysql/v1-upgrade)</span>，执行
 
 <table>
     <tbody>
@@ -40,26 +40,14 @@ td {
 
 
 ## **3、maven依赖**
-- <span class="big-font">springboot 支持2、3、4版本</span>
-
-- <span class="red-font">solon 支持3.10.0以上版本</span>
+- <span class="big-font">springboot 支持3、4版本（v2.0.0起已移除 springboot2 与 solon 适配）</span>
 
 
 ### **3.1、mybatis**
 
 ::: code-tabs#shell
 
-@tab:active springboot2
-
-```xml
-<dependency>
-    <groupId>org.dromara.warm</groupId>
-    <artifactId>warm-flow-mybatis-sb-starter</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-
-@tab springboot3
+@tab:active springboot3
 
 ```xml
 <dependency>
@@ -79,16 +67,6 @@ td {
 </dependency>
 ```
 
-@tab solon
-
-```xml
-<dependency>
-    <groupId>org.dromara.warm</groupId>
-    <artifactId>warm-flow-mybatis-solon-plugin</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-
 :::
 
 
@@ -96,17 +74,7 @@ td {
 
 ::: code-tabs#shell
 
-@tab:active springboot2
-
-```xml
-<dependency>
-    <groupId>org.dromara.warm</groupId>
-    <artifactId>warm-flow-mybatis-plus-sb-starter</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-
-@tab springboot3
+@tab:active springboot3
 
 ```xml
 <dependency>
@@ -126,74 +94,14 @@ td {
 </dependency>
 ```
 
-@tab solon
-
-```xml
-<dependency>
-    <groupId>org.dromara.warm</groupId>
-    <artifactId>warm-flow-mybatis-plus-solon-plugin</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-
 :::
 
-### **3.3、easy-query**
-
-::: tip
-最低支持3.1.79版本，低于这个版本没有测试过
-:::
-
-::: code-tabs#shell
-
-@tab:active springboot2
-
-```xml
-<dependency>
-    <groupId>org.dromara.warm</groupId>
-    <artifactId>warm-flow-easy-query-sb-starter</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-
-@tab springboot3
-
-```xml
-<dependency>
-    <groupId>org.dromara.warm</groupId>
-    <artifactId>warm-flow-easy-query-sb3-starter</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-
-@tab springboot4
-
-```xml
-<dependency>
-    <groupId>org.dromara.warm</groupId>
-    <artifactId>warm-flow-easy-query-sb4-starter</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-
-@tab solon
-
-```xml
-<dependency>
-    <groupId>org.dromara.warm</groupId>
-    <artifactId>warm-flow-easy-query-solon-plugin</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-
-:::
-
-### **3.4、jpa**
+### **3.3、jpa**
 
 <span class="big-font">[https://gitee.com/vanlin/warm-flow-jpa.git](https://gitee.com/vanlin/warm-flow-jpa.git)</span>
 
 
-### **3.5、BeetlSql**
+### **3.4、BeetlSql**
 
 <span class="big-font">[https://gitee.com/smartcity/warm-flow-beetlsql-solon.git](https://gitee.com/smartcity/warm-flow-beetlsql-solon.git)</span>
 
@@ -223,7 +131,7 @@ public void deployFlow() throws Exception {
 
 ```java
 public void publish() throws Exception {
-    defService.publish(1212437969554771968L);
+    FlowEngine.defService().publish(1212437969554771968L);
 }
 ```
 
@@ -231,30 +139,51 @@ public void publish() throws Exception {
 
 ```java
 public void startFlow() {
-    System.out.println("已开启的流程实例id：" + insService.start("1", getUser()).getId());
+    StartCommand command = new StartCommand();
+    // 操作者：办理人唯一标识 + 权限标识（实现 PermissionHandler 后可不传）
+    command.setOperator(new OperatorContext("1", Arrays.asList("role:1", "role:2")));
+    // 业务id
+    command.setBusinessId("1");
+    // 流程编码
+    command.setFlowCode("leaveFlow-serial");
+    // 流程变量，按需传输
+    command.setVariables(variable);
+    WorkflowResult result = FlowEngine.workflow().start(command);
+    System.out.println("已开启的流程实例id：" + result.getInstanceId());
 }
 ```
 
 @tab 流程流转
 
 ```java
-public void skipFlow() throws Exception {
-    // 通过实例id流转
-    Instance instance = insService.skipByInsId(1219286332141080576L, getUser().skipType(SkipType.PASS.getKey())
-            .permissionFlag(Arrays.asList("role:1", "role:2")));
-    System.out.println("流转后流程实例：" + instance.toString());
-
-//        // 通过任务id流转
-//        Instance instance = insService.skip(1219286332145274880L, getUser().skipType(SkipType.PASS.getKey())
-//                .permissionFlag(Arrays.asList("role:1", "role:2")));
-//        System.out.println("流转后流程实例：" + instance.toString());
+public void completeFlow() throws Exception {
+    // 审批通过：完成待办并推动流程继续执行
+    CompleteCommand command = new CompleteCommand();
+    command.setOperator(new OperatorContext("1", Arrays.asList("role:1", "role:2")));
+    command.setTaskId(1219286332141080576L);
+    command.setMessage("同意");
+    WorkflowResult result = FlowEngine.workflow().complete(command);
+    System.out.println("流转后流程实例：" + result.getInstanceId());
 }
 
-public void skipAnyNode() throws Exception {
-    // 跳转到指定节点
-    Instance instance = insService.skip(1219286332145274880L, getUser().skipType(SkipType.PASS.getKey())
-            .permissionFlag(Arrays.asList("role:1", "role:2")).nodeCode("4"));
-    System.out.println("流转后流程实例：" + instance.toString());
+public void rejectFlow() throws Exception {
+    // 驳回：退回到指定的前置节点
+    RejectCommand command = new RejectCommand();
+    command.setOperator(new OperatorContext("1", Arrays.asList("role:1", "role:2")));
+    command.setTaskId(1219286332141080576L);
+    command.setTargetNodeCode("2");
+    command.setMessage("驳回");
+    FlowEngine.workflow().reject(command);
+}
+
+public void jumpAnyNode() throws Exception {
+    // 任意跳转：跳转到指定节点
+    JumpCommand command = new JumpCommand();
+    command.setOperator(new OperatorContext("1", Arrays.asList("role:1", "role:2")));
+    command.setTaskId(1219286332145274880L);
+    command.setTargetNodeCode("4");
+    command.setMessage("跳转");
+    FlowEngine.workflow().jump(command);
 }
 ```
 
@@ -262,4 +191,3 @@ public void skipAnyNode() throws Exception {
 
 ## **5、设计器引入**
 > <span class="big-font">通过jar包引入：[文档地址](./designerIntroduced.md)</span>
-

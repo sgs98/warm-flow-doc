@@ -15,8 +15,8 @@
 ## **1、导入sql，按需求执行**
 
 - 开始学习前，请先了解<span class="big-font">[表结构](./table.md)</span>，不迷路
-- 首次导入，先创建数据库，找到对应数据库的全量脚本<span class="big-font">[warm-flow-all.sql](https://gitee.com/dromara/warm-flow/tree/master/sql/mysql)</span>，执行  
-- 如果版本更新，找到对应数据库的更新版本，比如xx-upgrade，<span class="big-font">[warm-flow_x.x.x.sql](https://gitee.com/dromara/warm-flow/tree/master/sql/mysql/v1-upgrade)</span>，执行
+- 首次导入，先创建数据库，找到对应数据库的全量脚本<span class="big-font">[warm-flow-all.sql](https://github.com/dromara/warm-flow/tree/master/sql/mysql)</span>，执行  
+- 如果版本更新，找到对应数据库的更新版本，比如xx-upgrade，<span class="big-font">[warm-flow_x.x.x.sql](https://github.com/dromara/warm-flow/tree/master/sql/mysql/v1-upgrade)</span>，执行
 
 <table>
     <tbody>

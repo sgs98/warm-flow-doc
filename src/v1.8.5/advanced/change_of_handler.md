@@ -127,9 +127,9 @@ public class CustomPermissionHandler implements PermissionHandler {
 `Instance skip(taskId, flowParams)`：传入流程任务id，流程跳转。flowParams包含如下字段：
 - skipType: 跳转类型(PASS审批通过 REJECT退回) [必传]
 - nodeCode: 如果指定节点,可[任意跳转]到对应节点，严禁任意退回选择后置节点 [按需传输]
-- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
+- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](../primary/permission_handler.md)
 - message: 审批意见 [按需传输]
-- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
+- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](../primary/permission_handler.md)可不用传
 - variable: 流程变量 [按需传输]
 - nextHandler: 执行的下个任务的办理人[按需传输]
 - nextHandlerAppend: 个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]

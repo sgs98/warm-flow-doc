@@ -9,16 +9,15 @@
 ## 1、内置表达式类型
 - 1、默认: `default@@${flag == 5 && flag > 4}`
 - 2、SpEL: `spel@@#{@user.eval(#flag)}`
-- 3、Snel: `snel@@#{@user.eval(flag)}`
-- 4、大于: `gt@@flag|4`
-- 5、大于等于: `ge@@flag|4`
-- 6、等于: `eq@@flag|4`
-- 7、不等于： `ne@@flag|4`
-- 8、小于: `lt@@flag|4`
-- 9、小于等于: `le@@flag|4`
-- 10、包含: `like@@flag|4`
-- 11、不包含: `notLike@@flag|4`
-- 12、自定义表达式
+- 3、大于: `gt@@flag|4`
+- 4、大于等于: `ge@@flag|4`
+- 5、等于: `eq@@flag|4`
+- 6、不等于： `ne@@flag|4`
+- 7、小于: `lt@@flag|4`
+- 8、小于等于: `le@@flag|4`
+- 9、包含: `like@@flag|4`
+- 10、不包含: `notLike@@flag|4`
+- 11、自定义表达式
 
 ## 2、匹配规则
 - 1、常规匹配规则：`xxx@@yyy|zzz`，`xxx`为表达式类型，其中`yyy`为变量名，，最后的`zzz`为变量值。
@@ -34,12 +33,7 @@
 
 <div><img src="https://foruda.gitee.com/images/1727163098727096928/c29d9af5_2218307.png"></div>
 
-- 4、Solon Expression（SnEl）表达式:
-  `snel@@#{@user.eval(flag)}`表达式，`flag`为变量和以下方法入参命名一致，可不设置入参。
-
-<div><img src="https://foruda.gitee.com/images/1774321773081214210/5cb09f6b_2218307.png"></div>
-
-- 5、代码实现:
+- 4、代码实现:
 
 ```java
 @Component("user")
@@ -66,14 +60,18 @@ public class User {
 @Override
 public int insertTestLeave(TestLeave testLeave, String flowStatus)
 {
-    FlowParams flowParams = FlowParams.build().flowCode(getFlowType(testLeave));
+    StartCommand command = new StartCommand();
+    // 业务id
+    command.setBusinessId(id);
+    // 流程编码
+    command.setFlowCode(getFlowType(testLeave));
     // 流程变量
     Map<String, Object> variable = new HashMap<>();
     variable.put("flag", String.valueOf(testLeave.getDay()));
-    flowParams.variable(variable);
+    command.setVariables(variable);
 
-    Instance instance = insService.start(id, flowParams);
-    return instance != null? 1 : 0;
+    WorkflowResult result = FlowEngine.workflow().start(command);
+    return result.isSuccess() ? 1 : 0;
 }
 ```
 ## 3、特别注意

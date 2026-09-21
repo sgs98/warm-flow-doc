@@ -9,7 +9,7 @@
 - 1、修改下个任务的办理人
   - <span class="red-no-bg">动态指定办理人：</span> 办理人表达式(或[分派监听器](./listener.html#_5-3、分派监听器))，动态修改下个任务的办理人
   - <span class="red-no-bg">角色|部门id转用户id：</span> 办理人权限处理器转换接口，角色/部门id转成用户id
-  - <span class="red-no-bg">跳转接口FlowParams设置nextHandler：</span> 比如skip的FlowParams(nextHandler、nextHandlerAppend)设置值，直接指定下个任务的办理人
+  - <span class="red-no-bg">流程操作命令设置nextHandlers：</span> 比如CompleteCommand、RejectCommand、JumpCommand的nextHandlers、nextHandlerAppend设置值，直接指定下个任务的办理人
 - 2、修改当前任务的办理人
   - <span class="red-no-bg">转办：</span> 任务转给其他人办理
   - <span class="red-no-bg">委派：</span> 求助其他人审批，然后参照他的意见决定是否审批通过
@@ -26,7 +26,7 @@
 **解决思路**
 
 - 1、流程设计时，需要动态指定办理人的节点，配置办理人表达式`${handler1}`
-- 2、本节点前任意节点办理时设置，在流程变量中传入`${handler1}`的值
+- 2、本节点前任意节点办理时设置，在流程变量的变量中传入`${handler1}`的值
 - 3、办理完成会生成本节点任务，并且替换`flow_user`表中的表达式
 
 
@@ -39,9 +39,11 @@
 // 流程变量
 Map<String, Object> variable = new HashMap<>();
 variable.put("handler1", "100");
-flowParams.variable(variable);
 
-Instance instance = insService.skipByInsId(testLeave.getInstanceId(), flowParams);
+CompleteCommand command = new CompleteCommand();
+command.setTaskId(taskId);
+command.setVariables(variable);
+FlowEngine.workflow().complete(command);
 ```
 
 
@@ -60,9 +62,11 @@ Instance instance = insService.skipByInsId(testLeave.getInstanceId(), flowParams
 // 流程变量
 Map<String, Object> variable = new HashMap<>();
 variable.put("handler1", Arrays.asList(4, "5", 100L));
-flowParams.variable(variable);
 
-Instance instance = insService.skipByInsId(testLeave.getInstanceId(), flowParams);
+CompleteCommand command = new CompleteCommand();
+command.setTaskId(taskId);
+command.setVariables(variable);
+FlowEngine.workflow().complete(command);
 ```
 <br>
 
@@ -88,9 +92,11 @@ public class User {
 // 流程变量
 Map<String, Object> variable = new HashMap<>();
 variable.put("handler2", "101");
-flowParams.variable(variable);
 
-Instance instance = insService.skipByInsId(testLeave.getInstanceId(), flowParams);
+CompleteCommand command = new CompleteCommand();
+command.setTaskId(taskId);
+command.setVariables(variable);
+FlowEngine.workflow().complete(command);
 ```
 
 ## 3、角色|部门id转用户id
@@ -120,21 +126,20 @@ public class CustomPermissionHandler implements PermissionHandler {
 
 ```
 
-## 4、跳转接口FlowParams设置nextHandler
-在[接口文档中](../primary/api.html#流程跳转)，skip方法的flowParams入参中有(nextHandler, nextHandlerAppend)，设置了nextHandler，会跳转到指定节点，
-并把nextHandler的值作为下一个任务的办理人。同理只要接口中有nextHandler，就可以设置。
+## 4、流程操作命令设置nextHandlers
+在[接口文档中](../primary/api.html)，CompleteCommand、RejectCommand、JumpCommand这些命令中都有(nextHandlers, nextHandlerAppend)，设置了nextHandlers，会跳转到指定节点，
+并把nextHandlers的值作为下一个任务的办理人。同理只要接口中有nextHandlers，就可以设置。
 
-`Instance skip(taskId, flowParams)`：传入流程任务id，流程跳转。flowParams包含如下字段：
-- skipType: 跳转类型(PASS审批通过 REJECT退回) [必传]
-- nodeCode: 如果指定节点,可[任意跳转]到对应节点，严禁任意退回选择后置节点 [按需传输]
-- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
+`WorkflowResult complete(CompleteCommand command)`：完成当前待办并推动流程继续执行。command包含如下字段：
+- operator: 操作者（handler办理人唯一标识 + permissions办理人权限标识）[按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](../primary/permission_handler.md)
+- taskId: 流程任务id [必传]
+- targetNodeCode: 目标节点编码，[任意跳转](./api.html)时使用 [按需传输]
 - message: 审批意见 [按需传输]
-- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- variable: 流程变量 [按需传输]
-- nextHandler: 执行的下个任务的办理人[按需传输]
-- nextHandlerAppend: 个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-- ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
+- variables: 流程变量 [按需传输]
+- instanceStatus: 流程实例状态，自定义流程状态 [按需传输]
+- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+- nextHandlers: 执行的下个任务的办理人 [按需传输]
+- nextHandlerAppend: 下个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
 
 ## 5、转办|委派|加签|减签
 [接口描述地址](../primary/api.html#转办)
@@ -147,49 +152,54 @@ public class CustomPermissionHandler implements PermissionHandler {
 @tab:active 转办
 
 ```java
-public void transfer(TaskService taskService) {
-
-    taskService.transfer(getTaskId(), new FlowParams()
-            .handler("1")
-            .permissionFlag(Arrays.asList("role:1", "role:2", "user:1"))
-            .addHandlers(Arrays.asList("1","2"))
-            .message("转办"));
+public void transfer() {
+    TransferCommand command = new TransferCommand();
+    command.setOperator(new OperatorContext("1", Arrays.asList("role:1", "role:2", "user:1")));
+    command.setTaskId(getTaskId());
+    // 转办只能指定一个办理人
+    command.setTargetHandler("2");
+    command.setMessage("转办");
+    FlowEngine.workflow().transfer(command);
 }
 ```
 
 @tab 委派
 
 ```java
-public void depute(TaskService taskService){
-    taskService.depute(getTaskId(), new FlowParams()
-            .handler("1")
-            .permissionFlag(Arrays.asList("role:1", "role:2", "user:1"))
-            .addHandlers(Arrays.asList("1","2"))
-            .message("委派"));
+public void delegate() {
+    DelegateCommand command = new DelegateCommand();
+    command.setOperator(new OperatorContext("1", Arrays.asList("role:1", "role:2", "user:1")));
+    command.setTaskId(getTaskId());
+    // 委派只能指定一个办理人
+    command.setTargetHandler("2");
+    command.setMessage("委派");
+    FlowEngine.workflow().delegate(command);
 }
 ```
 
 @tab 加签
 
 ```java
-public void addSignature(TaskService taskService){
-    taskService.addSignature(getTaskId(), new FlowParams()
-            .handler("1")
-            .permissionFlag(Arrays.asList("role:1", "role:2", "user:1"))
-            .addHandlers(Arrays.asList("1","2"))
-            .message("加签"));
+public void addSigner() {
+    AddSignerCommand command = new AddSignerCommand();
+    command.setOperator(new OperatorContext("1", Arrays.asList("role:1", "role:2", "user:1")));
+    command.setTaskId(getTaskId());
+    command.setTargetHandlers(Arrays.asList("1", "2"));
+    command.setMessage("加签");
+    FlowEngine.workflow().addSigner(command);
 }
 ```
 
 @tab 减签
 
 ```java
-public void reductionSignature(TaskService taskService){
-    taskService.reductionSignature(getTaskId(), new FlowParams()
-            .handler("1")
-            .permissionFlag(Arrays.asList("role:1", "role:2", "user:1"))
-            .reductionHandlers(Arrays.asList("1","2"))
-            .message("减签"));
+public void removeSigner() {
+    RemoveSignerCommand command = new RemoveSignerCommand();
+    command.setOperator(new OperatorContext("1", Arrays.asList("role:1", "role:2", "user:1")));
+    command.setTaskId(getTaskId());
+    command.setTargetHandlers(Arrays.asList("1", "2"));
+    command.setMessage("减签");
+    FlowEngine.workflow().removeSigner(command);
 }
 ```
 

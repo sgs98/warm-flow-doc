@@ -13,7 +13,7 @@
 
 ![输入图片说明](https://foruda.gitee.com/images/1724129834206431978/55f7deea_2218307.png "屏幕截图")
 <br>
-**[github地址](https://github.com/dromara/warm-flow.git)** | **[gitee地址](https://gitee.com/dromara/warm-flow.git)** | **[gitCode地址](https://gitcode.com/minliuhua/warm-flow.git)**
+**[github地址](https://github.com/dromara/warm-flow.git)**
 
 ### 为社区处理问题
 
@@ -111,4 +111,3 @@
 ### 步骤八 等待作者评审 按要求更改 直到没有问题后被作者合并
 
 ![输入图片说明](https://foruda.gitee.com/images/1724138716251455897/10caacb3_2218307.png "屏幕截图")
-

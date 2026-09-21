@@ -103,15 +103,8 @@ public class JacksonConfig {
 [如何处理Long类型精度丢失问题 👇点击👇](http://doc.ruoyi.vip/ruoyi/other/faq.html#%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86long%E7%B1%BB%E5%9E%8B%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98)
 <br>
 
-**方案3：通过yml配置**
-通过设置id生成器类型，修改id生成方式
-
-```yml
-# warm-flow工作流配置
-warm-flow:
-  # id生成器类型, 不填默认为orm扩展自带生成器或者warm-flow内置的19位雪花算法, SnowId14:14位，SnowId15:15位， SnowFlake19：19位
-  key_type: SnowId19
-```
+**方案3：自定义id生成器**
+v2.0.0 起移除了 `key_type`/`keyType` 配置，如需更换主键生成方式，可通过 `IdUtils.setInstanceNative` 注入自定义实现，详见[id生成器](../primary/idGen.md)
 
 <br>
 
@@ -209,19 +202,19 @@ restart.include.flow=/org[.]dromara[.]warm
 因为要在一个模块中展示不同的流程案例，所以使用字典，字典映射流程定义
 <div><img src="https://foruda.gitee.com/images/1742523937795259637/a55fbbda_2218307.png" width="700"/></div>
 
-## 10、 skipByIns和skip区别
+## 10、 按任务id办理和按实例id终止的区别
 
 区别一：业务模块（请假申请）中能直接拿到流程实例id，因为业务表通常冗余了流程实例id，但是一般不会冗余任务id，而待办任务中最方便拿到任务id。
-区别一：调用skipByIns时候，这个流程实例对应的点任务不能存在多个，否则不知道办理哪里一个，skip没有这个问题。
+区别二：按任务id办理时必须明确办理哪一个待办，同一个流程实例存在多个待办时，需要分别办理。
 
-
-InsService流程实例
-`skipByInsId(instanceId, flowParams)`：传入流程实例id，流程跳转
-`termination(instanceId, flowParams)`：传入流程实例id，终止流程
+WorkflowService统一门面
+`complete(CompleteCommand)`：完成任务id对应的待办，推动流程继续执行
+`terminate(TerminateCommand)`：按照instanceId或者taskId终止流程，二选一
 
 TaskService待办任务
-`skip(taskId, flowParams)`：传入流程任务id，流程跳转
-`termination(taskId, flowParams)`：传入流程任务id，终止流程
+`execute(taskId, context, skipType)`：传入流程任务id，流程流转
+`terminateByTaskId(taskId, context)`：传入流程任务id，终止流程
+`terminateByInstanceId(instanceId, context)`：传入流程实例id，终止流程
 
 ## 11、 抄送功能怎么实现
 - 抄送存在情况可能不同，内部做不好统一，抄送人有的是绑定任务表，有的是绑定实例表，有的绑定业务id，
@@ -234,11 +227,8 @@ TaskService待办任务
 ## 12、 死循环
 - 调用`previousNodeList`、`suffixNodeList`、 `getNextNodeList`等方法时出现死循环，检查流程跳转线，本该是退回类型的，选择了通过
 
-## 13、 如何解决jar包依赖冲突
-[maven如何解决jar包依赖冲突](./news/experience/7.html)
-
-## 14、 各种数据库支持
+## 13、 各种数据库支持
 假设现在需要支持国产数据库或者其他数据，步骤如下：
-- orm框架本身支持兼容这种数据库，那就支持。比如目前不修改内核情况下，`warm-flow-mybatis-plus-sb-starter`这个肯定支持的。
-- 从官方提供的四种表结构脚本[warm-flow-all.sql](https://gitee.com/dromara/warm-flow/tree/master/sql)中选出和目标数据最相似，转化成这种数据库就行了。
-- 又比如mybatis需要写sql，内核需要调整，那这个肯定不支持。目前`warm-flow-mybatis-sb-starter`对mysql和oracle支持的比较友好。
+- orm框架本身支持兼容这种数据库，那就支持。比如目前不修改内核情况下，`warm-flow-mybatis-plus-sb3-starter`这个肯定支持的。
+- 从官方提供的四种表结构脚本[warm-flow-all.sql](https://github.com/dromara/warm-flow/tree/master/sql)中选出和目标数据最相似，转化成这种数据库就行了。
+- 又比如mybatis需要写sql，内核需要调整，那这个肯定不支持。目前`warm-flow-mybatis-sb3-starter`对mysql和oracle支持的比较友好。

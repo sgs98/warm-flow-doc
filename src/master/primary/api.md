@@ -1,5 +1,94 @@
 # 接口文档
 
+> 所有 service 通过 `FlowEngine` 门面获取，比如 `FlowEngine.defService()`、`FlowEngine.workflow()`
+
+## 统一操作门面 WorkflowService
+
+> v2.0.0 起新增的统一流程操作门面，推荐业务系统直接使用。每个操作对应一个 `XxxCommand` 参数对象，统一返回 `WorkflowResult`。
+
+### 启动流程
+`WorkflowResult start(StartCommand command)`：启动流程实例并创建首个待办，不办理首节点。
+- businessId: 业务id [必传]
+- flowCode: 流程编码 [必传]
+- operator: 操作者，包含handler(办理人唯一标识)和permissions(办理人权限标识) [按需传输]；实现了[办理人权限处理器](./permission_handler.md)后可以不传
+- variables: 流程变量 [按需传输]
+- instanceStatus: 流程实例状态，自定义流程状态 [按需传输]
+- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+- nextHandlers: 执行的下个任务的办理人 [按需传输]
+- nextHandlerAppend: 下个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
+
+### 完成待办
+`WorkflowResult complete(CompleteCommand command)`：完成当前待办并推动流程继续执行。
+- taskId: 流程任务id [必传]
+- operator: 操作者 [按需传输]
+- message: 审批意见 [按需传输]
+- variables: 流程变量 [按需传输]
+- instanceStatus: 流程实例状态，自定义流程状态 [按需传输]
+- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+- nextHandlers: 执行的下个任务的办理人 [按需传输]
+- nextHandlerAppend: 下个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
+
+### 退回
+`WorkflowResult reject(RejectCommand command)`：将当前待办退回到合法的前置节点。
+- taskId: 流程任务id [必传]
+- targetNodeCode: 退回的目标节点编码，[任意退回]时需要 [按需传输]
+- 其余字段同 complete
+
+### 任意跳转
+`WorkflowResult jump(JumpCommand command)`：将当前待办跳转到指定节点。
+- taskId: 流程任务id [必传]
+- targetNodeCode: 目标节点编码 [必传]
+- 其余字段同 complete
+
+### 撤回
+`WorkflowResult revoke(RevokeCommand command)`：撤回申请人发起的流程实例。
+- instanceId: 流程实例id [必传]
+- message: 审批意见 [按需传输]
+- variables: 流程变量 [按需传输]
+- instanceStatus: 流程实例状态，自定义流程状态 [按需传输]
+- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+
+### 终止
+`WorkflowResult terminate(TerminateCommand command)`：终止流程实例。按照实例id或者任务id终止，二选一。
+- instanceId: 流程实例id [按需传输]
+- taskId: 流程任务id [按需传输]
+- message: 审批意见 [按需传输]
+- instanceStatus: 流程实例状态，自定义流程状态 [按需传输]
+- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+
+### 转办
+`WorkflowResult transfer(TransferCommand command)`：将当前待办转交给其他办理人。
+- taskId: 流程任务id [必传]
+- targetHandler: 转办的目标办理人，只能一个 [必传]
+- operator: 操作者 [按需传输]
+- message: 审批意见 [按需传输]
+- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+
+### 委派
+`WorkflowResult delegate(DelegateCommand command)`：将当前待办委派给其他办理人。字段同转办。
+
+### 加签
+`WorkflowResult addSigner(AddSignerCommand command)`：为会签或票签节点增加办理人。
+- taskId: 流程任务id [必传]
+- targetHandlers: 增加的目标办理人集合 [必传]
+- operator: 操作者 [按需传输]
+- message: 审批意见 [按需传输]
+- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+
+### 减签
+`WorkflowResult removeSigner(RemoveSignerCommand command)`：为会签或票签节点移除办理人。
+- taskId: 流程任务id [必传]
+- targetHandlers: 移除的目标办理人集合 [必传]
+- 其余字段同加签
+
+### 返回结果 WorkflowResult
+- success: 本次操作是否成功
+- operation: 操作名称，如start、complete、reject
+- instanceId: 流程实例id
+- businessId: 业务id
+- instanceStatus: 操作后的流程实例状态
+- completedTaskId: 本次操作关联的任务id
+- currentTasks: 操作后的当前待办视图集合（taskId、instanceId、nodeCode、nodeName、nodeType、taskStatus、handlers）
 
 ## DefService流程定义 
 ### 导入流程输入流
@@ -11,20 +100,23 @@
 ### 导入流程json对象 
 `Definition importDef(defJson)`：流程定义json对象
 
-### 新增流程 
-`boolean saveAndInitNode(definition)`：新增流程定义，并初始化流程节点和流程跳转数据
+### 新增流程定义、节点和跳转 
+`Definition insertFlow(definition, nodeList, skipList)`：新增流程定义，并初始化流程节点和流程跳转数据
 
 ### 只新增流程定义表数据 
 `boolean checkAndSave(definition)`：流程定义对象
 
 ### 保存流程节点和跳转 
-`void saveDef(defJson)`：流程定义json对象
+`void saveDef(defJson, onlyNodeSkip)`：流程定义json对象，onlyNodeSkip：是否只保存节点和跳转
 
 ### 导出流程定义json字符串 
 `String exportJson(id)`： 导出流程定义(流程定义、流程节点和流程跳转数据)的json字符串
 
 ### 获取流程定义全部数据对象 
 `Definition getAllDataDefinition(id)`： 获取流程定义全部数据(包含节点和跳转)
+
+### 获取流程定义合并数据对象 
+`FlowCombine getFlowCombine(id)`： 获取流程定义合并数据(包含节点和跳转)，`getFlowCombineNoDef(id)`则不查询流程定义，`getFlowCombine(definition)`可复用已有流程定义对象
 
 ### 查询流程设计所需的数据 
 `DefJson queryDesign(id)`： 查询流程设计所需的数据，比如流程图渲染
@@ -64,14 +156,17 @@
 ## InsService流程实例 
 
 ### 开启流程 
-`Instance start(businessId, flowParams)`：传入业务id，开启流程实例。flowParams包含如下字段：
-- flowCode: 流程编码 [必传]
+`Instance start(businessId, flowCode, context)`：传入业务id和流程编码，开启流程实例。context为[WorkflowContext](#流程执行上下文-workflowcontext)，包含如下字段：
 - handler: 办理人唯一标识，如用户id，用于记录到实例表和历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- variable: 流程变量 [按需传输]
+- permissions: 办理人权限标识，比如用户，角色，部门等 [按需传输]
+- ignorePermission: 是否忽略权限校验 [按需传输]
+- ignore: 是否忽略权限校验、会签/票签协作规则 [按需传输]
+- variables: 流程变量 [按需传输]
+- instanceStatus: 流程实例状态，自定义流程状态 [按需传输]
+- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+- nextHandlers: 执行的下个任务的办理人 [按需传输]
+- nextHandlerAppend: 下个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
 - ext: 扩展字段，预留给业务系统使用 [按需传输]
-- nextHandler: 执行的下个任务的办理人[按需传输]
-- nextHandlerAppend: 个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
-- flowStatus: 流程状态，自定义流程状态[按需传输]
 
 ### 根据defIds查询流程实例集合
 `List<Instance> listByDefIds(defIds)`：根据流程定义id集合，查询流程实例集合
@@ -82,6 +177,9 @@
 ### 删除流程实例 
 `boolean remove(instanceIds)`：根据实例ids，删除流程
 
+### 删除流程变量
+`void removeVariables(instanceId, keys)`：根据实例id，删除指定的流程变量
+
 ### 激活实例 
 `boolean active(Long id)`： 激活实例
 
@@ -89,247 +187,56 @@
 `boolean unActive(Long id)`： 挂起实例，流程实例挂起后，该流程实例无法继续流转
 
 ## TaskService待办任务 
-### 流程通过 
-`Instance pass(taskId, message, variable)`
-> <span class="red-no-bg">使用前提是实现，{@link PermissionHandler#permissions()}和{@link PermissionHandler#getHandler()}</span>
-> <span class="red-no-bg">工作流内部会获取办理人权限标识（permissionFlag）和办理人唯一标识（handler）</span>
+
+### 流程流转
+`Instance execute(taskId, context, skipType)`：传入流程任务id，流程流转。通过[WorkflowContext](#流程执行上下文-workflowcontext)传入办理人、权限、流程变量等，skipType为`PASS`审批通过、`REJECT`退回。
+
+### 撤回流程
+`Instance revoke(instanceId, context)`：根据流程实例id，撤回流程实例。
+
+### 根据实例id终止流程
+`Instance terminateByInstanceId(instanceId, context)`：根据流程实例id，终止流程。
+
+### 根据任务id终止流程
+`Instance terminateByTaskId(taskId, context)`：根据流程任务id，终止流程。
+
+### 调整办理人
+`Instance updateHandlers(taskId, context, addHandlers, removeHandlers, cooperateType)`：调整当前待办的办理人，用于加签、减签。
 - taskId: 流程任务id [必传]
-- message: 审批意见 [按需传输]
-- variable: 流程变量 [按需传输]
+- addHandlers: 需要增加的办理人 [按需传输]
+- removeHandlers: 需要移除的办理人 [按需传输]
+- cooperateType: 协作类型，见[协作类型](./collaboration.md) [必传]
 
-### 流程任意通过 
-`Instance passAtWill(taskId, nodeCode, message, variable)`
-> <span class="red-no-bg">使用前提是实现，{@link PermissionHandler#permissions()}和{@link PermissionHandler#getHandler()}</span>
-> <span class="red-no-bg">工作流内部会获取办理人权限标识（permissionFlag）和办理人唯一标识（handler）</span>
-- taskId: 流程任务id [必传]
-- nodeCode: 如果指定节点,可[任意跳转]到对应节点 [[必传]]
-- message: 审批意见 [按需传输]
-- variable: 流程变量 [按需传输]
+### 根据实例id查询待办
+`List<Task> getByInsId(instanceId)`：根据流程实例id，查询待办任务集合
 
-### 流程通过，自定义流程状态 
-`Instance pass(taskId, message, variable, flowStatus, hisStatus)`
-> <span class="red-no-bg">使用前提是实现，{@link PermissionHandler#permissions()}和{@link PermissionHandler#getHandler()}</span>
-> <span class="red-no-bg">工作流内部会获取办理人权限标识（permissionFlag）和办理人唯一标识（handler）</span>
-- taskId: 流程任务id [必传]
-- message: 审批意见 [按需传输]
-- variable: 流程变量 [按需传输]
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-- hisStatus: 历史任务表状态，自定义流程状态 [按需传输]
+### 根据实例id和节点编码查询待办
+`List<Task> getByInsIdAndNodeCodes(instanceId, nodeCodes)`：根据流程实例id和节点编码集合，查询待办任务集合
 
-### 流程任意通过，自定义流程状态 
-`Instance passAtWill(taskId, nodeCode, message, variable, flowStatus, hisStatus)`
-> <span class="red-no-bg">使用前提是实现，{@link PermissionHandler#permissions()}和{@link PermissionHandler#getHandler()}</span>
-> <span class="red-no-bg">工作流内部会获取办理人权限标识（permissionFlag）和办理人唯一标识（handler）</span>
-- taskId: 流程任务id [必传]
-- nodeCode: 如果指定节点,可[任意跳转]到对应节点，严禁任意退回选择后置节点 [[必传]]
-- message: 审批意见 [按需传输]
-- variable: 流程变量 [按需传输]
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-- hisStatus: 历史任务表状态，自定义流程状态 [按需传输]
+### 加载任务办理数据
+`FlowDto load(taskId)`：加载待办任务办理所需数据，无副作用查询
 
-### 流程退回
-`Instance reject(taskId, message, variable)`
-> <span class="red-no-bg">使用前提是实现，{@link PermissionHandler#permissions()}和{@link PermissionHandler#getHandler()}</span>
-> <span class="red-no-bg">工作流内部会获取办理人权限标识（permissionFlag）和办理人唯一标识（handler）</span>
-- taskId: 流程任务id [必传]
-- message: 审批意见 [按需传输]
-- variable: 流程变量 [按需传输]
+### 加载历史任务数据
+`FlowDto hisLoad(hisTaskId)`：加载历史任务数据
 
-### 流程任意退回
-`Instance rejectAtWill(taskId, nodeCode, message, variable)`
-> <span class="red-no-bg">使用前提是实现，{@link PermissionHandler#permissions()}和{@link PermissionHandler#getHandler()}</span>
-> <span class="red-no-bg">工作流内部会获取办理人权限标识（permissionFlag）和办理人唯一标识（handler）</span>
-- taskId: 流程任务id [必传]
-- nodeCode: 如果指定节点,可[任意跳转]到对应节点，严禁任意退回选择后置节点 [[必传]]
-- message: 审批意见 [按需传输]
-- variable: 流程变量 [按需传输]
+## 流程执行上下文 WorkflowContext
+> 流程动作的内部执行上下文，承载多个流程动作共享的执行数据，由各Command的`fillContext`填充
 
-### 流程退回，自定义流程状态
-`Instance reject(taskId, message, variable, flowStatus, hisStatus)`
-> <span class="red-no-bg">使用前提是实现，{@link PermissionHandler#permissions()}和{@link PermissionHandler#getHandler()}</span>
-> <span class="red-no-bg">工作流内部会获取办理人权限标识（permissionFlag）和办理人唯一标识（handler）</span>
-- taskId: 流程任务id [必传]
-- message: 审批意见 [按需传输]
-- variable: 流程变量 [按需传输]
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-- hisStatus: 历史任务表状态，自定义流程状态 [按需传输]
+- handler: 当前操作者唯一标识
+- permissions: 当前操作者可用于权限匹配的标识集合
+- ignorePermission: 是否忽略流程办理权限校验
+- ignore: 是否忽略权限校验、受托人委派处理和会签/票签协作规则（true：单方办理即可推动节点流转）
+- message: 本次流程动作的说明
+- variables: 本次流程动作需要写入实例的变量
+- instanceStatus: 调用方指定的流程实例状态，未设置时由引擎状态机决定
+- historyTaskStatus: 调用方指定的历史任务状态，未设置时由引擎状态机决定
+- targetNodeCode: 流程动作的目标节点编码
+- nextHandlers: 指定的后续节点办理人集合
+- nextHandlerAppend: 是否将指定办理人追加到引擎计算出的办理人集合
+- ext: 调用方传入的扩展信息
 
-### 流程任意退回，自定义流程状态
-`Instance rejectAtWill(taskId, nodeCode, message, variable, flowStatus, hisStatus)`
-> <span class="red-no-bg">使用前提是实现，{@link PermissionHandler#permissions()}和{@link PermissionHandler#getHandler()}</span>
-> <span class="red-no-bg">工作流内部会获取办理人权限标识（permissionFlag）和办理人唯一标识（handler）</span>
-- taskId: 流程任务id [必传]
-- nodeCode: 如果指定节点,可[任意跳转]到对应节点，严禁任意退回选择后置节点 [[必传]]
-- message: 审批意见 [按需传输]
-- variable: 流程变量 [按需传输]
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-- hisStatus: 历史任务表状态，自定义流程状态 [按需传输]
-
-### 流程跳转 
-`Instance skip(taskId, flowParams)`：传入流程任务id，流程跳转。flowParams包含如下字段：
-- skipType: 跳转类型(PASS审批通过 REJECT退回) [必传]
-- nodeCode: 如果指定节点,可[任意跳转]到对应节点，严禁任意退回选择后置节点 [按需传输]
-- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
-- message: 审批意见 [按需传输]
-- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- variable: 流程变量 [按需传输]
-- nextHandler: 执行的下个任务的办理人[按需传输]
-- nextHandlerAppend: 个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-- ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
-
-### 根据流程实例id流程跳转 
-`Instance skipByInsId(instanceId, flowParams)`：传入流程实例id，流程跳转。flowParams包含如下字段：
-- skipType: 跳转类型(PASS审批通过 REJECT退回) [必传]
-- nodeCode: 如果指定节点,可[任意跳转]到对应节点，严禁任意退回选择后置节点 [按需传输]
-- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
-- message: 审批意见 [按需传输]
-- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- variable: 流程变量 [按需传输]
-- nextHandler: 执行的下个任务的办理人[按需传输]
-- nextHandlerAppend: 个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-- ignore: 办理是忽略权限校验，默认不忽略（true：忽略，false：不忽略）[按需传输]
-
-### 驳回上一个任务 
-`Instance rejectLastByInsId(instanceId, flowParams)`：传入流程实例id，驳回上一个任务。flowParams包含如下字段：
-- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
-- message: 审批意见 [按需传输]
-- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- variable: 流程变量 [按需传输]
-- nextHandler: 执行的下个任务的办理人[按需传输]
-- nextHandlerAppend: 个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-- ignore: 办理是忽略权限校验，默认不忽略（true：忽略，false：不忽略）[按需传输]
-
-### 驳回上一个任务 
-`Instance rejectLast(taskId, flowParams)`：传入流程任务id，驳回上一个任务。flowParams包含如下字段：
-- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
-- message: 审批意见 [按需传输]
-- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- variable: 流程变量 [按需传输]
-- nextHandler: 执行的下个任务的办理人[按需传输]
-- nextHandlerAppend: 个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-- ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
-
-### 根据insId拿回到最近办理的任务
-`Instance taskBackByInsId(instanceId, flowParams)`：传入流程实例id，拿回到最近办理的任务。flowParams包含如下字段：
-- message: 审批意见 [按需传输]
-- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- variable: 流程变量 [按需传输]
-- nextHandler: 执行的下个任务的办理人[按需传输]
-- nextHandlerAppend: 个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-
-### 根据taskId拿回到最近办理的任务
-`Instance taskBack(taskId, flowParams)`：传入流程任务id，拿回到最近办理的任务。flowParams包含如下字段：
-- message: 审批意见 [按需传输]
-- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- variable: 流程变量 [按需传输]
-- nextHandler: 执行的下个任务的办理人[按需传输]
-- nextHandlerAppend: 个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-
-### 撤销 
-`Instance revoke(instanceId, flowParams)`：传入流程实例id，撤销到第一个中间节点。flowParams包含如下字段：
-- message: 审批意见 [按需传输]
-- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- variable: 流程变量 [按需传输]
-- nextHandler: 执行的下个任务的办理人[按需传输]
-- nextHandlerAppend: 个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-- ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
-
-### 根据流程实例id终止流程
-`Instance terminationByInsId(instanceId, flowParams)`：传入流程任务id，终止流程。flowParams包含如下字段：
-- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-- message: 审批意见 [按需传输]
-- ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
-
-
-### 终止流程 
-`Instance termination(taskId, flowParams)`：传入流程任务id，终止流程。flowParams包含如下字段：
-- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-- message: 审批意见 [按需传输]
-- ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
-
-### 根据流程实例id暂存任务
-`Instance pendingByInsId(instanceId, flowParams)`：传入流程任务id，暂存任务。flowParams包含如下字段：
-- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-- message: 审批意见 [按需传输]
-- ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
-
-
-### 根据任务实例id暂存任务
-`Instance pending(taskId, flowParams)`：传入流程任务id，暂存任务。flowParams包含如下字段：
-- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
-- flowStatus: 流程状态，自定义流程状态 [按需传输]
-- message: 审批意见 [按需传输]
-- ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
-
-### 转办 
-`boolean transfer(taskId, flowParams)`：转办, 默认删除当前办理用户权限，转办后，当前办理不可办理。flowParams包含如下字段：
-> **注意事项**：转办和委派会删除当前办理人，如果节点配置的是角色，这种情况删除不了，当前办理人还能办理，要解决这种问题，请把角色全部转成用户id-[转换办理人](./permission_handler.html)
-- handler: 当前办理人唯一标识，如用户id，用于记录历史表; 如果通过办理人权限处理器{@link PermissionHandler#getHandler()}传入了，就不需要传 [按需传输]
-- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
-- addHandlers: 转办对象 [必传]
-- message: 审批意见 [按需传输]
-- ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
-
-### 委派 
-`boolean depute(taskId, flowParams)`：委派, 默认删除当前办理用户权限，委派后审批完, 重新回到当前办理人。flowParams包含如下字段：
-> **注意事项**：转办和委派会删除当前办理人，如果节点配置的是角色，这种情况删除不了，当前办理人还能办理，要解决这种问题，请把角色全部转成用户id-[转换办理人](./permission_handler.html)
-- handler: 当前办理人唯一标识，如用户id，用于记录历史表; 如果通过办理人权限处理器{@link PermissionHandler#getHandler()}传入了，就不需要传 [按需传输]
-- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
-- addHandlers: 委托对象 [必传]
-- message: 审批意见 [按需传输]
-- ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
-
-### 加签 
-`boolean addSignature(taskId, flowParams)`：加签，增加办理人。flowParams包含如下字段：
-- handler: 当前办理人唯一标识，如用户id，用于记录历史表; 如果通过办理人权限处理器{@link PermissionHandler#getHandler()}传入了，就不需要传 [按需传输]
-- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
-- addHandlers: 加签对象 [必传]
-- message: 审批意见 [按需传输]
-- ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
-
-### 减签 
-`boolean reductionSignature(taskId, flowParams)`：减签，减少办理人。flowParams包含如下字段：
-- handler: 当前办理人唯一标识，如用户id，用于记录历史表; 如果通过办理人权限处理器{@link PermissionHandler#getHandler()}传入了，就不需要传 [按需传输]
-- permissionFlag: 办理人权限标识，比如用户，角色，部门等，用于校验是否有权限办理 [按需传输]；满足任一情况可以不传：流程设计时未设置办理人、ignore为true、实现了[办理人权限处理器](./permission_handler.md)
-- reductionHandlers: 减少办理人 [必传]
-- message: 审批意见 [按需传输]
-- ignore: 忽略权限校验（比如管理员不校验），默认不忽略 [按需传输]
-
-### 修改办理人 
-`boolean updateHandler(taskId, flowParams)`：传入流程任务id，修改办理人
-- handler: 办理人唯一标识，如用户id，用于记录历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
-- permissionFlag: 用户所拥有的权限标识 [按需传输，ignore为false，则必传]
-- addHandlers: 增加办理人：加签，转办，委托 [按需传输]
-- reductionHandlers: 减少办理人：减签，委托 [按需传输]
-- message: 审批意见 [按需传输]
-- cooperateType: 协作方式(2转办 3委派 6加签 7减签）[按需传输]
-- ignore: 转办忽略权限校验（true：忽略，false：不忽略）[按需传输]
-
-### 根据流程实例id获取流程任务集合
-`getByInsId(instanceId)`：根据流程实例id获取流程任务集合
-
-### 根据流程实例id和节点code集合获取流程任务集合
-`getByInsIdAndNodeCodes(instanceId, nodeCodes)`：根据流程实例id和节点code集合获取流程任务集合
-
-## NodeService流程节点 
-### 获取已发布流程节点 
-`getPublishByFlowCode(flowCode)`：根据流程编码获取已发布流程节点集合
-
-### 获取前置节点 
+## NodeService节点 
+### 根据节点id获取所有的前置节点 
 `previousNodeList(nodeId)`：根据节点id获取所有的前置节点集合
 - nodeId: 节点id [必传]
 
@@ -337,6 +244,9 @@
 `previousNodeList(definitionId, nowNodeCode)`：根据流程定义id和当前节点code获取所有的前置节点集合
 - definitionId: 流程定义id [必传]
 - nowNodeCode: 当前节点code [必传]
+
+### 根据流程定义合并数据获取前置节点
+`previousNodeList(nowNodeCode, combine)`：复用[FlowCombine](#获取流程定义合并数据对象)获取所有的前置节点集合，避免重复查询
 
 ### 获取后置节点 
 `suffixNodeList(nodeId)`：根据节点id获取所有的后置节点集合
@@ -358,8 +268,11 @@
 ### 根据流程定义id获取流程节点集合
 `getByDefId(definitionId)`：根据流程定义id获取流程节点集合
 
+### 根据节点编码获取流程节点
+`getByNodeCodes(nodeCodes, definitionId)`：根据节点编码集合和流程定义id获取流程节点集合
+
 ### 根据defId和节点编码获取流程节点
-`getByDefIdAndNodeCode(definitionId, nodeCode)`：根据流程定义id获取流程节点集合
+`getByDefIdAndNodeCode(definitionId, nodeCode)`：根据流程定义id和节点编码获取流程节点
 
 ### 根据流程定义id获取开始节点
 `getStartNode(definitionId)`：根据流程定义id获取开始节点
@@ -369,6 +282,9 @@
 
 ### 根据流程定义id获取结束节点
 `getEndNode(definitionId)`：根据流程定义id获取结束节点
+
+### 获取节点扩展信息
+`getExt(node)`：根据流程节点获取节点扩展信息
 
 ## SkipService节点跳转关联Service接口
 
@@ -381,10 +297,10 @@
 ### 根据流程定义id和节点编码查询节点跳转线
 `getByDefIdAndNowNodeCode(definitionId, nowNodeCode)`：根据流程定义id和节点编码查询节点跳转线
 
-### 获取节点扩展信息
-`getExt(node)`：根据流程节点获取节点扩展信息
-
 ## HisTaskService历史记录 
+### 根据任务id查询 
+`listByTaskId(taskId)`：根据任务id查询历史任务集合
+
 ### 根据任务id和协作类型查询 
 `listByTaskIdAndCooperateTypes(taskId, Integer... cooperateTypes)`：根据任务id和协作类型查询
 - taskId: taskId [必传]
@@ -395,8 +311,56 @@
 - instanceId: 实例Id [必传]
 - nodeCodes: 节点编码 [按需传输]
 
+### 根据流程实例id查询
+`getByInsId(instanceId)`：根据流程实例id查询历史任务集合
+
 ### 根据流程实例Ids删除 
 `boolean deleteByInsIds(instanceIds)`：根据流程实例Ids删除
+
+## UserService流程用户 
+### 获取待办任务的办理人
+`getPermission(associated, type...)`：根据关联id和用户类型，获取办理人唯一标识集合
+
+### 查询待办任务的用户
+`listByAssociatedAndTypes(associated, types...)`：根据关联id和用户类型集合，查询流程用户集合
+
+### 批量查询待办任务的用户
+`getByAssociateds(associateds, types...)`：根据关联id集合和用户类型集合，批量查询流程用户集合
+
+### 调整办理人
+`boolean updatePermission(associated, permissions, type, clear, handler)`：调整待办任务的办理人
+
+## FormService表单 
+### 新增表单
+`boolean save(form)`：新增表单
+
+### 发布表单
+`boolean publish(id)`：发布表单
+
+### 取消发布表单
+`boolean unPublish(id)`：取消发布表单
+
+### 复制表单
+`boolean copyForm(id)`：复制表单
+
+### 根据表单编码和版本查询
+`Form getByCode(formCode, formVersion)`：根据表单编码和版本查询表单
+
+### 分页查询已发布表单
+`Page<Form> publishedPage(formName, pageNum, pageSize)`：分页查询已发布表单
+
+### 保存表单内容
+`boolean saveContent(id, formContent)`：保存表单内容
+
+## ChartService流程图 
+### 开始节点元数据
+`String startMetadata(pathWayData)`：获取开始节点流程图元数据
+
+### 流转节点元数据
+`String skipMetadata(pathWayData)`：获取流转节点流程图元数据
+
+### 获取流程图状态颜色
+`List<String> getChartRgb(modelValue)`：获取流程图状态对应的三原色
 
 ## 公共api接口 
 ### 根据id查询 
@@ -408,13 +372,12 @@
 - ids: 主键集合
 
 ### 分页查询 
-`getById(entity, page)`：分页查询
+`page(entity, page)`：分页查询
 - entity: 查询实体
 - page: 分页对象，支持设置排序字段
 
 ### 查询列表 
 `list(entity)`：查询列表
-- entity: 查询实体
 
 ### 查询列表，可排序 
 `list(entity, query)`：查询列表，可排序
@@ -423,15 +386,13 @@
 
 ### 查询一条记录 
 `getOne(entity)`：查询一条记录
-- entity 查询实体
+- entity: 查询实体
 
 ### 获取总数量 
 `selectCount(entity)`：获取总数量
-- entity: 查询实体
 
 ### 判断是否存在 
 `exists(entity)`：判断是否存在
-- entity: 查询实体
 
 ### 新增 
 `save(entity)`：新增
@@ -439,32 +400,25 @@
 
 ### 根据id修改 
 `updateById(entity)`：根据id修改
-- entity: 实体
 
 ### 根据id删除 
 `removeById(id)`：根据id删除
-- id: 实体
 
 ### 根据entity删除 
 `remove(entity)`：根据entity删除
-- entity: 实体
 
 ### 根据ids批量删除 
 `removeByIds(ids)`：根据ids批量删除
-- ids: 实体
 
 ### 批量新增 
 `saveBatch(list)`：批量新增
-- list: 实体集合
 
 ### 批量新增 
 `saveBatch(list, batchSize)`：批量新增
-- list: 需要插入的集合数据
 - batchSize: 插入大小
 
 ### 批量更新 
 `updateBatch(list)`：批量更新
-- list: 集合数据
 
 ### id设置正序排列 
 `orderById()`：id设置正序排列
@@ -477,12 +431,9 @@
 
 ### 设置正序排列 
 `orderByAsc(orderByField)`：设置正序排列
-- orderByField: 排序字段
 
 ### 设置倒序排列 
 `orderByDesc(orderByField)`：设置倒序排列
-- orderByField: 排序字段
 
 ### 用户自定义排序方案 
 `orderBy(orderByField)`：用户自定义排序方案
-- orderByField: 排序字段

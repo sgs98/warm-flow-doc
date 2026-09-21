@@ -15,7 +15,6 @@
         - warm-flow-plugin-ui:                     设计器插件模块
             - warm-flow-plugin-ui-core:              设计器后端核心模块
             - warm-flow-plugin-ui-sb-web:            设计器后端springboot web接口和starter启动模块
-            - warm-flow-plugin-ui-solon-web:         设计器后端solon web接口和plugin启动模块
             - warm-flow-plugin-vue3-ui:              设计器前端编译后jar包引入模块
     - warm-flow-ui:                              设计器前端模块, 基于logic-flow开发
 

@@ -11,6 +11,7 @@
 - assignment： 分派办理人监听器，动态修改代办任务信息，但不限于
 - finish：完成监听器，当前任务完成后执行，可对业务表更新，消息通知等
 - create：创建监听器，任务创建时执行，比如数据初始化
+- formLoad：表单数据加载监听器，加载待办任务表单（`TaskService.load`）时执行，可用于初始化或校验表单数据
 
 ## 2、监听器大类
 - 节点监听器：在流程节点中配置，作用范围当前节点，只会执行小类中任意一个
@@ -26,7 +27,7 @@
 - 监听器设置：设置节点表的`listener_type`和`listener_path`字段，如果有多个监听器，用`,`分隔，并且两个字段对应  
 - listener_type：监听器类型，如`start,assignment,finish,create`等  
 - listener_path：监听器路径，支持配置类包名和表达式，如`包名1,表达式1,包名2,表达式2`等  
-- 监听器路径：默认支持内置spel或者snel表达式，支持扩展，比如：`#{@assignmentExpListener.notify(#listenerVariable)}` 或者`#{@assignmentExpListener.notify(listenerVariable)}`
+- 监听器路径：默认支持内置spel表达式，支持扩展，比如：`#{@assignmentExpListener.notify(#listenerVariable)}`
 
 ## 5、匹配规则
 - 默认先判断是否是监听器表达式，然后再去尝试加载类路径
@@ -54,6 +55,9 @@ public interface Listener extends Serializable {
     /** 分派监听器，动态修改代办任务信息 */
     String LISTENER_ASSIGNMENT = "assignment";
 
+    /** 表单数据加载监听器，内置表单使用 */
+    String LISTENER_FORM_LOAD = "formLoad";
+
     void notify(ListenerVariable variable);
 }
 
@@ -74,15 +78,16 @@ public class DefStartListener implements Listener {
    */
   @Override
   public void notify(ListenerVariable listenerVariable) {
-    log.info("流程开始监听器");
+    log.info("流程开始监听器，本次触发的事件类型：" + listenerVariable.getEventType());
 
-    FlowParams flowParams = listenerVariable.getFlowParams();
+    // 本次流程动作的执行上下文，用于设置当前办理人、办理权限等
+    WorkflowContext context = listenerVariable.getContext();
     LoginUser user = SecurityUtils.getLoginUser();
     // 设置当前办理人id
-    flowParams.setHandler(user.getUser().getUserId().toString());
+    context.setHandler(user.getUser().getUserId().toString());
 
     // 设置办理人所拥有的权限，比如角色、部门、用户等
-    List<String> permissionList = flowParams.getPermissionFlag();
+    List<String> permissionList = context.getPermissions();
     if (StringUtils.isEmpty(permissionList)) {
       permissionList = new ArrayList<>();
     }
@@ -93,7 +98,7 @@ public class DefStartListener implements Listener {
     }
     permissionList.add("dept:" + SecurityUtils.getLoginUser().getUser().getDeptId());
     permissionList.add(user.getUser().getUserId().toString());
-    flowParams.setPermissionFlag(permissionList);
+    context.setPermissions(permissionList);
 
     log.info("流程开始监听器结束......");
   }
@@ -332,4 +337,24 @@ public class ListenerListServiceImpl implements ListenerListService {
         }
         log.info("创建监听器结束");
     }
+```
+
+<br>
+
+## 9、获取本次监听器事件类型
+
+> v2.0.0 起，监听器上下文新增 `eventType`，表示本次实际触发的事件类型，取值见 `Listener` 接口中的事件常量
+
+同一个监听器可以同时配置在多种事件上（比如 `start,finish`），如果需要在实现类中区分本次是哪种事件，可以直接读取 `eventType`：
+
+```java
+public void notify(ListenerVariable variable) {
+    // create、start、assignment、finish
+    String eventType = variable.getEventType();
+    if (Listener.LISTENER_START.equals(eventType)) {
+        // 开始监听器逻辑
+    } else if (Listener.LISTENER_FINISH.equals(eventType)) {
+        // 完成监听器逻辑
+    }
+}
 ```

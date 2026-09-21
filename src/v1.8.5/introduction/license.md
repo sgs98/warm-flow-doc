@@ -3,7 +3,7 @@
 
 ::: warning
 - Dromara Warm-Flow采用APACHE LICENSE 2.0开源协议，项目代码、文档均开源免费可商用，遵循开源协议即可  
-- 开发完成请务必登记使用项目列表，[登记地址](https://gitee.com/dromara/warm-flow/issues/I7Y57D)
+- 开发完成请务必登记使用项目列表，[登记地址](https://github.com/dromara/warm-flow/issues)
 :::
 
 

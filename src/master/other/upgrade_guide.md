@@ -2,12 +2,24 @@
 
 ### 注意事项
 ::: warning
-- 更新脚本在项目里面的 [Sql](https://gitee.com/dromara/warm-flow/tree/master/sql/mysql/v1-upgrade)文件下，对应数据库类型，对应版本号
+- 更新脚本在项目里面的 [Sql](https://github.com/dromara/warm-flow/tree/master/sql/mysql/v1-upgrade)文件下，对应数据库类型，对应版本号
 - 只提供mysql升级脚本和全量脚本，其他升级脚本的自行由mysql升级脚本转换
 - 如果二开设计器，请自行手动同步
 - 未提到的版本号升级，就只需要改动jar包版本号，如v1.7.6 --> v1.7.7
 
 :::
+### v2.0.0
+::: warning 本次为大版本升级，存在破坏性变更，升级前请先阅读本节
+- **JDK 基线升级**：从 Java8 升级到 **JDK 17**，兼容 Java17、Java21，请先确认业务系统已升级到 JDK 17 及以上
+- **移除 springboot2 适配**：`warm-flow-mybatis-sb-starter`、`warm-flow-mybatis-plus-sb-starter` 已删除，springboot3 请改用 `warm-flow-mybatis-sb3-starter`、`warm-flow-mybatis-plus-sb3-starter`，springboot4 用对应的 sb4 starter
+- **移除 solon 适配**：solon 相关的 starter、表达式实现和设计器插件包均已移除
+- **移除 easy-query 扩展包**：如需使用，请由社区自行扩展
+- **流程操作接口重构**：新增统一门面 `FlowEngine.workflow()`（`WorkflowService`）+ 各操作命令（`StartCommand`、`CompleteCommand`、`RejectCommand`、`JumpCommand`、`RevokeCommand`、`TerminateCommand`、`TransferCommand`、`DelegateCommand`、`AddSignerCommand`、`RemoveSignerCommand`），统一返回 `WorkflowResult`；原 `FlowParams` 参数对象已删除，请参考[接口文档](../primary/api.md)迁移
+- **移除 id 生成器配置**：`key_type`/`keyType` 配置已删除，主键生成策略由所用 orm 扩展包决定（见[id生成器](../primary/idGen.md)）
+- **移除 JPA 配置**：`jpa_persistence_provider` 配置已删除
+- 如果二开设计器，请自行手动同步，就不一一列举，参考工作流引擎源码中`warm-flow/warm-flow-ui`文件夹的提交记录
+:::
+
 ### v1.8.9
 - 升级版本号就行
 - 如果二开设计器，请自行手动同步，就不一一列举，参考工作流引擎源码中`warm-flow/warm-flow-ui`文件夹的提交记录
@@ -26,31 +38,31 @@
 
 
 ### v1.8.4
-- 执行升级脚本1.8.4版本[warm-flow_1.8.4.sql](https://gitee.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.8.4.sql)
+- 执行升级脚本1.8.4版本[warm-flow_1.8.4.sql](https://github.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.8.4.sql)
 - 如果二开设计器，请自行手动同步，因为本次改动比较多，就不一一列举，参考工作流引擎源码中`warm-flow/warm-flow-ui`文件夹的提交记录，提交时间范围：`2025/10/27 13:35 ~ 2025/11/13 16:06`
 
 ### v1.8.3
 - 如果二开设计器，请自行手动同步，因为本次改动比较多，就不一一列举，参考工作流引擎源码中`warm-flow/warm-flow-ui`文件夹的提交记录，提交时间范围：`2025/10/9 22:50 ~ 2025/10/27 13:35`
 
 ### v1.8.2
-- 执行升级脚本1.8.2版本[warm-flow_1.8.2.sql](https://gitee.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.8.2.sql)
+- 执行升级脚本1.8.2版本[warm-flow_1.8.2.sql](https://github.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.8.2.sql)
 - 如果二开设计器，请自行手动同步，因为本次改动比较多，就不一一列举，参考工作流引擎源码中`warm-flow/warm-flow-ui`文件夹的提交记录，提交时间范围：`2025/8/24 17:51 ~ 2025/10/9 22:50`
 
 ### v1.8.1
 - 如果二开设计器，请自行手动同步，因为本次改动比较多，就不一一列举，参考工作流引擎源码中`warm-flow/warm-flow-ui`文件夹的提交记录，提交时间范围：`2025/8/6 11:19 ~ 2025/8/24 17:51`
 
 ### v1.8.0
-- 执行升级脚本1.8.0版本[warm-flow_1.8.0.sql](https://gitee.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.8.0.sql)
+- 执行升级脚本1.8.0版本[warm-flow_1.8.0.sql](https://github.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.8.0.sql)
 - 访问设计器时传入的disable变量可以不用传，内部会通过发布状态自行判断
 - 如果要单独访问流程设计，不显示基础信息，可以在访问设计器的时候传入参数`&onlyDesignShow=true`
 - 如果二开设计器，请自行手动同步，因为本次改动比较多，就不一一列举，参考工作流引擎源码中`warm-flow/warm-flow-ui`文件夹的提交记录，提交时间范围：`2025/6/18 14:53 ~ 2025/8/6 11:19`
 
 ### v1.7.6
-- 执行升级脚本1.7.6版本[warm-flow_1.7.6.sql](https://gitee.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.7.6.sql)
+- 执行升级脚本1.7.6版本[warm-flow_1.7.6.sql](https://github.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.7.6.sql)
 - 如果二开设计器，请自行手动同步，因为本次改动比较多，就不一一列举，参考工作流引擎源码中`warm-flow/warm-flow-ui`文件夹的提交记录，提交时间范围：`2025/5/28 11:50 ~ 2025/6/18 14:53`
 
 ### v1.7.4
-- 执行升级脚本1.7.4版本[warm-flow_1.7.4.sql](https://gitee.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.7.4.sql)
+- 执行升级脚本1.7.4版本[warm-flow_1.7.4.sql](https://github.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.7.4.sql)
 - 如果二开设计器，请自行手动同步，因为本次改动比较多，就不一一列举，参考工作流引擎源码中`warm-flow/warm-flow-ui`文件夹的提交记录，提交时间范围：`2025/5/28 11:50 ~ 2025/6/18 14:53`
 
 ### v1.7.3
@@ -60,7 +72,7 @@
 
 
 ### v1.7.2
-- 执行升级脚本1.7.2版本[warm-flow_1.7.2.sql](https://gitee.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.7.2.sql)
+- 执行升级脚本1.7.2版本[warm-flow_1.7.2.sql](https://github.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.7.2.sql)
 - mybatis-plus逻辑删除强制设置为（未删除值：0，删除值：1），如果流程表的逻辑删除字段不是这个，请刷库修改为为这个
 - 如果二开设计器，请自行手动同步，参考如下：
 
@@ -181,7 +193,7 @@ function getList() {
 :::
 
 ### v1.7.0
-- 执行升级脚本1.7.0版本[warm-flow_1.7.0.sql](https://gitee.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.7.0.sql)
+- 执行升级脚本1.7.0版本[warm-flow_1.7.0.sql](https://github.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.7.0.sql)
 - 设计器原办理人输入改成列表，使用`HandlerSelectService.handlerFeedback`接口回显名称，他内部是利用`HandlerSelectService.getHandlerSelect`接口，但是性能会差，如果有特别要求 ，可以重写`HandlerSelectService.handlerFeedback`，[重写文档](../../master/primary/designerIntroduced.html#_5-设计器办理人列表回显)
 <div><img src="https://foruda.gitee.com/images/1745570346631861131/f5ba4bf7_2218307.png" width="500"></div>
 
@@ -214,7 +226,7 @@ const filteredNodes = computed(() => {
 :::
 
 ### v1.6.8
-- 执行升级脚本1.6.8版本[warm-flow_1.6.8.sql](https://gitee.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.6.8.sql)
+- 执行升级脚本1.6.8版本[warm-flow_1.6.8.sql](https://github.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.6.8.sql)
 - 如果二开设计器，请自行手动同步，参考如下：
 
 ::: tip 原between.vue：`showWays.default=false`
@@ -238,11 +250,11 @@ showWays: {
 :::
 
 ### v1.6.7
-- 执行升级脚本1.6.7版本[warm-flow_1.6.7.sql](https://gitee.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.6.7.sql)
+- 执行升级脚本1.6.7版本[warm-flow_1.6.7.sql](https://github.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.6.7.sql)
 - 如果二开设计器，请自行手动同步，参考工作流引擎源码中`warm-flow-ui`文件夹的提交记录，提交时间范围：`2025/1/21 11:46 ~ 2025/2/24 14:59`
 
 ### v1.6.6
-- 执行升级脚本1.6.0版本[warm-flow_1.6.0.sql](https://gitee.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.6.0.sql)
+- 执行升级脚本1.6.0版本[warm-flow_1.6.0.sql](https://github.com/dromara/warm-flow/blob/master/sql/mysql/v1-upgrade/warm-flow_1.6.0.sql)
 - 导入、导出和保存xml格式标识为即将删除，请参照[hh-vue](https://gitee.com/min290/hh-vue.git)的这个类`DefController`切换json方式
 - 移除DefService获取流程图api，由ChartService中chartIns和chartDef代替
 - 全局FlowFactory替换成FlowEngine
@@ -388,7 +400,7 @@ public ResponseEntity<byte[]> exportDefinition(@PathVariable("id") Long id) {
 
 
 ### v1.3.7
-- 执行[1.3.7版本升级脚本](https://gitee.com/dromara/warm-flow/tree/master/sql)
+- 执行[1.3.7版本升级脚本](https://github.com/dromara/warm-flow/tree/master/sql)
 - 如果设计器是自己维护的，需要相应调整，可以参考如下
     - 流程设计时，办理人有多个，回显通过`,`分隔，改为`@@`
     - 流程设计时，办理人设置了多个，入库拼接通过`,`拼接改为`@@`
@@ -450,7 +462,7 @@ watch(() => form.value.permissionFlag, (n) => {
 :::
 
 ### v1.3.5
-- 执行升级脚本1.3.5版本[升级脚本warm-flow_x.x.x.sql](https://gitee.com/dromara/warm-flow/tree/master/sql)
+- 执行升级脚本1.3.5版本[升级脚本warm-flow_x.x.x.sql](https://github.com/dromara/warm-flow/tree/master/sql)
 - 如果设计器是自己维护的，需要相应调整，可以参考如下
     - 条件表达式前端拼接需要把原本`@@eq@@|flag@@eq@5`格式 改成 `eq|flag|5`,
     - `@@spel@@|#{@user.eval(#flag)}`改成`spel|#{@user.eval(flag)}`
@@ -592,7 +604,7 @@ if (skipCondition) {
 
 ### v1.3.4
 
-- 办理人表达式，删除策略前缀，通过$和#区分，需执行1.3.4.[升级脚本warm-flow_x.x.x.sql](https://gitee.com/dromara/warm-flow/tree/master/sql)
+- 办理人表达式，删除策略前缀，通过$和#区分，需执行1.3.4.[升级脚本warm-flow_x.x.x.sql](https://github.com/dromara/warm-flow/tree/master/sql)
 - 依赖的groupId：org.dromara，改为org.dromara.warm
 - 如果扩展了条件表达式策略
     - 接口或者抽象类前缀由`ExpressionStrategy`改为 `ConditionStrategy`
@@ -622,7 +634,7 @@ if (skipCondition) {
 
 ### v1.3.0
 
-- 执行.[升级脚本warm-flow_x.x.x.sql](https://gitee.com/dromara/warm-flow/tree/master/sql)
+- 执行.[升级脚本warm-flow_x.x.x.sql](https://github.com/dromara/warm-flow/tree/master/sql)
 
 
 ### v1.2.8
@@ -642,13 +654,13 @@ if (skipCondition) {
 
 ### v1.2.6
 
-- 执行.[升级脚本warm-flow_x.x.x.sql](https://gitee.com/dromara/warm-flow/tree/master/sql)
+- 执行.[升级脚本warm-flow_x.x.x.sql](https://github.com/dromara/warm-flow/tree/master/sql)
 - 流程状态字段flow_status改为string类型，业务系统需要对应修改
 
 
 ### v1.2.4
 
-- 执行.[升级脚本warm-flow_x.x.x.sql](https://gitee.com/dromara/warm-flow/tree/master/sql)
+- 执行.[升级脚本warm-flow_x.x.x.sql](https://github.com/dromara/warm-flow/tree/master/sql)
 - 流程定义表from_custom改为form_custom，from_path改为form_path，涉及到这两个字段的前后段都要修改
 - 反显审批流程表单，改为通过task表新增的form_custom和form_path字段
 - 只针对mybatis-plus扩展包，其他的扩展包可忽略，多租户和逻辑删除，改为通过mybatis-plus的自带的方式实现(
@@ -657,13 +669,13 @@ if (skipCondition) {
 
 
 ### v1.2.1
-- 执行.[升级脚本warm-flow_x.x.x.sql](https://gitee.com/dromara/warm-flow/tree/master/sql)
+- 执行.[升级脚本warm-flow_x.x.x.sql](https://github.com/dromara/warm-flow/tree/master/sql)
 
 
 ### v1.2.0
-- 执行.[升级脚本warm-flow_x.x.x.sql](https://gitee.com/dromara/warm-flow/tree/master/sql)
+- 执行.[升级脚本warm-flow_x.x.x.sql](https://github.com/dromara/warm-flow/tree/master/sql)
 - 工具包路径调整
 
 
 ### v1.1.9
-- 执行.[升级脚本warm-flow_x.x.x.sql](https://gitee.com/dromara/warm-flow/tree/master/sql)
+- 执行.[升级脚本warm-flow_x.x.x.sql](https://github.com/dromara/warm-flow/tree/master/sql)

@@ -16,15 +16,21 @@
         String id = IdUtils.nextIdStr();
         testLeave.setId(id);
         LoginUser user = SecurityUtils.getLoginUser();
-        FlowParams flowParams = FlowParams.build().flowCode(getFlowType(testLeave))
-                .handler(user.getUser().getUserId().toString());
+
+        StartCommand command = new StartCommand();
+        // 操作者：办理人唯一标识 + 权限标识，实现办理人权限处理器后可不传
+        command.setOperator(new OperatorContext(user.getUser().getUserId().toString(), null));
+        // 业务id
+        command.setBusinessId(id);
+        // 流程编码
+        command.setFlowCode(getFlowType(testLeave));
         // 流程变量
         Map<String, Object> variable = new HashMap<>();
         variable.put("testLeave", testLeave);
         variable.put("flag", String.valueOf(testLeave.getDay()));
-        flowParams.variable(variable);
+        command.setVariables(variable);
 
-        Instance instance = insService.start(id, flowParams);
+        WorkflowResult result = FlowEngine.workflow().start(command);
     }
 ```
 
@@ -37,7 +43,7 @@ public class FinishListener implements Listener {
     public void notify(ListenerVariable variable) {
         log.info("完成监听器:{}", variable);
         Instance instance = variable.getInstance();
-        Map<String, Object> testLeaveMap = variable.getVariable();
+        Map<String, Object> variableMap = variable.getVariable();
         log.info("完成监听器结束......");
     }
 }

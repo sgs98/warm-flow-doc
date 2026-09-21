@@ -23,10 +23,10 @@ public interface HandlerStrategy extends ExpressionStrategy<List<String>> {
     /**
      * 办理人表达式策略实现类集合
      */
-    List<ExpressionStrategy<List<String>>> expressionStrategyList = new ArrayList<>();
+    List<ExpressionStrategy<List<String>>> EXPRESSION_STRATEGY_LIST = new ArrayList<>();
 
     default void setExpression(ExpressionStrategy<List<String>> expressionStrategy) {
-        expressionStrategyList.add(expressionStrategy);
+        EXPRESSION_STRATEGY_LIST.add(expressionStrategy);
     }
 
     Object preEval(String expression, Map<String, Object> variable);

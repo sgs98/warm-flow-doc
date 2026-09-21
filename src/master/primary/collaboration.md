@@ -24,7 +24,6 @@
   - 固定驳回人数：类型为正整数，审批驳回人数大于等于这个人数，审批流程才往下执行，反之提前不满足驳回人数，直接驳回
   - 默认表达式：格式如: `${flag > 4}`，如果`${}`内部返回的结果为true，则通过，否则驳回。实际上是基于spring的spel表达式简化使用，会把flag替换成#flag，然后由spel执行#flag == 5 && #flag > 4
   - spel（Spring Expression Language）表达式：格式如: `#{@user.eval(#flag)}`，如果`#{}`内部返回的结果为true，则通过，否则驳回
-  - snel（Solon Expression）l表达式：格式如: `#{@user.eval(flag)}`，如果`#{}`内部返回的结果为true，则通过，否则驳回
 
 <table>
     <tbody>
