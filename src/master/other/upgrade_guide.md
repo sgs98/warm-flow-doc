@@ -1,9 +1,12 @@
 # 升级指南
 
+<div class="wf-timeline">
+
+
 ### 注意事项
 ::: warning
 - 更新脚本在项目里面的 [Sql](https://github.com/sgs98/warm-flow/tree/main/sql/mysql/v1-upgrade)文件下，对应数据库类型，对应版本号
-- 只提供mysql升级脚本和全量脚本，其他升级脚本的自行由mysql升级脚本转换
+- 当前仓库提供 MySQL、Oracle、PostgreSQL、SQL Server 四种数据库的全量脚本；升级脚本以 MySQL 为主，其他数据库请根据对应方言转换
 - 如果二开设计器，请自行手动同步
 - 未提到的版本号升级，就只需要改动jar包版本号，如v1.7.6 --> v1.7.7
 
@@ -19,3 +22,5 @@
 - **移除 JPA 配置**：`jpa_persistence_provider` 配置已删除
 - 如果二开设计器，请自行手动同步，就不一一列举，参考工作流引擎源码中`warm-flow/warm-flow-ui`文件夹的提交记录
 :::
+
+</div>
