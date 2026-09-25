@@ -7,7 +7,7 @@
 
 ## 1、概念模型
 
-监听器由两维组成：<span class="red-no-bg">何时执行</span>（小类）和 <span class="red-no-bg">作用范围</span>（大类）。四个小类在三种大类上都可以挂。
+监听器由两维组成：<span class="wf-em">何时执行</span>（小类）和 <span class="wf-em">作用范围</span>（大类）。常用四个小类在三种大类上都可以挂，`formLoad` 为内置表单专用。
 
 **何时执行（小类）**
 
@@ -17,6 +17,7 @@
 | `start` | 任务开始办理时 | 数据初始化、办理人权限设置 |
 | `assignment` | 分派办理人时 | 动态修改待办任务信息 |
 | `finish` | 当前任务完成后 | 更新业务表、消息通知 |
+| `formLoad` | 内置表单数据加载时（1.3.0+） | 表单渲染前的数据准备 |
 
 **作用范围（大类）**
 
@@ -26,7 +27,7 @@
 | 流程监听器 | 流程定义 | 当前流程定义的所有节点 |
 | 全局监听器 | 实现 `GlobalListener` | 系统所有流程 |
 
-同一事件的执行顺序：<span class="red-no-bg">节点监听器</span> → <span class="red-no-bg">流程监听器</span> → <span class="red-no-bg">全局监听器</span>
+同一事件的执行顺序：<span class="wf-em">节点监听器</span> → <span class="wf-em">流程监听器</span> → <span class="wf-em">全局监听器</span>
 
 ## 2、生命周期
 
@@ -62,6 +63,9 @@ public interface Listener extends Serializable {
 
     /** 分派监听器，动态修改待办任务信息 */
     String LISTENER_ASSIGNMENT = "assignment";
+
+    /** 表单数据加载监听器，内置表单使用 */
+    String LISTENER_FORM_LOAD = "formLoad";
 
     void notify(ListenerVariable variable);
 }

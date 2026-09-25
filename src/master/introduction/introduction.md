@@ -9,7 +9,7 @@
 - **流程图**‌：自带流程图，通过jar包快速集，功能扩展，原生支持经典和仿钉钉双模式。
 - **条件表达式**‌：内置常见的和spel条件表达式，支持自定义扩展。
 - **办理人变量表达式**‌：内置${handler}和spel格式的表达式，满足不同场景需求，灵活可扩展。
-- **监听器**‌：提供四种监听器，支持不同作用范围和spel表达式，参数传递灵活，支持动态权限。
+- **监听器**‌：提供 create/start/assignment/finish 四种常用监听器，以及内置表单的 formLoad 监听器，支持不同作用范围和spel表达式，参数传递灵活，支持动态权限。
 - **流程变量**‌：在整个流程办理过程起到重要的角色，如办理人表达式中，传入变量进行动态指定办理人。
 - **ORM框架支持**‌：官方支持MyBatis、Mybatis-Plus，Jpa、BeetlSql等其他框架可由社区扩展
 - **数据库支持**‌：支持MySQL、Oracle、PostgreSQL和SQL Server，其他数据库只需要转换表结构即可支持。
@@ -22,8 +22,8 @@
 ```
 
 <div class="yat"><div><img src="https://foruda.gitee.com/images/1773981444246272785/259ff9b7_2218307.png"/></div></div>
-<div class="yat"><div><img src="https://foruda.gitee.com/images/1776738528839847061/d5db8f23_2218307.png"/></div></div>
-<div class="yat"><div><img src="https://foruda.gitee.com/images/1776738347146941820/ffac4456_2218307.png"/></div></div>
+<div class="yat"><div><img src="/designer/classic.png" alt="经典模式设计器"/></div></div>
+<div class="yat"><div><img src="/designer/dingtalk.png" alt="仿钉钉模式设计器"/></div></div>
 
 ## 2、演示地址
 
@@ -72,8 +72,10 @@ Dromara Warm-Flow作为一个国产的工作流引擎，其设计简洁轻量但
 
 
 ## 6、支持orm框架类型
-* [x] mybatis
-* [x] mybatis-plus
-* [x] jpa
-* [x] BeetlSql
+::: tip 官方维护的 ORM 适配只有 mybatis 与 mybatis-plus；JPA、BeetlSql 等由社区扩展提供，非官方维护。
+:::
+* [x] mybatis（官方）
+* [x] mybatis-plus（官方）
+* [ ] jpa（社区扩展）
+* [ ] BeetlSql（社区扩展）
 * [ ] ......

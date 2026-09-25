@@ -1,7 +1,7 @@
 # 团队
 
 
-<table>
+<table class="wf-team">
     <thead>
         <tr style="text-align: left;">
             <th>avatar</th>

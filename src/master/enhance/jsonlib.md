@@ -1,7 +1,7 @@
 # json库扩展
 
 ::: tip
-- 目前支持 Snack3、Snack4、Jackson、Jackson3、fastjson 和 Gson 六种 json 库
+- 目前支持 Snack3、Snack4、Jackson、Jackson3、fastjson2 和 Gson 六种 json 库
 - 通过 `warm-flow-plugin-modes-sb` / ORM 的 `sb3`、`sb4` starter 引入时，已自动带上 json 实现，无需额外配置
 
 :::

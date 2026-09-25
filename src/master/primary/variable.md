@@ -19,7 +19,7 @@
 
         StartCommand command = new StartCommand();
         // 操作者：办理人唯一标识 + 权限标识，实现办理人权限处理器后可不传
-        command.setOperator(new OperatorContext(user.getUser().getUserId().toString(), null));
+        command.setOperator(new OperatorContext(user.getUser().getUserId().toString()));
         // 业务id
         command.setBusinessId(id);
         // 流程编码

@@ -7,6 +7,9 @@
 
 
 ## 1、内置表达式类型
+::: tip 适用范围
+第 3–10 项（gt/ge/eq/ne/lt/le/like/notLike 共 8 个比较策略）由 core 直接注册，任何模式可用；第 1 项「默认」与第 2 项「SpEL」基于 SpEL，仅由 `warm-flow-plugin-modes-sb` 在 **Spring Boot 模式**下注册，非 Spring Boot 环境不可用。
+:::
 - 1、默认: `default@@${flag == 5 && flag > 4}`
 - 2、SpEL: `spel@@#{@user.eval(#flag)}`
 - 3、大于: `gt@@flag|4`
@@ -20,7 +23,7 @@
 - 11、自定义表达式
 
 ## 2、匹配规则
-- 1、常规匹配规则：`xxx@@yyy|zzz`，`xxx`为表达式类型，其中`yyy`为变量名，，最后的`zzz`为变量值。
+- 1、常规匹配规则：`xxx@@yyy|zzz`，`xxx`为表达式类型，其中`yyy`为变量名，最后的`zzz`为变量值。
 <div><img src="https://foruda.gitee.com/images/1754531858724397764/de4b4e75_2218307.png"></div>
 
 - 2、默认表达式：`default@@${flag == 5 && flag > 4}`，其中`flag`为变量名。

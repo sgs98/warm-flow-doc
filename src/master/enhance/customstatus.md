@@ -2,8 +2,8 @@
 
 
 ::: tip
-- instanceStatus：流程实例表状态，当前流程状态    
-- historyTaskStatus：历史任务表状态，过程状态记录，按照自身业务要求，可以与流程实例状态不同  
+- flowStatus：流程实例表状态，当前流程状态    
+- taskStatus：历史任务表状态，过程状态记录，按照自身业务要求，可以与流程实例状态不同  
 
 :::
 
@@ -12,20 +12,21 @@
 ## 1、开启流程
 
 ```java
-    public void insertTestLeave(TestLeave testLeave, Integer flowStatus)
+    public void insertTestLeave(TestLeave testLeave, String flowStatus)
     {
         String id = IdUtils.nextIdStr();
         testLeave.setId(id);
         LoginUser user = SecurityUtils.getLoginUser();
 
         StartCommand command = new StartCommand();
-        command.setOperator(new OperatorContext(user.getUser().getUserId().toString(), null));
+        command.setOperator(new OperatorContext(user.getUser().getUserId().toString()));
         command.setBusinessId(id);
         command.setFlowCode(getFlowType(testLeave));
 
-        // 自定义流程状态扩展，instanceStatus与historyTaskStatus可以不同
+        // 自定义流程状态扩展，flowStatus与taskStatus可以不同
         if (Objects.nonNull(flowStatus)) {
-            command.setInstanceStatus(flowStatus).setHistoryTaskStatus(flowStatus);
+            command.setFlowStatus(flowStatus);
+            command.setTaskStatus(flowStatus);
         }
 
         WorkflowResult result = FlowEngine.workflow().start(command);
@@ -35,17 +36,19 @@
 ## 2、流程跳转
 
 ```java
-        // 自定义流程状态扩展，instanceStatus与historyTaskStatus可以不同
+        // 自定义流程状态扩展，flowStatus与taskStatus可以不同
         if (Objects.nonNull(flowStatus)) {
-            command.setInstanceStatus(flowStatus).setHistoryTaskStatus(flowStatus);
+            command.setFlowStatus(flowStatus);
+            command.setTaskStatus(flowStatus);
         }
         WorkflowResult result = FlowEngine.workflow().complete(command);
 ```
 
 ```java
-        // 自定义流程状态扩展，instanceStatus与historyTaskStatus可以不同
+        // 自定义流程状态扩展，flowStatus与taskStatus可以不同
         if (Objects.nonNull(flowStatus)) {
-            command.setInstanceStatus(flowStatus).setHistoryTaskStatus(flowStatus);
+            command.setFlowStatus(flowStatus);
+            command.setTaskStatus(flowStatus);
         }
         WorkflowResult result = FlowEngine.workflow().reject(command);
 ```

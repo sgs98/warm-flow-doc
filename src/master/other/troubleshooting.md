@@ -1,5 +1,8 @@
 # 常见问题
 
+<div class="wf-faq">
+
+
 
 ## 1、id精度丢失
 **方案1：处理长度过长的Long类型**
@@ -232,3 +235,5 @@ TaskService待办任务
 - orm框架本身支持兼容这种数据库，那就支持。比如目前不修改内核情况下，`warm-flow-mybatis-plus-sb3-starter`这个肯定支持的。
 - 从官方提供的四种表结构脚本[warm-flow-all.sql](https://github.com/sgs98/warm-flow/tree/main/sql)中选出和目标数据最相似，转化成这种数据库就行了。
 - 又比如mybatis需要写sql，内核需要调整，那这个肯定不支持。目前`warm-flow-mybatis-sb3-starter`对mysql和oracle支持的比较友好。
+
+</div>

@@ -27,6 +27,14 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 | 6     | flow_task       | 待办任务表     |              |
 | 7     | flow_user       | 流程用户表     |              |
 
+::: tip 关于 flow_form（表单表）
+除上述 7 张核心表外，引擎还有一张**可选**的 `flow_form` 表，服务于内置表单功能（对应 `FormService`，字段如 `form_code`/`form_name`/`version`/`is_publish`/`form_type`/`form_path`/`form_content`/`ext` 等）。该表目前仅在升级脚本 `sql/mysql/v1-upgrade/warm-flow_form.sql` 中提供，**尚未纳入各库的全量脚本 `warm-flow-all.sql`**，且功能仍在完善中；不使用内置表单时无需建表。
+:::
+
+::: warning 审计字段默认值
+各表的 `create_by` / `update_by` 在 SQL 中均为 `varchar(64) DEFAULT ''`，`del_flag` 为 `char(1) DEFAULT '0'`；下方明细表为排版简洁未逐一标注默认值，以建表脚本为准。
+:::
+
 
 ## 1.3 表字段明细
 
@@ -40,10 +48,10 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 | 4     | model_value     | 设计器模型（CLASSICS经典模型 MIMIC仿钉钉模型） | VARCHAR(40)  |          | √        | 'CLASSICS' |              |
 | 5     | category        | 流程类别                                       | VARCHAR(100) |          |          |            |              |
 | 6     | version         | 流程版本                                       | VARCHAR(20)  |          | √        |            |              |
-| 7     | is_publish      | 是否发布（0未发布 1已发布 9失效）              | BIT(1)       |          | √        | 0          |              |
+| 7     | is_publish      | 是否发布（0未发布 1已发布 9失效）              | TINYINT(1)       |          | √        | 0          |              |
 | 8     | form_custom     | 审批表单是否自定义（Y是 N否）                  | CHAR(1)      |          |          | 'N'        |              |
 | 9     | form_path       | 审批表单路径                                   | VARCHAR(100) |          |          |            |              |
-| 10    | activity_status | 流程激活状态（0挂起 1激活）                    | BIT(1)       |          | √        | 1          |              |
+| 10    | activity_status | 流程激活状态（0挂起 1激活）                    | TINYINT(1)       |          | √        | 1          |              |
 | 11    | listener_type   | 监听器类型                                     | VARCHAR(100) |          |          |            |              |
 | 12    | listener_path   | 监听器路径                                     | VARCHAR(400) |          |          |            |              |
 | 13    | ext             | 业务详情 存业务表对象json字符串                | VARCHAR(500) |          |          |            |              |
@@ -64,12 +72,12 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 | 4     | task_id         | 对应flow_task表的id                                          | BIGINT       |          | √        |            |              |
 | 5     | node_code       | 开始节点编码                                                 | VARCHAR(100) |          |          |            |              |
 | 6     | node_name       | 开始节点名称                                                 | VARCHAR(100) |          |          |            |              |
-| 7     | node_type       | 开始节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关） | BIT(1)       |          |          |            |              |
+| 7     | node_type       | 开始节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关 5包容网关） | TINYINT(1)       |          |          |            |              |
 | 8     | target_node_code | 目标节点编码                                                 | VARCHAR(200) |          |          |            |              |
 | 9     | target_node_name | 结束节点名称                                                 | VARCHAR(200) |          |          |            |              |
 | 10    | approver        | 审批者                                                       | VARCHAR(40)  |          |          |            |              |
-| 11    | cooperate_type  | 协作方式(1审批 2转办 3委派 4会签 5票签 6加签 7减签)          | BIT(1)       |          | √        | 0          |              |
-| 12    | collaborator    | 协作人                                                       | VARCHAR(40)  |          |          |            |              |
+| 11    | cooperate_type  | 协作方式(1审批 2转办 3委派 4会签 5票签 6加签 7减签)          | TINYINT(1)       |          | √        | 0          |              |
+| 12    | collaborator    | 协作人                                                       | VARCHAR(500) |          |          |            |              |
 | 13    | skip_type       | 流转类型（PASS通过 REJECT退回 NONE无动作）                   | VARCHAR(10)  |          | √        |            |              |
 | 14    | flow_status     | 流程状态（0待提交 1审批中 2审批通过 4终止 5作废 6撤销 8已完成 9已退回 10失效 11拿回） | VARCHAR(20)  |          | √        |            |              |
 | 15    | form_custom     | 审批表单是否自定义（Y是 N否）                                | CHAR(1)      |          |          | 'N'        |              |
@@ -89,12 +97,12 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 | 1     | id              | 主键id                                                       | BIGINT       | √        | √        |            |              |
 | 2     | definition_id   | 对应flow_definition表的id                                    | BIGINT       |          | √        |            |              |
 | 3     | business_id     | 业务id                                                       | VARCHAR(40)  |          | √        |            |              |
-| 4     | node_type       | 节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关） | BIT(1)       |          | √        |            |              |
+| 4     | node_type       | 节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关 5包容网关） | TINYINT(1)       |          | √        |            |              |
 | 5     | node_code       | 流程节点编码                                                 | VARCHAR(40)  |          | √        |            |              |
 | 6     | node_name       | 流程节点名称                                                 | VARCHAR(100) |          |          |            |              |
 | 7     | variable        | 任务变量                                                     | TEXT         |          |          |            |              |
 | 8     | flow_status     | 流程状态（0待提交 1审批中 2审批通过 4终止 5作废 6撤销 8已完成 9已退回 10失效 11拿回） | VARCHAR(20)  |          | √        |            |              |
-| 9     | activity_status | 流程激活状态（0挂起 1激活）                                  | BIT(1)       |          | √        | 1          |              |
+| 9     | activity_status | 流程激活状态（0挂起 1激活）                                  | TINYINT(1)       |          | √        | 1          |              |
 | 10    | def_json        | 流程定义json                                                 | TEXT         |          |          |            |              |
 | 11    | create_time     | 创建时间                                                     | DATETIME     |          |          |            |              |
 | 12    | create_by       | 创建者                                                       | VARCHAR(64)  |          |          |            |              |
@@ -109,12 +117,12 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 | **#** | **字段**        | **名称**                                                     | **数据类型** | **主键** | **非空** | **默认值** | **备注说明** |
 | ----- | --------------- | ------------------------------------------------------------ | ------------ | -------- | -------- | ---------- | ------------ |
 | 1     | id              | 主键id                                                       | BIGINT       | √        | √        |            |              |
-| 2     | node_type       | 节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关） | BIT(1)       |          | √        |            |              |
+| 2     | node_type       | 节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关 5包容网关） | TINYINT(1)       |          | √        |            |              |
 | 3     | definition_id   | 流程定义id                                                   | BIGINT       |          | √        |            |              |
 | 4     | node_code       | 流程节点编码                                                 | VARCHAR(100) |          | √        |            |              |
 | 5     | node_name       | 流程节点名称                                                 | VARCHAR(100) |          |          |            |              |
 | 6     | permission_flag | 权限标识（权限类型:权限标识，可以多个，用@@隔开)             | VARCHAR(200) |          |          |            |              |
-| 7     | node_ratio      | 流程签署比例值                                               | DECIMAL(6,3) |          |          |            |              |
+| 7     | node_ratio      | 流程签署比例值                                               | VARCHAR(200) |          |          |            |              |
 | 8     | coordinate      | 坐标                                                         | VARCHAR(100) |          |          |            |              |
 | 9     | any_node_skip   | 任意结点跳转                                                 | VARCHAR(100) |          |          |            |              |
 | 10    | listener_type   | 监听器类型                                                   | VARCHAR(100) |          |          |            |              |
@@ -136,9 +144,9 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 | 1     | id              | 主键id                                                       | BIGINT       | √        | √        |            |              |
 | 2     | definition_id   | 流程定义id                                                   | BIGINT       |          | √        |            |              |
 | 3     | now_node_code   | 当前流程节点的编码                                           | VARCHAR(100) |          | √        |            |              |
-| 4     | now_node_type   | 当前节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关） | BIT(1)       |          |          |            |              |
+| 4     | now_node_type   | 当前节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关 5包容网关） | TINYINT(1)       |          |          |            |              |
 | 5     | next_node_code  | 下一个流程节点的编码                                         | VARCHAR(100) |          | √        |            |              |
-| 6     | next_node_type  | 下一个节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关） | BIT(1)       |          |          |            |              |
+| 6     | next_node_type  | 下一个节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关 5包容网关） | TINYINT(1)       |          |          |            |              |
 | 7     | skip_name       | 跳转名称                                                     | VARCHAR(100) |          |          |            |              |
 | 8     | skip_type       | 跳转类型（PASS审批通过 REJECT退回）                          | VARCHAR(40)  |          |          |            |              |
 | 9     | skip_condition  | 跳转条件                                                     | VARCHAR(200) |          |          |            |              |
@@ -159,7 +167,7 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 | 3     | instance_id     | 对应flow_instance表的id                                      | BIGINT       |          | √        |            |              |
 | 4     | node_code       | 节点编码                                                     | VARCHAR(100) |          | √        |            |              |
 | 5     | node_name       | 节点名称                                                     | VARCHAR(100) |          |          |            |              |
-| 6     | node_type       | 节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关） | BIT(1)       |          | √        |            |              |
+| 6     | node_type       | 节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关 5包容网关） | TINYINT(1)       |          | √        |            |              |
 | 7     | flow_status     | 流程状态（0待提交 1审批中 2审批通过 4终止 5作废 6撤销 8已完成 9已退回 10失效 11拿回） | VARCHAR(20)  |          | √        |            |              |
 | 8     | form_custom     | 审批表单是否自定义（Y是 N否）                                | CHAR(1)      |          |          | 'N'        |              |
 | 9     | form_path       | 审批表单路径                                                 | VARCHAR(100) |          |          |            |              |

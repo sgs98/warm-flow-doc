@@ -78,14 +78,14 @@ public class AutoApprovalListener implements Listener {
                         // 自动审批：通过走complete，退回走reject，ignore表示忽略权限校验
                         if (pass) {
                             CompleteCommand command = new CompleteCommand();
-                            command.setOperator(new OperatorContext(null, null));
+                            command.setOperator(new OperatorContext());
                             command.setIgnore(true);
                             command.setTaskId(task.getId());
                             command.setMessage("超时自动审批");
                             FlowEngine.workflow().complete(command);
                         } else {
                             RejectCommand command = new RejectCommand();
-                            command.setOperator(new OperatorContext(null, null));
+                            command.setOperator(new OperatorContext());
                             command.setIgnore(true);
                             command.setTaskId(task.getId());
                             command.setTargetNodeCode(extMap.get("autoApproval_skipNode"));

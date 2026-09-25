@@ -25,9 +25,8 @@ public class MpTenantHandler implements TenantLineHandler {
 
 
     /**
-     * 指定租户字段
+     * 指定租户字段：动态切换业务表与流程表的租户列名
      * @param tableName 表名
-     * @return
      */
     @Override
     public boolean ignoreTable(String tableName) {
@@ -39,18 +38,23 @@ public class MpTenantHandler implements TenantLineHandler {
                 threadLocal.set(field.getColumn());
             }
         });
-        // 获取表字段
         return false;
     }
 
+}
+
+```
+
+::: tip 二选一：业务系统未开启租户、只想让流程表开启
+如果业务系统本身没有多租户、只想给流程相关的表加租户过滤，把上面的 `ignoreTable` 换成下面这版（同一类里只能保留一个 `ignoreTable`，二者按需二选一）：
+
+```java
     /**
-     * 如果业务系统不开启租户，使用下面方法，指定流程表才开启
+     * 只对流程表开启租户过滤，其余业务表忽略
      * @param tableName 表名
-     * @return
      */
     @Override
     public boolean ignoreTable(String tableName) {
-        // 流程表
         List<String> flowTableName = Arrays.asList("flow_definition", "flow_his_task", "flow_instance", "flow_node"
                 ,"flow_skip", "flow_task", "flow_user");
         TableInfo tableInfo = TableInfoHelper.getTableInfo(tableName);
@@ -60,17 +64,18 @@ public class MpTenantHandler implements TenantLineHandler {
         }
         List<TableFieldInfo> fieldList = tableInfo.getFieldList();
         fieldList.forEach(field -> {
-            // 如果业务和工作流引擎中的租户字段不一致，可以通过这种方式动态切换
             if (field.getColumn().equals("tenant_id")) {
                 threadLocal.set(field.getColumn());
             }
         });
-        // 获取表字段
         return flag.get();
     }
+```
+:::
 
-}
+Mybatis-plus 的拦截器配置：
 
+```java
 @Configuration
 public class MybatisPlusConfig {
 
@@ -88,7 +93,10 @@ public class MybatisPlusConfig {
 }
 ```
 
-## 3、通用多租户
+## 2、通用多租户
+::: warning 适用范围
+`TenantHandler`（通用多租户）目前**仅被 MyBatis 扩展包消费**（`TenantDeleteUtil`），MyBatis-Plus 扩展包不读取它——用 MyBatis-Plus 时请走上文的 `TenantLineHandler` 方式。
+:::
 ::: code-tabs#shell
 
 @tab:active yaml
@@ -96,8 +104,8 @@ public class MybatisPlusConfig {
 ```yaml
 # warm-flow工作流配置
 warm-flow:
-  # 全局租户处理器（可通过配置文件注入，也可用@Bean/@Component方式
-  tenant_handler_path: org.dromara.warm.flow.core.test.handle.CustomTenantHandler
+  # 全局租户处理器（可通过配置文件注入，也可用@Bean/@Component方式）
+  tenant-handler-path: org.dromara.warm.flow.core.test.handle.CustomTenantHandler
 ```
 
 @tab @bean
@@ -106,7 +114,7 @@ warm-flow:
 @Configuration
 public class WarmFlowConfig {
     /**
-     * 全局租户处理器（可通过配置文件注入，也可用@Bean/@Component方式
+     * 全局租户处理器（可通过配置文件注入，也可用@Bean/@Component方式）
      */
     @Bean
     public TenantHandler tenantHandler() {
@@ -120,7 +128,7 @@ public class WarmFlowConfig {
 
 ```java
 /**
- * 全局租户处理器（可通过配置文件注入，也可用@Bean/@Component方式
+ * 全局租户处理器（可通过配置文件注入，也可用@Bean/@Component方式）
  *
  * @author warm
  */
@@ -137,4 +145,5 @@ public class CustomTenantHandler implements TenantHandler {
 ```
 
 :::
+
 

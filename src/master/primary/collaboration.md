@@ -10,6 +10,21 @@
 > 票签：满足设定的通过策略，部分审批人审批通过，审批节点才会通过  
 > 会签：所有审批人审批通过，审批节点才会通过
 
+### 协作类型一览
+引擎 `CooperateType` 枚举共 7 种协作方式（`flow_his_task.cooperate_type` 存对应 key）：
+
+| key | 枚举 | 含义 |
+| --- | --- | --- |
+| 1 | APPROVAL | 无（普通审批） |
+| 2 | TRANSFER | 转办：任务转给其他人办理 |
+| 3 | DEPUTE | 委派：求助他人审批，再参照其意见决定是否通过 |
+| 4 | COUNTERSIGN | 会签：所有审批人通过才算通过 |
+| 5 | VOTE | 票签：达到设定通过率即通过 |
+| 6 | ADD_SIGNATURE | 加签：办理中途增加办理人 |
+| 7 | REDUCTION_SIGNATURE | 减签：办理中途移除办理人 |
+
+> 或签/票签/会签的区分靠 `flow_node.node_ratio`：`0`=或签，`0~100`=票签，`100`=会签。
+
 ## 2、注意事项
 > 票签和会签会会根据用户数量计算通过率或者通过策略等，如果节点配置的是角色，这种情况不好统计，要解决这种问题，请把角色全部转成用户id-[转换办理人](./permission_handler.html)
 
@@ -49,8 +64,8 @@
 <div><img src="https://foruda.gitee.com/images/1754532261962167543/23ce23da_2218307.png"/></div>
 
 ## 4、票签策略注意事项
-> 通过策略特别需要讲一下<span class="red-font">默认表达式和spel表达</span>，因为不管通过什么方式，通常需要知道已通过的
-<span class="red-font">人数和总人数</span>等，才能在自己的表达式中判断是否满足条件，那么<span class="red-font">如何获取</span>已通过和总人数呢？
+> 通过策略特别需要讲一下<span class="wf-em">默认表达式和spel表达</span>，因为不管通过什么方式，通常需要知道已通过的
+<span class="wf-em">人数和总人数</span>等，才能在自己的表达式中判断是否满足条件，那么<span class="wf-em">如何获取</span>已通过和总人数呢？
 
 - 组件在执行表达式的时候会注入内置变量，如下：
     - skipType：跳过类型

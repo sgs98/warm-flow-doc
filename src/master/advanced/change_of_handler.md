@@ -8,7 +8,7 @@
 
 <a id="_1、变更的时机"></a>
 
-办理人变更分两维：<span class="red-no-bg">改下个任务</span> 还是 <span class="red-no-bg">改当前任务</span>。
+办理人变更分两维：<span class="wf-em">改下个任务</span> 还是 <span class="wf-em">改当前任务</span>。
 
 **修改下个任务的办理人**
 
@@ -155,12 +155,12 @@ FlowEngine.workflow().complete(command);
 
 | 字段 | 说明 |
 | :--- | :--- |
-| `operator` | 操作者（`handler` + `permissions`）[按需传输]；实现了 [办理人权限处理器](../primary/permission_handler.md) 后可以不传 |
+| `operator` | 操作者 `OperatorContext`（`handler` / `ignorePermission` / `ignore`）[按需传输]；办理人权限标识 `permissions` 由 [办理人权限处理器](../primary/permission_handler.md) 提供，实现了它则可不传 |
 | `taskId` | 流程任务 id [必传] |
 | `message` | 审批意见 [按需传输] |
 | `variables` | 流程变量 [按需传输] |
-| `instanceStatus` | 流程实例状态 [按需传输] |
-| `historyTaskStatus` | 历史任务状态 [按需传输] |
+| `flowStatus` | 流程实例状态 [按需传输] |
+| `taskStatus` | 历史任务状态 [按需传输] |
 | `nextHandlers` | 下个任务的办理人 [按需传输] |
 | `nextHandlerAppend` | `true` 追加，`false` 覆盖，默认 `false` |
 
@@ -181,7 +181,7 @@ FlowEngine.workflow().complete(command);
 ```java
 public void transfer() {
     TransferCommand command = new TransferCommand();
-    command.setOperator(new OperatorContext("1", Arrays.asList("role:1", "role:2", "user:1")));
+    command.setOperator(new OperatorContext("1"));
     command.setTaskId(getTaskId());
     // 转办只能指定一个办理人
     command.setTargetHandler("2");
@@ -195,7 +195,7 @@ public void transfer() {
 ```java
 public void delegate() {
     DelegateCommand command = new DelegateCommand();
-    command.setOperator(new OperatorContext("1", Arrays.asList("role:1", "role:2", "user:1")));
+    command.setOperator(new OperatorContext("1"));
     command.setTaskId(getTaskId());
     // 委派只能指定一个办理人
     command.setTargetHandler("2");
@@ -209,7 +209,7 @@ public void delegate() {
 ```java
 public void addSigner() {
     AddSignerCommand command = new AddSignerCommand();
-    command.setOperator(new OperatorContext("1", Arrays.asList("role:1", "role:2", "user:1")));
+    command.setOperator(new OperatorContext("1"));
     command.setTaskId(getTaskId());
     command.setTargetHandlers(Arrays.asList("1", "2"));
     command.setMessage("加签");
@@ -222,7 +222,7 @@ public void addSigner() {
 ```java
 public void removeSigner() {
     RemoveSignerCommand command = new RemoveSignerCommand();
-    command.setOperator(new OperatorContext("1", Arrays.asList("role:1", "role:2", "user:1")));
+    command.setOperator(new OperatorContext("1"));
     command.setTaskId(getTaskId());
     command.setTargetHandlers(Arrays.asList("1", "2"));
     command.setMessage("减签");

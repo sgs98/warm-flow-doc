@@ -67,15 +67,16 @@ public class PlusPostInitTableInfoHandler implements PostInitTableInfoHandler {
 }
 
 ```
-## 3、通用逻辑删除
+## 2、通用逻辑删除
 
 ```yaml
 # warm-flow工作流配置
 warm-flow:
-  # 是否开启逻辑删除（orm框架本身不支持逻辑删除，可通过这种方式开启，比如jpa）
-  logic_delete: true
+  # 当所用 ORM 扩展包自身不提供逻辑删除时（如 MyBatis 扩展包），可通过此方式开启；
+  # MyBatis-Plus 走自身的 @TableLogic，不读取该配置
+  logic-delete: true
   # 逻辑删除字段值（开启后默认为2）
-  logic_delete_value: 2
+  logic-delete-value: 2
   # 逻辑未删除字段（开启后默认为0）
-  logic_not_delete_value: 0
+  logic-not-delete-value: 0
 ```

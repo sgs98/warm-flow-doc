@@ -10,10 +10,10 @@
 `WorkflowResult start(StartCommand command)`：启动流程实例并创建首个待办，不办理首节点。
 - businessId: 业务id [必传]
 - flowCode: 流程编码 [必传]
-- operator: 操作者，包含handler(办理人唯一标识)和permissions(办理人权限标识) [按需传输]；实现了[办理人权限处理器](./permission_handler.md)后可以不传
+- operator: 操作者 `OperatorContext`，含 handler(办理人唯一标识)、ignorePermission(是否忽略权限校验)、ignore(是否忽略权限与协作规则) [按需传输]；办理人权限标识(permissions)由[办理人权限处理器](./permission_handler.md)提供，实现了它则可不传
 - variables: 流程变量 [按需传输]
-- instanceStatus: 流程实例状态，自定义流程状态 [按需传输]
-- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+- flowStatus: 流程实例状态，自定义流程状态 [按需传输]
+- taskStatus: 历史任务状态，自定义流程状态 [按需传输]
 - nextHandlers: 执行的下个任务的办理人 [按需传输]
 - nextHandlerAppend: 下个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
 
@@ -23,8 +23,8 @@
 - operator: 操作者 [按需传输]
 - message: 审批意见 [按需传输]
 - variables: 流程变量 [按需传输]
-- instanceStatus: 流程实例状态，自定义流程状态 [按需传输]
-- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+- flowStatus: 流程实例状态，自定义流程状态 [按需传输]
+- taskStatus: 历史任务状态，自定义流程状态 [按需传输]
 - nextHandlers: 执行的下个任务的办理人 [按需传输]
 - nextHandlerAppend: 下个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
 
@@ -45,16 +45,16 @@
 - instanceId: 流程实例id [必传]
 - message: 审批意见 [按需传输]
 - variables: 流程变量 [按需传输]
-- instanceStatus: 流程实例状态，自定义流程状态 [按需传输]
-- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+- flowStatus: 流程实例状态，自定义流程状态 [按需传输]
+- taskStatus: 历史任务状态，自定义流程状态 [按需传输]
 
 ### 终止
 `WorkflowResult terminate(TerminateCommand command)`：终止流程实例。按照实例id或者任务id终止，二选一。
 - instanceId: 流程实例id [按需传输]
 - taskId: 流程任务id [按需传输]
 - message: 审批意见 [按需传输]
-- instanceStatus: 流程实例状态，自定义流程状态 [按需传输]
-- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+- flowStatus: 流程实例状态，自定义流程状态 [按需传输]
+- taskStatus: 历史任务状态，自定义流程状态 [按需传输]
 
 ### 转办
 `WorkflowResult transfer(TransferCommand command)`：将当前待办转交给其他办理人。
@@ -62,7 +62,7 @@
 - targetHandler: 转办的目标办理人，只能一个 [必传]
 - operator: 操作者 [按需传输]
 - message: 审批意见 [按需传输]
-- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+- taskStatus: 历史任务状态，自定义流程状态 [按需传输]
 
 ### 委派
 `WorkflowResult delegate(DelegateCommand command)`：将当前待办委派给其他办理人。字段同转办。
@@ -73,7 +73,7 @@
 - targetHandlers: 增加的目标办理人集合 [必传]
 - operator: 操作者 [按需传输]
 - message: 审批意见 [按需传输]
-- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+- taskStatus: 历史任务状态，自定义流程状态 [按需传输]
 
 ### 减签
 `WorkflowResult removeSigner(RemoveSignerCommand command)`：为会签或票签节点移除办理人。
@@ -86,7 +86,7 @@
 - operation: 操作名称，如start、complete、reject
 - instanceId: 流程实例id
 - businessId: 业务id
-- instanceStatus: 操作后的流程实例状态
+- flowStatus: 操作后的流程实例状态
 - completedTaskId: 本次操作关联的任务id
 - currentTasks: 操作后的当前待办视图集合（taskId、instanceId、nodeCode、nodeName、nodeType、taskStatus、handlers）
 
@@ -162,8 +162,8 @@
 - ignorePermission: 是否忽略权限校验 [按需传输]
 - ignore: 是否忽略权限校验、会签/票签协作规则 [按需传输]
 - variables: 流程变量 [按需传输]
-- instanceStatus: 流程实例状态，自定义流程状态 [按需传输]
-- historyTaskStatus: 历史任务状态，自定义流程状态 [按需传输]
+- flowStatus: 流程实例状态，自定义流程状态 [按需传输]
+- taskStatus: 历史任务状态，自定义流程状态 [按需传输]
 - nextHandlers: 执行的下个任务的办理人 [按需传输]
 - nextHandlerAppend: 下个任务处理人配置类型（true-追加，false-覆盖，默认false）[按需传输]
 - ext: 扩展字段，预留给业务系统使用 [按需传输]
@@ -220,7 +220,7 @@
 `FlowDto hisLoad(hisTaskId)`：加载历史任务数据
 
 ## 流程执行上下文 WorkflowContext
-> 流程动作的内部执行上下文，承载多个流程动作共享的执行数据，由各Command的`fillContext`填充
+> 流程动作的内部执行上下文，承载多个流程动作共享的执行数据，由 `WorkflowContextMapper` 从各 `XxxCommand` 映射而来
 
 - handler: 当前操作者唯一标识
 - permissions: 当前操作者可用于权限匹配的标识集合
@@ -228,8 +228,8 @@
 - ignore: 是否忽略权限校验、受托人委派处理和会签/票签协作规则（true：单方办理即可推动节点流转）
 - message: 本次流程动作的说明
 - variables: 本次流程动作需要写入实例的变量
-- instanceStatus: 调用方指定的流程实例状态，未设置时由引擎状态机决定
-- historyTaskStatus: 调用方指定的历史任务状态，未设置时由引擎状态机决定
+- flowStatus: 调用方指定的流程实例状态，未设置时由引擎状态机决定
+- taskStatus: 调用方指定的历史任务状态，未设置时由引擎状态机决定
 - targetNodeCode: 流程动作的目标节点编码
 - nextHandlers: 指定的后续节点办理人集合
 - nextHandlerAppend: 是否将指定办理人追加到引擎计算出的办理人集合

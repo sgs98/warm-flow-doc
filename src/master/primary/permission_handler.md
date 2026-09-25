@@ -99,9 +99,9 @@ public class CustomPermissionHandler implements PermissionHandler {
     @Override
     public List<String> convertPermissions(List<String> permissions) {
         // 把角色部门转换成用户
-        // permissions：{role:1,dept:1} ---> {1,2,100}
+        // permissions：["role:1","dept:1"] ---> ["1","2","100"]
         ......
-        return "{1,2,100}";
+        return Arrays.asList("1", "2", "100");
     }
 }
 

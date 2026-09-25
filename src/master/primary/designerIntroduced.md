@@ -6,9 +6,8 @@
 - 设计原理采取不分离的方式，把设计器打包的jar包中,以接口和静态资源的方式引入
 :::
 
-<div class="yat"><img src="https://foruda.gitee.com/images/1776741276337447902/c7997b56_2218307.png"/></div>
-<div class="yat"><div><img src="https://foruda.gitee.com/images/1776738528839847061/d5db8f23_2218307.png"/></div></div>
-<div class="yat"><div><img src="https://foruda.gitee.com/images/1776738347146941820/ffac4456_2218307.png"/></div></div>
+<div class="yat"><img src="/designer/classic.png" alt="经典模式设计器"/></div>
+<div class="yat"><img src="/designer/dingtalk.png" alt="仿钉钉模式设计器"/></div>
 
 
 
@@ -92,7 +91,7 @@ public class ShiroConfig {
 ### 2.2. 前端引入设计器
 ::: tip
 **1、设计器页面入口是访问后端地址(前后端不分离)：`ip:port/warm-flow-ui/index.html?id=${definitionId}&onlyDesignShow=${onlyDesignShow}&Authorization=${token}`**
-- definitionId：流程定义id，<span class="red-font">如果没传，则认定是新增流程，会初始化流程节点，否则则是编辑或者查看</span>
+- definitionId：流程定义id，<span class="wf-em">如果没传，则认定是新增流程，会初始化流程节点，否则则是编辑或者查看</span>
 - onlyDesignShow：是否独显流程设计，传true单独访问流程设计器，不显示流程基础信息
 - disabled：是否可编辑 , true:不可标记 false:可标记 (本身warm-flow工作流内部会通过发布状态自行判断是否可以编辑，但是如果是需要查看的场景可以单独可控制)
 - theme： 主题，默认是theme-light， 可选值：theme-light：浅色, theme-dark：深色
