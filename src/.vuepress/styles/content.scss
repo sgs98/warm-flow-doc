@@ -1,0 +1,208 @@
+// 文档正文覆写。
+// 实测：本主题版本（theme-hope rc.92）正文容器是 div[vp-content]，没有 .theme-hope-content 类
+// （见 MarkdownContent.js:35 → h("div", { class:{custom}, "vp-content":"" })）。
+// 所以下面一律用 [vp-content]，只作用于文档页，首页不受影响。
+
+.vp-page [vp-content] {
+    color: var(--wv-fg);
+    font-family: var(--wv-sans);
+    line-height: 1.85;
+
+    h2 {
+        margin-top: 2.4em;
+        padding-bottom: .3em;
+        border-bottom: 1px solid var(--wv-line);
+        letter-spacing: -.01em;
+    }
+    h3 { margin-top: 1.8em; }
+
+    a { color: var(--wv-brand); }
+
+    // 行内代码
+    :not(pre) > code {
+        padding: 1px 5px;
+        border: 1px solid var(--wv-line);
+        border-radius: 4px;
+        background: var(--wv-bg-soft);
+        color: var(--wv-brand-ink);
+        font-family: var(--wv-mono);
+        font-size: .88em;
+    }
+
+    // 表格：描边 + 圆角 + 表头底色
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 1px solid var(--wv-line);
+        border-radius: 10px;
+        overflow: hidden;
+        background: var(--wv-bg);
+        th { background: var(--wv-bg-soft); font-size: 12.5px; letter-spacing: .02em; }
+        th, td { border: 0; border-inline-end: 1px solid var(--wv-line); border-bottom: 1px solid var(--wv-line); }
+        th:last-child, td:last-child { border-inline-end: 0; }
+        tr:last-child td { border-bottom: 0; }
+        td { padding: 8px 12px; }
+        td :not(pre) > code { border: 0; background: none; padding: 0; }
+    }
+    table img { max-width: 100%; }
+
+    // 正文图片：描边 + 圆角 + 居中
+    img {
+        border: 1px solid var(--wv-line);
+        border-radius: 10px;
+    }
+    p:has(> img) { text-align: center; }
+
+    // 提示块：theme-hope 用 .hint-container.{tip,warning,danger,info}
+    .hint-container {
+        border-inline-start: 3px solid var(--wv-brand);
+        border-radius: 0 10px 10px 0;
+        background: var(--wv-bg-hero);
+        color: var(--wv-fg);
+        .hint-container-title { color: var(--wv-brand); font-weight: 700; }
+        &.warning { border-inline-start-color: var(--wv-amber); .hint-container-title { color: var(--wv-amber); } }
+        &.danger { border-inline-start-color: #e5484d; .hint-container-title { color: #e5484d; } }
+    }
+}
+
+// 代码块容器：与首页代码面板同一套底色语言
+.vp-page [vp-content] {
+    div[class*="language-"] {
+        border: 1px solid var(--wv-line);
+        border-radius: 10px;
+    }
+}
+
+// 页面标题：H1 下方琥珀短划线（全站唯一设计签名）
+.vp-page-title h1::after {
+    content: "";
+    display: block;
+    width: 44px;
+    height: 2px;
+    margin-top: 10px;
+    background: var(--wv-amber);
+}
+
+// 底部翻页卡片
+.vp-page-nav a {
+    border: 1px solid var(--wv-line);
+    border-radius: 10px;
+    background: var(--wv-bg);
+}
+
+// 右侧 TOC 导轨
+.vp-toc-wrapper {
+    border-inline-start: 2px solid var(--wv-line);
+    .active > .vp-toc-link { color: var(--wv-brand); font-weight: 600; }
+}
+
+// TOC 重叠修复：theme-hope 把 #toc 绝对定位到正文右侧留白，留白宽度 =
+//   100vw - content-width - sidebar-space - 6rem（main-layout.scss）。
+// 在 1440–1580px 这段，该值 < TOC 所需的 ~16rem，导致 TOC 溢出视口或被超宽表格顶到正文上。
+// 给留白加一个 17rem 下限：宽屏时公式值更大、下限不触发（内容不变窄）；
+// 窄桌面时下限兜底，内容略窄一点，但 TOC 永远有独立列、不再压正文。
+@media (min-width: 1440px) {
+    .theme-container.has-toc .vp-page {
+        padding-inline-end: max(
+            calc(100vw - var(--content-width) - var(--sidebar-space) - 6rem),
+            17rem
+        );
+    }
+}
+
+
+// ---------- 二级页面 ----------
+
+// 团队页：成员表格渲染成卡片网格（列序：avatar / name / email / role / contributions）
+.vp-page [vp-content] table.wf-team {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    border: 0;
+    background: none;
+    overflow: visible;
+    border-radius: 0;
+
+    thead { display: none; }
+    tbody { display: contents; }
+    tr {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        padding: 16px;
+        border: 1px solid var(--wv-line);
+        border-radius: 12px;
+        background: var(--wv-bg);
+    }
+    td {
+        display: block;
+        padding: 0;
+        border: 0;
+        text-align: left;
+
+        &:first-child {
+            margin-bottom: 4px;
+            img { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--wv-line); }
+        }
+        &:nth-child(2) { font-size: 15px; font-weight: 700; color: var(--wv-fg); }
+        &:nth-child(3) { font-size: 12.5px; color: var(--wv-fg-mute); word-break: break-all; }
+        &:nth-child(4) {
+            margin-top: 6px;
+            font-family: var(--wv-mono);
+            font-size: 11px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--wv-amber);
+        }
+        &:last-child { font-size: 12px; color: var(--wv-fg-mute); }
+    }
+}
+
+// 常见问题：每个 h2 做成卡头（背景 + 圆角 + 左侧强调条），答案内容自然下排。
+// 不用 `h2 + *` 去包 body —— 答案含 p/ul/code 多个兄弟节点，只包第一个会溢出破框。
+.vp-page [vp-content] .wf-faq > h2 {
+    margin-top: 1.8em;
+    margin-bottom: .6em;
+    padding: 10px 14px;
+    border: 1px solid var(--wv-line);
+    border-inline-start: 3px solid var(--wv-brand);
+    border-radius: 8px;
+    background: var(--wv-bg-soft);
+    font-size: 16px;
+}
+
+// 版本时间线：h3 即版本号，左侧竖导轨 + 节点圆点（不生成内容，版本号文字本就在标题里）
+.vp-page [vp-content] .wf-timeline {
+    position: relative;
+    padding-inline-start: 26px;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset-block: 6px;
+        inset-inline-start: 4px;
+        width: 1px;
+        background: var(--wv-line);
+    }
+    > h3 {
+        position: relative;
+        font-family: var(--wv-mono);
+        letter-spacing: -.01em;
+        &::after {
+            content: "";
+            position: absolute;
+            inset-inline-start: -28px;
+            top: .5em;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--wv-brand);
+            box-shadow: 0 0 0 3px var(--wv-bg);
+        }
+    }
+}
+
+
+
+

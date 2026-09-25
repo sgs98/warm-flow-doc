@@ -10,7 +10,8 @@ export default hopeTheme(
             name: "Dromara Warm-Flow工作流",
             url: "https://gitee.com/warm_4/warm-flow-doc",
         },
-        logo: "/logo.png",
+        logo: "/logo.svg",
+        logoDark: "/logo-dark.svg",
         docsDir: "src",
         print: false,
         pageInfo: false,
@@ -48,92 +49,6 @@ export default hopeTheme(
                 assets: "https://at.alicdn.com/t/c/font_4043253_v7nldr3uv7.css",
                 prefix: "iconfont icon-",
             },
-            notice: [
-                // {
-                //     path: "/",
-                //     title: "🙏  请给我支持 🙏 ",
-                //     content: "我正在参加 【Gitee 2025 最受欢迎的开源软件】投票活动，快来给我【投票】吧！",
-                //     actions: [
-                //         {
-                //             text: "👉 投票 👈",
-                //             link: "https://gitee.com/activity/2025opensource?ident=IWLJ3F",
-                //             type: "primary",
-                //         },
-                //     ],
-                //     showOnce: true,
-                //     fullscreen: true,
-                //     confirm: true
-                // },
-                {
-                    path: "/master",
-                    title: "公告: 发布2.0.0版本",
-                    content:
-                        `
-                         <table>
-                           <tbody>
-<!--                            <tr>-->
-<!--                               <td>-->
-<!--                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.7.html">🚀 1.8.8版本</a>-->
-<!--                               </td>-->
-<!--                               <td>-->
-<!--                                 <a href="/master/other/news/upgrade/Warm-Flow_1.8.7.html">ui全面升级，支持移动端！</a>-->
-<!--                               </td>-->
-<!--                             </tr>-->
-                             <tr>
-                               <td>
-                                 <a href="https://gitee.com/sgs98/warm-flow/stargazers" target="_blank">⭐️ Star</a>
-                               </td>
-                               <td>
-                                 <a href="https://gitee.com/sgs98/warm-flow/stargazers" target="_blank">一键三连，你的Star是我持续开发的动力</a>
-                               </td>
-                             </tr>
-                             <tr>
-                               <td>
-                                 <a href="https://gitee.com/sgs98/warm-flow/issues" target="_blank">❓ 疑问</a>
-                               </td>
-                               <td>
-                                 <a href="https://gitee.com/sgs98/warm-flow/issues" target="_blank">先看常见问题和issue，然后再是提👉 issue 👈</a>
-                               </td>
-                             </tr>
-                             <tr>
-                               <td>
-                                 <a href="${base}master/introduction/introduction.html">📖 使用文档</a>
-                               </td>
-                               <td>
-                                 <a href="${base}master/introduction/introduction.html">集成前先快速浏览，大概知道有功能和注意事项</a>
-                               </td>
-                             </tr>
-                             <tr>
-                               <td>
-                                 <a href="${base}master/other/upgrade_guide.html">🌟 升级指南</a>
-                               </td>
-                               <td>
-                                 <a href="${base}master/other/upgrade_guide.html">如发布新版本，请查看</a>
-                               </td>
-                             </tr>
-                             <tr>
-                               <td>
-                                 <a href="https://github.com/sgs98/warm-flow-doc" target="_blank">🚀 本地部署文档</a>
-                               </td>
-                               <td>
-                                 <a href="https://github.com/sgs98/warm-flow-doc" target="_blank">如部分地方访问不了，可本地部署文档</a>
-                               </td>
-                             </tr>
-                           </tbody>
-                         </table>
-                        `,
-                    actions: [
-                        {
-                            text: "⭐️star⭐️",
-                            link: "https://gitee.com/sgs98/warm-flow/stargazers",
-                            type: "primary",
-                        },
-                        { text: "取消" },
-                    ],
-                    showOnce: false,
-                    confirm: true
-                },
-            ],
         }
     },
     { custom: true }

@@ -1,12 +1,8 @@
-<template xmlns="http://www.w3.org/1999/html">
-  <el-link
-      :href="dynamicHref"
-      target="_blank"
-      class="warm-edit removeAfter"
-  >
-    <el-icon><img src="/icons/gitee_home.svg" alt="编辑图标"></el-icon>
+<template>
+  <a :href="dynamicHref" target="_blank" rel="noreferrer" class="warm-edit">
+    <img src="/icons/gitee_home.svg" alt="" aria-hidden="true" />
     <span>编辑此页</span>
-  </el-link>
+  </a>
 </template>
 
 <script setup>
@@ -33,25 +29,24 @@ const dynamicHref = computed(() => {
 .warm-edit {
   display: inline-flex;
   align-items: center;
-  color: #1E90FF; /* 链接颜色 */
-  text-decoration: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  transition: background-color 0.3s, color 0.3s;
+  gap: 6px;
   margin-top: 20px;
+  padding: 6px 12px;
+  border: 1px solid var(--wv-line);
+  border-radius: 8px;
+  color: var(--wv-brand);
+  font-size: 13.5px;
+  text-decoration: none;
+  transition: border-color 0.2s, background-color 0.2s;
 }
 
 .warm-edit:hover {
-  color: indianred;
+  border-color: var(--wv-brand);
+  background: var(--wv-bg-hero);
 }
 
 .warm-edit img {
-  margin-right: 5px;
   width: 16px;
   height: 16px;
-}
-
-.removeAfter::after {
-  content: none !important; /* 移除伪元素内容 */
 }
 </style>

@@ -1,146 +1,32 @@
 <script setup lang="ts">
-import { Layout } from "vuepress-theme-hope/client";
-import {usePageData, usePageFrontmatter} from "vuepress/client";
-import {ref, watch} from "vue";
-import Between from "../components/Between.vue";
-
+import { usePageFrontmatter } from "vuepress/client";
+import { Layout as HopeLayout } from "vuepress-theme-hope/client";
 import type { ThemeBasePageFrontmatter } from "vuepress-theme-hope";
+
+import Home from "../components/home/Home.vue";
+import AnnouncementBar from "../components/AnnouncementBar.vue";
 import DynamicEditLink from "../components/DynamicEditLink.vue";
 
 const frontmatter = usePageFrontmatter<ThemeBasePageFrontmatter>();
-
-const page = usePageData();
-
-/** 文档页赞助广告展示开关。数据、轮播与组件都保留，需要展示时改回 true */
-const SHOW_SPONSOR_ADS = false;
-
-// 部署基路径，子路径部署时广告位等硬编码资源需带前缀
-const base = import.meta.env.BASE_URL;
-
-const sidebarTopArrayLift = [
-  `<a href="https://www.maxkey.top" target="_blank">
-    <img className="no-zoom" height="60px" width="200px" src="${base}ggw/MaxKey.png" class="9999">
-  </a>`,
-  `<a href="https://ccflow.org/index.html?frm=warmflow" target="_blank">
-    <img className="no-zoom" height="60px" width="200px" src="${base}ggw/ccflow.png" class="2028-03-03">
-  </a>`,
-  `<a href="https://el.frsimple.com" target="_blank">
-    <img className="no-zoom" height="60px" width="200px" src="${base}ggw/frsimple.png" class="2027-03-03">
-  </a>`,
-  `<a href="https://easysearch.cn" target="_blank">
-    <img className="no-zoom" height="60px" width="200px" src="${base}ggw/easysearch.webp" class="2027-03-15">
-  </a>`,
-  `<a href="https://www.oarsai.com" target="_blank">
-    <img className="no-zoom" height="60px" width="200px" src="https://www.oarsai.com/assets/ad-banner.webp" class="2027-08-08">
-  </a>`,
-];
-
-const sidebarContentLift = ref("");
-const tocContentRight = ref("");
-
-function renderSponsorAds(containerClass: string) {
-  return `\
-      <div class="${containerClass}">
-          <div class="warm-flow-ads-title">
-            <span>广告采用随机轮播方式显示</span>
-            <span class="warm-flow-ads-sponsor">❤️<a href="${base}master/other/paidservice.html#赞助商广告">成为赞助商</a></span>
-          </div>
-          <div class="warm-flow-ads-list">
-            ${sidebarTopArrayLift.slice(0, sidebarTopArrayLift.length-1).join("\n  ")}
-          </div>
-      </div>
-    `;
-}
-
-function shuffle(arr) {
-  var l = arr.length;
-  var index, temp;
-  while (l > 0) {
-    index = Math.floor(Math.random() * l);
-    temp = arr[l - 1];
-    arr[l - 1] = arr[index];
-    arr[index] = temp;
-    l--;
-  }
-  return arr;
-}
-
-watch(
-    () => page.value.path,
-    () => {
-      if (!SHOW_SPONSOR_ADS || page.value.path.startsWith("/en/")) {
-        sidebarContentLift.value = "";
-        tocContentRight.value = "";
-        return;
-      }
-      shuffle(sidebarTopArrayLift);
-
-      sidebarContentLift.value = renderSponsorAds("warm-flow-sidebar-ads");
-      tocContentRight.value = renderSponsorAds("warm-flow-right-ads");
-    },
-    { immediate: true },
-);
 </script>
 
 <template>
-  <Layout>
-    <template v-if="SHOW_SPONSOR_ADS && !frontmatter.home" #sidebarTop>
-      <div v-html="sidebarContentLift" />
+  <!-- theme-hope 的 HomePage 槽位只有 heroBefore/heroAfter/content，撑不住自定义首屏，
+       所以首页整体换成自有组件树 -->
+  <Home v-if="frontmatter.home" />
+  <HopeLayout v-else>
+    <template #pageTop>
+      <AnnouncementBar />
     </template>
-<!--    <template v-if="!frontmatter.home" #tocBefore>-->
-<!--      <div v-html="tocContentRight" />-->
-<!--    </template>-->
-    <template v-if="!frontmatter.home" #tocAfter>
-      <div class="wwads-cn wwads-horizontal fixed-banner" data-id="349"></div>
+    <template #contentAfter>
+      <DynamicEditLink />
     </template>
-    <template v-if="SHOW_SPONSOR_ADS && !frontmatter.home" #contentBefore>
-      <Between/>
-    </template>
-    <template v-if="!frontmatter.home" #contentAfter>
-      <DynamicEditLink/>
-    </template>
-  </Layout>
+  </HopeLayout>
 </template>
 
 <style lang="scss">
-.warm-flow-ads-title {
-  margin: 12px 0 6px;
-  color: gray;
-  font-size: smaller;
-  line-height: 1.4;
-}
-
-.warm-flow-ads-sponsor {
-  float: right;
-  color: #E01E5A;
-  font-weight: bolder;
-}
-
-.warm-flow-ads-list {
-  width: 230px;
-  margin: 5px auto;
-}
-
-.warm-flow-right-ads {
-  margin-bottom: 1rem;
-}
-
-.warm-flow-right-ads .warm-flow-ads-title {
-  margin-top: 0;
-}
-
-.warm-flow-right-ads .warm-flow-ads-list {
-  margin-inline: 0;
-}
-
 .vp-toc-wrapper {
   height: auto;
   max-height: 50vh;
-}
-
-@media (max-width: 1439px) {
-  .warm-flow-right-ads {
-    display: none;
-  }
 }
 </style>

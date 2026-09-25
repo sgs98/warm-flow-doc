@@ -1,0 +1,73 @@
+// Warm-Flow 重设计令牌层。浅色挂 :root，暗色同时挂两种选择器：
+// theme-hope 用 useDarkMode 设置 html[data-theme]，但其内置 scss 仍混用 .dark 类。
+:root {
+    --wv-brand: #126bae;
+    --wv-brand-ink: #0b4d7e;
+    --wv-amber: #e08a2e;
+    --wv-bg: #ffffff;
+    --wv-bg-soft: #f6f8fa;
+    --wv-bg-hero: #eef4fa;
+    --wv-fg: #1c2933;
+    --wv-fg-mute: #5b6b7a;
+    --wv-line: #e3e9ef;
+    --wv-code-bg: #0d1117;
+    --wv-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --wv-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+        "Microsoft YaHei", "Segoe UI", sans-serif;
+
+    // 让 theme-hope 自身组件也跟着新色板走（不改 node_modules）
+    --theme-color: var(--wv-brand);
+    --vp-c-bg: var(--wv-bg);
+    --vp-c-bg-alt: var(--wv-bg-soft);
+    --vp-c-text-1: var(--wv-fg);
+    --vp-c-text-2: var(--wv-fg-mute);
+    --vp-c-divider: var(--wv-line);
+    --vp-c-accent: var(--wv-brand);
+    --vp-c-accent-bg: var(--wv-brand);
+    --vp-c-accent-soft: var(--wv-bg-hero);
+}
+
+html[data-theme="dark"],
+html.dark {
+    --wv-brand: #58a6ff;
+    --wv-brand-ink: #9ecbff;
+    --wv-amber: #f0a04b;
+    --wv-bg: #0d1117;
+    --wv-bg-soft: #11161d;
+    --wv-bg-hero: #0f1e2d;
+    --wv-fg: #d5dde5;
+    --wv-fg-mute: #8b98a5;
+    --wv-line: #1f2630;
+    --wv-code-bg: #010409;
+
+    --theme-color: var(--wv-brand);
+    --vp-c-bg: var(--wv-bg);
+    --vp-c-bg-alt: var(--wv-bg-soft);
+    --vp-c-text-1: var(--wv-fg);
+    --vp-c-text-2: var(--wv-fg-mute);
+    --vp-c-divider: var(--wv-line);
+    --vp-c-accent: var(--wv-brand);
+    --vp-c-accent-bg: var(--wv-brand);
+    --vp-c-accent-soft: var(--wv-bg-hero);
+}
+
+// 旧 .yat（截图/表格边框）的替代品
+.wf-card {
+    border: 1px solid var(--wv-line);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--wv-bg);
+}
+
+// red-font / big-font 的统一替代品
+.wf-lead {
+    color: var(--wv-amber);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.7;
+}
+
+.wf-em {
+    color: var(--wv-amber);
+    font-weight: 600;
+}

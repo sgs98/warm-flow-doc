@@ -34,6 +34,10 @@ export default defineUserConfig({
     }),
     dest: "./src/.vuepress/warm-flow-docs",
     head: [
+        ['link', { rel: "icon", type: "image/svg+xml", href: `${base}favicon.svg` }],
+        // 首次访问（无存储偏好）时预置为暗色；用户仍可切换，选择会被记住。
+        // key 与 theme-hope useDarkMode 的 useStorage("vuepress-theme-hope-scheme") 一致。
+        ['script', {}, `try{if(!localStorage.getItem('vuepress-theme-hope-scheme'))localStorage.setItem('vuepress-theme-hope-scheme','dark')}catch(e){}`],
         ['script', {}, `       
             var _hmt = _hmt || [];
             (function() {
@@ -43,8 +47,5 @@ export default defineUserConfig({
               s.parentNode.insertBefore(hm, s);
             })();
         `],
-        ['script', { type: 'text/javascript', charset: 'UTF-8'
-            , src: 'https://cdn.wwads.cn/js/makemoney.js', async: '' }, ''
-        ],
     ],
 });

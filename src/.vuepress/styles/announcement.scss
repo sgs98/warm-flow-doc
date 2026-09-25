@@ -1,0 +1,40 @@
+// 顶部公告横幅。渲染在 PageContent 的 #pageTop 槽（正文列顶部、fixed 导航栏下方），
+// 不放在 navbar 之上，否则会被 position:fixed 的导航栏遮住。
+.wf-announce {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    padding: 9px 16px;
+    border: 1px solid var(--wv-line);
+    border-radius: 10px;
+    background: var(--wv-bg-hero);
+    color: var(--wv-fg-mute);
+    font-size: 13px;
+
+    strong { color: var(--wv-fg); }
+
+    .pill {
+        padding: 1px 8px;
+        border: 1px solid var(--wv-brand);
+        border-radius: 99px;
+        font-family: var(--wv-mono);
+        font-size: 10.5px;
+        color: var(--wv-brand);
+    }
+
+    a { color: var(--wv-brand); text-decoration: none; &:hover { text-decoration: underline; } }
+
+    .x {
+        margin-inline-start: auto;
+        padding: 2px 6px;
+        border: 0;
+        background: none;
+        color: inherit;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    @media (max-width: 739px) { .txt { display: none; } }
+}
