@@ -23,6 +23,7 @@ export default sidebar({
                 'primary/config.md',
                 'primary/api.md',
                 'primary/designerIntroduced.md',
+                'primary/designer_model.md',
                 'primary/chart_manage.md',
                 'primary/permission_handler.md',
                 'primary/datafillhandler.md',

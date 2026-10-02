@@ -21,8 +21,8 @@ warm-flow:
   global-listener-path: com.warm.flow.listener.CustomGlobalListener
   # 当所用 ORM 扩展包自身不提供逻辑删除时（如 MyBatis 扩展包），可通过此方式开启；MyBatis-Plus 走自身 @TableLogic，不读取该配置
   logic-delete: true
-  # 逻辑删除字段值（开启后默认为2）
-  logic-delete-value: 2
+  # 逻辑删除字段值（开启后默认为1）
+  logic-delete-value: 1
   # 逻辑未删除字段（开启后默认为0）
   logic-not-delete-value: 0
   ## 如果需要工作流共享业务系统权限，默认Authorization，如果有多个token，用逗号分隔
