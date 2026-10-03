@@ -21,6 +21,19 @@
 - **流程操作接口重构**：新增统一门面 `FlowEngine.workflow()`（`WorkflowService`）+ 各操作命令（`StartCommand`、`CompleteCommand`、`RejectCommand`、`JumpCommand`、`RevokeCommand`、`TerminateCommand`、`TransferCommand`、`DelegateCommand`、`AddSignerCommand`、`RemoveSignerCommand`），统一返回 `WorkflowResult`；原 `FlowParams` 参数对象已删除，请参考[接口文档](../primary/api.md)迁移
 - **移除 id 生成器配置**：`key_type`/`keyType` 配置已删除，主键生成策略由所用 orm 扩展包决定（见[id生成器](../primary/idGen.md)）
 - **移除 JPA 配置**：`jpa_persistence_provider` 配置已删除
+- **逻辑删除默认值变更**：2.0 起 `warm-flow.logic-delete` 默认由 `false`（物理删除）改为 `true`（逻辑删除），`warm-flow.logic-delete-value` 默认由 `2` 改为 `1`（与 MyBatis-Plus 对齐）。如果 1.8.x 已手工开启逻辑删除且库中已删除数据为 `del_flag='2'`，升级后需先将旧数据迁移为 `del_flag='1'`，否则已删除数据会被查询出来：
+
+  ```sql
+  UPDATE flow_definition SET del_flag = '1' WHERE del_flag = '2';
+  UPDATE flow_node SET del_flag = '1' WHERE del_flag = '2';
+  UPDATE flow_skip SET del_flag = '1' WHERE del_flag = '2';
+  UPDATE flow_instance SET del_flag = '1' WHERE del_flag = '2';
+  UPDATE flow_task SET del_flag = '1' WHERE del_flag = '2';
+  UPDATE flow_his_task SET del_flag = '1' WHERE del_flag = '2';
+  UPDATE flow_user SET del_flag = '1' WHERE del_flag = '2';
+  ```
+
+  未开启过逻辑删除（或已删除数据为 `del_flag='1'`）的库无需迁移；1.8.x 里关闭逻辑删除走物理删除的库也无影响。
 - 如果二开设计器，请自行手动同步，就不一一列举，参考工作流引擎源码中`warm-flow/warm-flow-ui`文件夹的提交记录
 :::
 
