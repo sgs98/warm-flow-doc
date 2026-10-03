@@ -13,6 +13,7 @@
 :::
 ### v2.0.0
 ::: warning 本次为大版本升级，存在破坏性变更，升级前请先阅读本节
+- **Maven 坐标迁移**：groupId 由 `org.dromara.warm` 迁移为 `io.github.sgs98`（如 `io.github.sgs98:warm-flow-mybatis-plus-sb3-starter`），升级时请一并修改依赖 groupId，否则会继续解析到 1.8.9 版本
 - **JDK 基线升级**：从 Java8 升级到 **JDK 17**，兼容 Java17、Java21，请先确认业务系统已升级到 JDK 17 及以上
 - **移除 springboot2 适配**：`warm-flow-mybatis-sb-starter`、`warm-flow-mybatis-plus-sb-starter` 已删除，springboot3 请改用 `warm-flow-mybatis-sb3-starter`、`warm-flow-mybatis-plus-sb3-starter`，springboot4 用对应的 sb4 starter
 - **移除 solon 适配**：solon 相关的 starter、表达式实现和设计器插件包均已移除

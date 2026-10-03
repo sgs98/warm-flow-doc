@@ -45,7 +45,7 @@ td {
 
 ```xml
 <dependency>
-    <groupId>org.dromara.warm</groupId>
+    <groupId>io.github.sgs98</groupId>
     <artifactId>warm-flow-mybatis-sb3-starter</artifactId>
     <version>最新版本</version>
 </dependency>
@@ -55,7 +55,7 @@ td {
 
 ```xml
 <dependency>
-    <groupId>org.dromara.warm</groupId>
+    <groupId>io.github.sgs98</groupId>
     <artifactId>warm-flow-mybatis-sb4-starter</artifactId>
     <version>最新版本</version>
 </dependency>
@@ -72,7 +72,7 @@ td {
 
 ```xml
 <dependency>
-    <groupId>org.dromara.warm</groupId>
+    <groupId>io.github.sgs98</groupId>
     <artifactId>warm-flow-mybatis-plus-sb3-starter</artifactId>
     <version>最新版本</version>
 </dependency>
@@ -82,7 +82,7 @@ td {
 
 ```xml
 <dependency>
-    <groupId>org.dromara.warm</groupId>
+    <groupId>io.github.sgs98</groupId>
     <artifactId>warm-flow-mybatis-plus-sb4-starter</artifactId>
     <version>最新版本</version>
 </dependency>

@@ -19,14 +19,20 @@
 
 
 ## 更新日志
-### v2.0.0  2026-09-21
+### v2.0.0  2026-10-03
 - [升级指南](./upgrade_guide.md#v2-0-0)
 - 破坏性变更：JDK 基线升级到 17，移除 springboot2、solon、easy-query 适配
+- 破坏性变更：Maven 坐标由 `org.dromara.warm` 迁移为 `io.github.sgs98`，升级需同步修改依赖 groupId
+- 破坏性变更：移除 id 生成器配置 `key_type`/`keyType` 与 JPA 配置 `jpa_persistence_provider`
 - feat：新增统一流程操作门面 WorkflowService，一个操作对应一个命令对象，统一返回 WorkflowResult
 - feat：监听器上下文新增 eventType，可读取本次实际触发的监听器事件类型
+- feat：设计器支持经典 ↔ 仿钉钉画布内一键互转（经典转仿钉钉自动重排、仿钉钉转经典保留坐标，并重建折点与标签），双模式视觉美化、拖拽磁吸对齐、属性分组可折叠
+- feat：逻辑删除默认开启，新增物理删除模式（`logic-delete: false` 时 starter 自动注册处理器关闭流程表逻辑删除），逻辑删除值默认 1
 - refactor：流程操作按步骤链重构（启动、执行、撤回、终止、办理人调整）
 - perf：新增流程执行作用域，一次操作内复用流程定义、节点、跳线查询结果
+- perf：优化节点图遍历与网关路径解析，ORM 批量保存改用批处理
 - feat：新增实例流程历史图
+- fix：运行态流程图只展示已办节点办理人，连线标签对齐、节点防重叠；修复设计器双模型互转的撤销错乱、网关标签重叠与折点脱开
 - docs：补充流程定义导入导出示例，补充核心单测
 
 </div>

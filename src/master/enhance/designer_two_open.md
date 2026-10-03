@@ -34,12 +34,12 @@
 
 ```xml
 <dependency>
-    <groupId>org.dromara.warm</groupId>
+    <groupId>io.github.sgs98</groupId>
     <artifactId>warm-flow-plugin-ui-sb-web</artifactId>
     <exclusions>
         <exclusion>
             <artifactId>warm-flow-plugin-vue3-ui</artifactId>
-            <groupId>org.dromara.warm</groupId>
+            <groupId>io.github.sgs98</groupId>
         </exclusion>
     </exclusions>
 </dependency>
