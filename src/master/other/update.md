@@ -19,6 +19,16 @@
 
 
 ## 更新日志
+### v2.0.1  2026-10-12
+- [升级指南](./upgrade_guide.md#v2-0-1)
+- feat：新增 `DefService#copyDefReturnId`，复制流程定义并返回新定义主键，复制产物固定为未发布草稿
+- update：发布流程定义前校验持久化流程图，结构非法的定义不允许进入已发布状态
+- update：已发布或已失效的流程定义不再允许保存修改，需复制新版本后编辑，与设计器只读规则对齐
+- update：设计器保存与发布校验改由服务端从目标节点派生连线节点类型，不再信任客户端回传值，防止绕过中间节点多出口限制
+- refactor：流程定义保存与导入合并为共享结构校验核 `FlowConfigUtil#validateGraph`
+- fix：`unPublish` 对不存在的流程定义改为报「流程定义不存在」，与 `publish` 行为对齐
+- update：`flow_instance.node_code` 由 `varchar(40)` 扩至 `varchar(100)`，MySQL 升级脚本 `warm-flow_2.0.1.sql`
+
 ### v2.0.0  2026-10-03
 - [升级指南](./upgrade_guide.md#v2-0-0)
 - 破坏性变更：JDK 基线升级到 17，移除 springboot2、solon、easy-query 适配

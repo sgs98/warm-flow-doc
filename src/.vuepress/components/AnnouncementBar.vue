@@ -1,7 +1,7 @@
 <template>
   <div v-if="visible" class="wf-announce">
-    <span class="pill">v2.0.0</span>
-    <strong>Warm-Flow 2.0.0 已发布</strong>
+    <span class="pill">v2.0.1</span>
+    <strong>Warm-Flow 2.0.1 已发布</strong>
     <span class="txt">破坏性变更与迁移步骤见升级指南</span>
     <a :href="`${base}master/other/upgrade_guide.html`">升级指南 →</a>
     <a href="https://gitee.com/sgs98/warm-flow/stargazers" target="_blank" rel="noreferrer">★ Star</a>
@@ -13,7 +13,7 @@
 import { useRoute } from "vuepress/client";
 import { computed, onMounted, ref } from "vue";
 
-const VERSION = "2.0.0";
+const VERSION = "2.0.1";
 const KEY = "wf-announce-dismissed";
 const base = import.meta.env.BASE_URL;
 const route = useRoute();

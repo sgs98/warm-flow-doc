@@ -11,6 +11,17 @@
 - 未提到的版本号升级，就只需要改动jar包版本号，如v1.7.6 --> v1.7.7
 
 :::
+### v2.0.1
+- **表结构变更**：`flow_instance.node_code` 由 `varchar(40)` 扩至 `varchar(100)`，MySQL 需执行 [warm-flow_2.0.1.sql](https://github.com/sgs98/warm-flow/blob/main/sql/mysql/v1-upgrade/warm-flow_2.0.1.sql)：
+
+  ```sql
+  ALTER TABLE `flow_instance` MODIFY COLUMN `node_code` varchar(100) NOT NULL COMMENT '流程节点编码';
+  ```
+
+  Oracle 原本即为 `VARCHAR2(100)`，无需处理；PostgreSQL、SQL Server 请按对应方言转换。
+- **行为变更**：已发布或已失效的流程定义不可再通过 `saveDef` 就地改图（返回「请复制新版本后编辑」），发布前会校验持久化流程图结构，依赖就地编辑已发布定义的集成方需改为复制新版本。
+- **行为变更**：`unPublish` 对不存在的流程定义由静默返回 `false` 改为抛出「流程定义不存在」异常，依赖该返回值的调用方需改为异常处理。
+
 ### v2.0.0
 ::: warning 本次为大版本升级，存在破坏性变更，升级前请先阅读本节
 - **Maven 坐标迁移**：groupId 由 `org.dromara.warm` 迁移为 `io.github.sgs98`（如 `io.github.sgs98:warm-flow-mybatis-plus-sb3-starter`），升级时请一并修改依赖 groupId，否则会继续解析到 1.8.9 版本

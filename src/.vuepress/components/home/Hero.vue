@@ -1,6 +1,6 @@
 <template>
   <header class="wf-hero">
-    <p class="wf-eyebrow">Dromara · 国产自研工作流引擎 · v2.0.0</p>
+    <p class="wf-eyebrow">Dromara · 国产自研工作流引擎 · v2.0.1</p>
 
     <h1 class="wf-h1">
       <em>7 张表</em>，一个依赖，<br />跑通整条审批流
