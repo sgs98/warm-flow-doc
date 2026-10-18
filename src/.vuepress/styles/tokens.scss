@@ -7,6 +7,9 @@
     --wv-bg: #ffffff;
     --wv-bg-soft: #f6f8fa;
     --wv-bg-hero: #eef4fa;
+    // 图示底板：正文里的 SVG 图是「浅色填充 + 浅灰文字」的配色，
+    // 画布本身透明，必须给一层不透明浅底，否则文字会落在页面底色上（暗色下对比度崩到 1.3:1）
+    --wv-figure-bg: #ffffff;
     --wv-fg: #1c2933;
     --wv-fg-mute: #5b6b7a;
     --wv-line: #e3e9ef;
@@ -24,6 +27,7 @@
     --vp-c-divider: var(--wv-line);
     --vp-c-accent: var(--wv-brand);
     --vp-c-accent-bg: var(--wv-brand);
+    --vp-c-accent-hover: var(--wv-brand-ink);
     --vp-c-accent-soft: var(--wv-bg-hero);
 }
 
@@ -35,6 +39,9 @@ html.dark {
     --wv-bg: #0d1117;
     --wv-bg-soft: #11161d;
     --wv-bg-hero: #0f1e2d;
+    // 暗色下也保持浅底（不透明白色）：图示配色为浅色系，
+    // 若让画布透明，图内 #5F5E5A 文字压在 #0d1117 上仅约 2.9:1、标题 #2C2C2A 仅约 1.3:1
+    --wv-figure-bg: #ffffff;
     --wv-fg: #d5dde5;
     --wv-fg-mute: #8b98a5;
     --wv-line: #1f2630;
@@ -48,6 +55,7 @@ html.dark {
     --vp-c-divider: var(--wv-line);
     --vp-c-accent: var(--wv-brand);
     --vp-c-accent-bg: var(--wv-brand);
+    --vp-c-accent-hover: #2b5c8f;
     --vp-c-accent-soft: var(--wv-bg-hero);
 }
 

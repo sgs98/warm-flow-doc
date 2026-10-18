@@ -3,6 +3,7 @@
 // 令牌与局部覆写。sidebar 依赖 tokens 里的 --wv-*，顺序不能颠倒。
 @use "fonts";
 @use "tokens";
+@use "ux";
 @use "sidebar";
 @use "home";
 @use "content";

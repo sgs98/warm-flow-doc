@@ -15,6 +15,9 @@ export default hopeTheme(
         docsDir: "src",
         print: false,
         pageInfo: false,
+        // 面包屑只能显示 Master / Primary 这类英文目录名（页面 H1 + 侧栏 + TOC 已覆盖导航），
+        // 显示出来反而拉低观感，直接关闭
+        breadcrumb: false,
         locales: {
             "/": {
                 navbar,
@@ -22,6 +25,8 @@ export default hopeTheme(
                 displayFooter: false,
                 metaLocales: {
                     editLink: "前往 Gitee 编辑此页",
+                    prev: "上一篇",
+                    next: "下一篇",
                 },
             },
         },

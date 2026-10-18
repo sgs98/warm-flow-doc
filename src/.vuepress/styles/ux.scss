@@ -1,0 +1,77 @@
+// 使用与交互打磨：焦点环 / 滚动条 / reduced-motion / 搜索弹窗统一。
+// 均为全局增强，不影响布局与既有组件样式。
+
+// ------------------------------------------------------------
+// 1. 键盘焦点环：浏览器默认 outline 在两套主题下观感不一，
+//    统一为品牌色 2px 环。只在 :focus-visible（键盘导航）时出现，
+//    鼠标点击不会显示，搜索输入框自带的边框样式也不受影响。
+// ------------------------------------------------------------
+:focus-visible {
+    outline: 2px solid var(--wv-brand);
+    outline-offset: 2px;
+}
+
+// ------------------------------------------------------------
+// 2. 细滚动条：侧栏与 TOC 用系统默认滚动条，Windows 下粗黑突兀，
+//    统一成窄条 + 主题分隔线色（悬停加深），与正文观感一致。
+// ------------------------------------------------------------
+.vp-sidebar > .vp-sidebar-links,
+.vp-toc-wrapper,
+.vp-toc-wrapper-inner {
+    scrollbar-width: thin;
+    scrollbar-color: var(--wv-line) transparent;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 6px;
+        background: var(--wv-line);
+
+        &:hover { background: var(--wv-fg-mute); }
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}
+
+// ------------------------------------------------------------
+// 3. 搜索弹窗统一到站点色板：
+//    - 关键词 mark 高亮：浏览器默认是刺眼的黄色荧光笔底，
+//      改为品牌色柔和底 + 前景色不变（亮暗主题都成立）
+//    - 选中/悬停记录的背景走 --vp-c-accent-hover（tokens.scss 已映射到品牌深蓝），
+//      白字与蓝底的对比度 4.6:1，满足正文要求
+// ------------------------------------------------------------
+.slimsearch-record-matches mark,
+.slimsearch-suggestions mark {
+    padding: 0 2px;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--wv-amber) 28%, transparent);
+    color: inherit;
+}
+
+.slimsearch-record-matches.active mark,
+.slimsearch-record-matches:hover mark {
+    background: rgba(255, 255, 255, 0.28);
+}
+
+// 弹窗圆角与站点卡片一致
+.slimsearch-modal {
+    border: 1px solid var(--wv-line);
+}
+
+// ------------------------------------------------------------
+// 4. 减弱动态效果：尊重系统「减少动态效果」偏好，
+//    关闭装饰性动画与过渡（滚动定位仍即时可用）。
+// ------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
