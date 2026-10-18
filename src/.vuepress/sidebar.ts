@@ -43,6 +43,8 @@ export default sidebar({
                 'advanced/variableStategy.md',
                 'advanced/change_of_handler.md',
                 'advanced/listener.md',
+                'advanced/spi.md',
+                'advanced/event.md',
                 'advanced/node_ext.md',
                 'advanced/ormusagetips.md',
                 'advanced/logicdelete.md',
