@@ -1,0 +1,50 @@
+<svg viewBox="0 0 680 330" width="100%" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>示例一：人工审批超时自动转交</title>
+  <desc>人工审批挂 3 秒定时边界：3 秒内办完则闹钟取消、流程正常结束；3 秒没人办则任务归档失效、流程改走超时转交</desc>
+  <defs>
+    <marker id="a51" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <style>
+    .h{font:500 14px sans-serif;fill:#2C2C2A}.t{font:400 12px sans-serif;fill:#5F5E5A}
+    .gry{fill:#F1EFE8;stroke:#888780}.blu{fill:#E6F1FB;stroke:#185FA5}.amb{fill:#FAEEDA;stroke:#BA7517}
+    .red{fill:#FCEBEB;stroke:#A32D2D}.grn{fill:#EAF3DE;stroke:#3B6D11}
+    .tg{font:500 14px sans-serif;fill:#444441}.tb{font:500 14px sans-serif;fill:#0C447C}
+    .ta{font:500 14px sans-serif;fill:#633806}.tr{font:500 14px sans-serif;fill:#791F1F}
+    .ag{font:500 14px sans-serif;fill:#27500A}
+    .ab{stroke:#185FA5;fill:none}.aa{stroke:#BA7517;fill:none}.ar{stroke:#A32D2D;fill:none}.ak{stroke:#3B6D11;fill:none}
+  </style>
+
+  <text class="h" x="40" y="30">示例一：人工审批超时自动转交（TIMER_BOUNDARY）</text>
+
+  <g><rect class="gry" x="40" y="64" width="70" height="44" rx="8" stroke-width="0.5"/>
+    <text class="tg" x="75" y="86" text-anchor="middle" dominant-baseline="central">开始</text></g>
+  <path class="ab" d="M110 86 L150 86" stroke-width="1.5" marker-end="url(#a51)"/>
+  <g><rect class="blu" x="152" y="64" width="120" height="44" rx="8" stroke-width="0.5"/>
+    <text class="tb" x="212" y="86" text-anchor="middle" dominant-baseline="central">人工审批</text></g>
+
+  <g><rect class="amb" x="152" y="146" width="180" height="52" rx="12" stroke-width="0.5"/>
+    <text class="ta" x="242" y="166" text-anchor="middle" dominant-baseline="central">边界：3 秒超时闹钟</text>
+    <text class="t" x="242" y="186" text-anchor="middle" dominant-baseline="central">附着在「人工审批」上</text></g>
+  <line x1="212" y1="144" x2="212" y2="112" stroke="rgba(0,0,0,0.3)" stroke-width="0.5" stroke-dasharray="3 3"/>
+
+  <path class="ak" d="M272 86 C 320 86 344 70 398 70" stroke-width="1.5" marker-end="url(#a51)"/>
+  <text class="t" x="284" y="56">3 秒内办理完</text>
+  <g><rect class="grn" x="400" y="48" width="106" height="44" rx="8" stroke-width="0.5"/>
+    <text class="ag" x="453" y="70" text-anchor="middle" dominant-baseline="central">正常结束</text></g>
+  <text class="t" x="516" y="62">闹钟取消</text>
+  <text class="t" x="516" y="82">流程和没配边界一样</text>
+
+  <path class="ar" d="M332 172 L394 172" stroke-width="1.5" marker-end="url(#a51)"/>
+  <g><rect class="red" x="396" y="146" width="130" height="52" rx="8" stroke-width="0.5"/>
+    <text class="tr" x="461" y="172" text-anchor="middle" dominant-baseline="central">超时转交</text></g>
+  <path class="ar" d="M526 172 L566 172" stroke-width="1.5" marker-end="url(#a51)"/>
+  <g><rect class="gry" x="568" y="150" width="70" height="44" rx="8" stroke-width="0.5"/>
+    <text class="tg" x="603" y="172" text-anchor="middle" dominant-baseline="central">结束</text></g>
+  <text class="t" x="383" y="220">3 秒没人办：任务失效改道</text>
+
+  <text class="t" x="40" y="258">3 秒内办完：边界等待置 CANCELLED，审批任务正常归档（历史任务 PASS=2）</text>
+  <text class="t" x="40" y="280">3 秒没人办：审批任务归档失效（INVALID=10，备注「定时边界事件中断」），流程沿边界出口走「超时转交」</text>
+  <text class="t" x="40" y="302">定时器扫描间隔默认 5 秒，所以 3 秒的边界实际会在 3～8 秒之间触发</text>
+</svg>

@@ -1,0 +1,69 @@
+<svg viewBox="0 0 680 560" width="100%" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>示例五：每日自动巡检</title>
+  <desc>定时启动让引擎每天 09:00 自动发起巡检实例；巡检是并行分支，风控支线经互斥网关按 veto 变量选路：严重异常走 TERMINATE_END 直接收口，无异常则与质检支线汇聚后正常结束</desc>
+  <defs>
+    <marker id="a55" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <style>
+    .h{font:500 14px sans-serif;fill:#2C2C2A}.t{font:400 12px sans-serif;fill:#5F5E5A}
+    .gry{fill:#F1EFE8;stroke:#888780}.blu{fill:#E6F1FB;stroke:#185FA5}.amb{fill:#FAEEDA;stroke:#BA7517}
+    .red{fill:#FCEBEB;stroke:#A32D2D}.grn{fill:#EAF3DE;stroke:#3B6D11}
+    .tg{font:500 14px sans-serif;fill:#444441}.tb{font:500 14px sans-serif;fill:#0C447C}
+    .ta{font:500 14px sans-serif;fill:#633806}.tr{font:500 14px sans-serif;fill:#791F1F}
+    .ag{font:500 14px sans-serif;fill:#27500A}
+    .ab{stroke:#185FA5;fill:none}.aa{stroke:#BA7517;fill:none}.ar{stroke:#A32D2D;fill:none}
+  </style>
+
+  <text class="h" x="40" y="28">示例五：每日自动巡检（TIMER_START + TERMINATE_END）</text>
+
+  <g><rect class="amb" x="230" y="48" width="220" height="52" rx="12" stroke-width="0.5"/>
+    <text class="ta" x="340" y="68" text-anchor="middle" dominant-baseline="central">① 每天 09:00 自动发起</text>
+    <text class="t" x="340" y="88" text-anchor="middle" dominant-baseline="central">TIMER_START（POINT_IN_TIME）</text></g>
+  <path class="aa" d="M340 100 L340 122" stroke-width="1.5" marker-end="url(#a55)"/>
+  <g><rect class="blu" x="230" y="124" width="220" height="44" rx="8" stroke-width="0.5"/>
+    <text class="tb" x="340" y="146" text-anchor="middle" dominant-baseline="central">② 执行数据巡检（待办）</text></g>
+  <path class="ab" d="M340 168 L340 190" stroke-width="1.5" marker-end="url(#a55)"/>
+
+  <g transform="translate(340,212)">
+    <rect class="gry" x="-22" y="-22" width="44" height="44" rx="4" stroke-width="0.5" transform="rotate(45)"/>
+    <text class="tg" x="0" y="0" text-anchor="middle" dominant-baseline="central" font-size="12">并行</text>
+  </g>
+  <path class="ab" d="M320 226 C 250 246 168 250 148 268" stroke-width="1.5" marker-end="url(#a55)"/>
+  <path class="ab" d="M360 226 C 430 246 512 250 532 268" stroke-width="1.5" marker-end="url(#a55)"/>
+
+  <g><rect class="blu" x="58" y="274" width="180" height="44" rx="8" stroke-width="0.5"/>
+    <text class="tb" x="148" y="296" text-anchor="middle" dominant-baseline="central">③ 质检复核</text></g>
+  <g><rect class="blu" x="442" y="274" width="180" height="44" rx="8" stroke-width="0.5"/>
+    <text class="tb" x="532" y="296" text-anchor="middle" dominant-baseline="central">③′ 风控否决判定</text></g>
+
+  <g transform="translate(340,352)">
+    <rect class="gry" x="-22" y="-22" width="44" height="44" rx="4" stroke-width="0.5" transform="rotate(45)"/>
+    <text class="tg" x="0" y="0" text-anchor="middle" dominant-baseline="central" font-size="12">汇聚</text>
+  </g>
+  <g transform="translate(532,352)">
+    <rect class="gry" x="-22" y="-22" width="44" height="44" rx="4" stroke-width="0.5" transform="rotate(45)"/>
+    <text class="tg" x="0" y="0" text-anchor="middle" dominant-baseline="central" font-size="12">互斥</text>
+  </g>
+
+  <path class="ab" d="M148 318 L148 352 L305 352" stroke-width="1.5" marker-end="url(#a55)"/>
+  <path class="ab" d="M532 318 L532 331" stroke-width="1.5" marker-end="url(#a55)"/>
+  <path class="ab" d="M497 352 L375 352" stroke-width="1.5" marker-end="url(#a55)"/>
+  <text class="t" x="412" y="342" text-anchor="middle">无异常</text>
+  <path class="ar" d="M532 374 L532 400" stroke-width="1.5" marker-end="url(#a55)"/>
+  <text class="t" x="544" y="392">严重异常</text>
+
+  <path class="ab" d="M340 383 L340 400" stroke-width="1.5" marker-end="url(#a55)"/>
+  <g><rect class="grn" x="288" y="402" width="104" height="40" rx="8" stroke-width="0.5"/>
+    <text class="ag" x="340" y="422" text-anchor="middle" dominant-baseline="central">④ 结束</text></g>
+
+  <g><rect class="red" x="432" y="402" width="200" height="50" rx="12" stroke-width="0.5"/>
+    <text class="tr" x="532" y="420" text-anchor="middle" dominant-baseline="central">⑤ 严重异常终止</text>
+    <text class="t" x="532" y="438" text-anchor="middle" dominant-baseline="central">TERMINATE_END</text></g>
+
+  <text class="t" x="40" y="486">① 定义发布且激活后，引擎写一条定义级等待（只有 TIMER_START 这样）；到点由定时器创建实例，无需人工发起</text>
+  <text class="t" x="40" y="508">② 巡检是并行分支：质检与风控两条支线都办完才汇聚结束</text>
+  <text class="t" x="40" y="530">③ 风控否决判定办理时带变量 veto：1 → 互斥网关走「严重异常」到 TERMINATE_END，中断在办任务与等待</text>
+  <text class="t" x="40" y="552">④ veto=0 → 走「无异常」与质检支线汇合；变量必须传，缺失时互斥网关抛「跳转条件不能为空!」</text>
+</svg>

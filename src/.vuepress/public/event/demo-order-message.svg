@@ -1,0 +1,61 @@
+<svg viewBox="0 0 680 500" width="100%" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>示例二：订单对账的完整链路</title>
+  <desc>支付成功由宿主调 startByMessage 发起实例；风控结果由宿主调 triggerMessage 推进；对账后消息抛出，引擎回调发布器由宿主投递外部系统</desc>
+  <defs>
+    <marker id="a52" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <style>
+    .h{font:500 14px sans-serif;fill:#2C2C2A}.t{font:400 12px sans-serif;fill:#5F5E5A}
+    .blu{fill:#E6F1FB;stroke:#185FA5}.grn{fill:#EAF3DE;stroke:#3B6D11}.gry{fill:#F1EFE8;stroke:#888780}
+    .tb{font:500 14px sans-serif;fill:#0C447C}.ag{font:500 14px sans-serif;fill:#27500A}
+    .ab{stroke:#185FA5;fill:none}.ak{stroke:#3B6D11;fill:none}
+  </style>
+
+  <text class="h" x="40" y="28">示例二：订单对账 —— 消息启动 + 消息捕获 + 消息抛出</text>
+  <text class="t" x="40" y="48">左侧是流程走向，右侧是「谁在什么时机做什么」；蓝色圆角=事件节点，蓝色直角=人工审批节点</text>
+
+  <g><rect class="blu" x="40" y="62" width="210" height="52" rx="12" stroke-width="0.5"/>
+    <text class="tb" x="145" y="82" text-anchor="middle" dominant-baseline="central">① 订单已支付</text>
+    <text class="t" x="145" y="102" text-anchor="middle" dominant-baseline="central">消息启动 order.paid</text></g>
+  <text class="t" x="284" y="78">宿主：支付回调里调 startByMessage(</text>
+  <text class="t" x="284" y="98">businessId, flowCode, "order.paid", payload)</text>
+  <text class="t" x="284" y="118">→ 实例被创建，payload 合并为流程变量</text>
+
+  <path class="ab" d="M145 114 L145 140" stroke-width="1.5" marker-end="url(#a52)"/>
+
+  <g><rect class="blu" x="40" y="142" width="210" height="52" rx="12" stroke-width="0.5"/>
+    <text class="tb" x="145" y="162" text-anchor="middle" dominant-baseline="central">② 等待风控结果</text>
+    <text class="t" x="145" y="182" text-anchor="middle" dominant-baseline="central">消息捕获 risk.result</text></g>
+  <text class="t" x="284" y="158">宿主：风控系统回调进来时调 triggerMessage(</text>
+  <text class="t" x="284" y="178">instanceId, "risk.result", payload)</text>
+  <text class="t" x="284" y="198">→ 实例停在这里等，没有待办</text>
+
+  <path class="ab" d="M145 194 L145 220" stroke-width="1.5" marker-end="url(#a52)"/>
+
+  <g><rect class="blu" x="40" y="222" width="210" height="46" rx="8" stroke-width="0.5"/>
+    <text class="tb" x="145" y="245" text-anchor="middle" dominant-baseline="central">③ 对账确认（人工审批）</text></g>
+  <text class="t" x="284" y="238">人工：审批人办理，产生 approver3 待办</text>
+  <text class="t" x="284" y="258">全流程只有这一步有待办、有审批历史</text>
+
+  <path class="ab" d="M145 268 L145 294" stroke-width="1.5" marker-end="url(#a52)"/>
+
+  <g><rect class="blu" x="40" y="296" width="210" height="52" rx="12" stroke-width="0.5"/>
+    <text class="tb" x="145" y="316" text-anchor="middle" dominant-baseline="central">④ 对账结果通知</text>
+    <text class="t" x="145" y="336" text-anchor="middle" dominant-baseline="central">消息抛出 order.settled</text></g>
+  <text class="t" x="284" y="312">引擎：到达即同步回调 EventPublisher.publish</text>
+  <text class="t" x="284" y="332">宿主：在自己的发布器里投递 MQ / HTTP</text>
+  <text class="t" x="284" y="352">→ 不等回执，流程继续往下走</text>
+
+  <path class="ak" d="M145 348 L145 374" stroke-width="1.5" marker-end="url(#a52)"/>
+
+  <g><rect class="grn" x="40" y="376" width="210" height="46" rx="8" stroke-width="0.5"/>
+    <text class="ag" x="145" y="399" text-anchor="middle" dominant-baseline="central">⑤ 结束（实例 FINISHED=8）</text></g>
+  <text class="t" x="284" y="392">事件节点（①②④）不产生待办 / 审批历史</text>
+  <text class="t" x="284" y="412">所以它们只能从右侧这些回调点观察</text>
+
+  <line x1="40" y1="442" x2="640" y2="442" stroke="rgba(0,0,0,0.15)" stroke-width="0.5"/>
+  <text class="t" x="40" y="466">宿主侧一共要写三处代码：① 发起、② 推进、④ 接收，它们不会自己发生</text>
+  <text class="t" x="40" y="488">① 用 startByMessage 主动发起；② 用 triggerMessage 推进；④ 用 EventPublisher 接收并投递出去</text>
+</svg>

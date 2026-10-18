@@ -1,0 +1,33 @@
+<svg viewBox="0 0 680 300" width="100%" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>定时启动与消息启动对比</title>
+  <desc>定时启动由引擎按计划创建实例，消息启动由宿主按消息名创建实例；两者位于开始节点之后，且互斥</desc>
+  <defs>
+    <marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <style>
+    .t{font:400 12px sans-serif;fill:#5F5E5A}
+    .gry{fill:#F1EFE8;stroke:#888780}.amb{fill:#FAEEDA;stroke:#BA7517}.blu{fill:#E6F1FB;stroke:#185FA5}
+    .tg{font:500 14px sans-serif;fill:#444441}.ta{font:500 14px sans-serif;fill:#633806}.tb{font:500 14px sans-serif;fill:#0C447C}
+    .aa{stroke:#BA7517;fill:none}.ab{stroke:#185FA5;fill:none}
+  </style>
+
+  <g><rect class="gry" x="40" y="40" width="70" height="44" rx="8" stroke-width="0.5"/><text class="tg" x="75" y="62" text-anchor="middle" dominant-baseline="central">开始</text></g>
+
+  <g><rect class="amb" x="150" y="24" width="170" height="52" rx="12" stroke-width="0.5"/><text class="ta" x="235" y="44" text-anchor="middle" dominant-baseline="central">定时启动</text><text class="t" x="235" y="64" text-anchor="middle" dominant-baseline="central">每天 09:00 自动发起</text></g>
+  <g><rect class="blu" x="150" y="94" width="170" height="52" rx="12" stroke-width="0.5"/><text class="tb" x="235" y="114" text-anchor="middle" dominant-baseline="central">消息启动</text><text class="t" x="235" y="134" text-anchor="middle" dominant-baseline="central">订单支付成功后发起</text></g>
+
+  <path class="aa" d="M110 62 C 130 62 128 50 148 50" stroke-width="1.5" marker-end="url(#a3)"/>
+  <path class="ab" d="M110 62 C 130 62 128 120 148 120" stroke-width="1.5" marker-end="url(#a3)"/>
+  <path d="M320 120 L360 120" fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="1.5" marker-end="url(#a3)"/>
+  <g><rect class="blu" x="362" y="98" width="110" height="44" rx="8" stroke-width="0.5"/><text class="tb" x="417" y="120" text-anchor="middle" dominant-baseline="central">人工审批</text></g>
+
+  <text class="t" x="348" y="52">谁创建实例：定时=引擎到点自动建；</text>
+  <text class="t" x="348" y="72">消息=宿主调 startByMessage(businessId, flowCode, 消息名)</text>
+
+  <text class="t" x="40" y="190">与普通手动启动互斥：配置了启动事件的流程不能再调 start 手动发起</text>
+  <text class="t" x="40" y="212">定时启动与消息启动也不能同时配置（一个流程只有一种自动发起方式）</text>
+  <text class="t" x="40" y="234">定时启动到期由引擎建实例，businessId 由引擎生成；消息启动 businessId 由调用方指定</text>
+  <text class="t" x="40" y="256">定义被挂起 / 取消发布后，定时启动不再补发挂起期间错过的触发</text>
+</svg>

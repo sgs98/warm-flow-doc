@@ -1,0 +1,46 @@
+<svg viewBox="0 0 680 340" width="100%" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>示例三：付款失败善后</title>
+  <desc>财务执行付款挂错误边界：宿主抛错 PAY_FAILED 时任务归档失效、流程改走善后；任务正常办完则边界等待取消</desc>
+  <defs>
+    <marker id="a53" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <style>
+    .h{font:500 14px sans-serif;fill:#2C2C2A}.t{font:400 12px sans-serif;fill:#5F5E5A}
+    .gry{fill:#F1EFE8;stroke:#888780}.blu{fill:#E6F1FB;stroke:#185FA5}.red{fill:#FCEBEB;stroke:#A32D2D}
+    .grn{fill:#EAF3DE;stroke:#3B6D11}
+    .tg{font:500 14px sans-serif;fill:#444441}.tb{font:500 14px sans-serif;fill:#0C447C}
+    .tr{font:500 14px sans-serif;fill:#791F1F}.ag{font:500 14px sans-serif;fill:#27500A}
+    .ab{stroke:#185FA5;fill:none}.ar{stroke:#A32D2D;fill:none}.ak{stroke:#3B6D11;fill:none}
+  </style>
+
+  <text class="h" x="40" y="30">示例三：付款失败善后（ERROR_BOUNDARY）</text>
+
+  <g><rect class="gry" x="40" y="64" width="70" height="44" rx="8" stroke-width="0.5"/>
+    <text class="tg" x="75" y="86" text-anchor="middle" dominant-baseline="central">开始</text></g>
+  <path class="ab" d="M110 86 L150 86" stroke-width="1.5" marker-end="url(#a53)"/>
+  <g><rect class="blu" x="152" y="64" width="150" height="44" rx="8" stroke-width="0.5"/>
+    <text class="tb" x="227" y="86" text-anchor="middle" dominant-baseline="central">财务执行付款</text></g>
+
+  <g><rect class="red" x="152" y="146" width="210" height="52" rx="12" stroke-width="0.5"/>
+    <text class="tr" x="257" y="166" text-anchor="middle" dominant-baseline="central">边界：错误码 PAY_FAILED</text>
+    <text class="t" x="257" y="186" text-anchor="middle" dominant-baseline="central">附着在「财务执行付款」上</text></g>
+  <line x1="227" y1="144" x2="227" y2="112" stroke="rgba(0,0,0,0.3)" stroke-width="0.5" stroke-dasharray="3 3"/>
+
+  <path class="ak" d="M302 86 C 350 86 370 70 416 70" stroke-width="1.5" marker-end="url(#a53)"/>
+  <text class="t" x="322" y="48">付款成功</text>
+  <g><rect class="grn" x="418" y="48" width="100" height="44" rx="8" stroke-width="0.5"/>
+    <text class="ag" x="468" y="70" text-anchor="middle" dominant-baseline="central">结束</text></g>
+
+  <path class="ar" d="M362 172 L400 172" stroke-width="1.5" marker-end="url(#a53)"/>
+  <g><rect class="blu" x="402" y="146" width="160" height="52" rx="8" stroke-width="0.5"/>
+    <text class="tb" x="482" y="166" text-anchor="middle" dominant-baseline="central">善后确认（admin）</text>
+    <text class="t" x="482" y="186" text-anchor="middle" dominant-baseline="central">办完 → 结束</text></g>
+  <text class="t" x="402" y="220">宿主抛错触发，任务被判失效，流程从这里改道</text>
+
+  <text class="t" x="40" y="256">宿主：FlowEngine.taskService().throwError(taskId, "PAY_FAILED", "卡余额不足")</text>
+  <text class="t" x="40" y="278">抛错命中：「财务执行付款」归档失效（INVALID=10，备注「错误边界事件中断」）→ 流程进「善后确认」</text>
+  <text class="t" x="40" y="300">抛错落空：错误码不匹配 / 作用域用错 → 抛「流程错误未被捕获」，实例与任务状态完全不变</text>
+  <text class="t" x="40" y="322">任务正常办完：边界等待取消，流程照常走到结束（和没配边界一样）</text>
+</svg>

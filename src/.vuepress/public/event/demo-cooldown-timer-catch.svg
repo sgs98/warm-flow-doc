@@ -1,0 +1,44 @@
+<svg viewBox="0 0 680 270" width="100%" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>示例四：账号注销冷静期</title>
+  <desc>流程中间用定时捕获等 2 分钟冷静期：停在事件节点时没有待办，到点由定时器自动继续；终审通过后消息抛出通知外部</desc>
+  <defs>
+    <marker id="a54" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <style>
+    .h{font:500 14px sans-serif;fill:#2C2C2A}.t{font:400 12px sans-serif;fill:#5F5E5A}
+    .gry{fill:#F1EFE8;stroke:#888780}.blu{fill:#E6F1FB;stroke:#185FA5}.amb{fill:#FAEEDA;stroke:#BA7517}
+    .grn{fill:#EAF3DE;stroke:#3B6D11}
+    .tg{font:500 14px sans-serif;fill:#444441}.tb{font:500 14px sans-serif;fill:#0C447C}
+    .ta{font:500 14px sans-serif;fill:#633806}.ag{font:500 14px sans-serif;fill:#27500A}
+    .ab{stroke:#185FA5;fill:none}
+  </style>
+
+  <text class="h" x="40" y="28">示例四：账号注销冷静期（TIMER_CATCH + MESSAGE_THROW）</text>
+  <text class="t" x="274" y="62" text-anchor="middle">① 停在这里等，没有待办</text>
+
+  <g><rect class="gry" x="30" y="80" width="48" height="44" rx="8" stroke-width="0.5"/>
+    <text class="tg" x="54" y="102" text-anchor="middle" dominant-baseline="central">开始</text></g>
+  <path class="ab" d="M78 102 L92 102" stroke-width="1.5" marker-end="url(#a54)"/>
+  <g><rect class="blu" x="94" y="80" width="102" height="44" rx="8" stroke-width="0.5"/>
+    <text class="tb" x="145" y="102" text-anchor="middle" dominant-baseline="central">提交注销申请</text></g>
+  <path class="ab" d="M196 102 L210 102" stroke-width="1.5" marker-end="url(#a54)"/>
+  <g><rect class="amb" x="212" y="78" width="124" height="52" rx="12" stroke-width="0.5"/>
+    <text class="ta" x="274" y="104" text-anchor="middle" dominant-baseline="central">冷静期 2 分钟</text></g>
+  <path class="ab" d="M336 104 L350 104" stroke-width="1.5" marker-end="url(#a54)"/>
+  <g><rect class="blu" x="352" y="80" width="102" height="44" rx="8" stroke-width="0.5"/>
+    <text class="tb" x="403" y="102" text-anchor="middle" dominant-baseline="central">注销终审确认</text></g>
+  <path class="ab" d="M454 102 L468 102" stroke-width="1.5" marker-end="url(#a54)"/>
+  <g><rect class="blu" x="470" y="78" width="112" height="52" rx="12" stroke-width="0.5"/>
+    <text class="tb" x="526" y="104" text-anchor="middle" dominant-baseline="central">注销结果推送</text></g>
+  <path class="ab" d="M582 104 L596 104" stroke-width="1.5" marker-end="url(#a54)"/>
+  <g><rect class="grn" x="598" y="80" width="56" height="44" rx="8" stroke-width="0.5"/>
+    <text class="ag" x="626" y="102" text-anchor="middle" dominant-baseline="central">结束</text></g>
+  <text class="t" x="526" y="70" text-anchor="middle">③ 抛出消息通知外部</text>
+
+  <text class="t" x="40" y="176">① 停在「冷静期」的实例没有待办、没有审批历史——这是正常现象，用 waitingEvents 能看到 TIMER_CATCH</text>
+  <text class="t" x="40" y="198">② 2 分钟到点：定时器抢占该等待并触发，流程自动继续到「注销终审确认」，全程不需要人插手</text>
+  <text class="t" x="40" y="220">③ 到达 MESSAGE_THROW：引擎同步回调发布器，宿主投递 membership.cancelled（示例六订阅它启动下游）</text>
+  <text class="t" x="40" y="242">④ 冷静期不会因重启 / 宕机丢失：等待状态在 flow_event_wait，重启后按 next_trigger_at 继续</text>
+</svg>

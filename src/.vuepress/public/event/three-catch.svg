@@ -1,0 +1,37 @@
+<svg viewBox="0 0 680 330" width="100%" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>三种中间捕获事件对比</title>
+  <desc>定时捕获等时间，消息捕获等外部回调，错误捕获等实例内抛错；形态相同，触发源不同</desc>
+  <defs>
+    <marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <style>
+    .t{font:400 12px sans-serif;fill:#5F5E5A}
+    .amb{fill:#FAEEDA;stroke:#BA7517}.blu{fill:#E6F1FB;stroke:#185FA5}.red{fill:#FCEBEB;stroke:#A32D2D}.gry{fill:#F1EFE8;stroke:#888780}
+    .ta{font:500 14px sans-serif;fill:#633806}.tb{font:500 14px sans-serif;fill:#0C447C}.tr{font:500 14px sans-serif;fill:#791F1F}
+    .aa{stroke:#BA7517;fill:none}.ab{stroke:#185FA5;fill:none}.ar{stroke:#A32D2D;fill:none}
+  </style>
+
+  <g><rect class="amb" x="140" y="52" width="150" height="52" rx="12" stroke-width="0.5"/><text class="ta" x="215" y="72" text-anchor="middle" dominant-baseline="central">定时捕获</text><text class="t" x="215" y="92" text-anchor="middle" dominant-baseline="central">等时间到</text></g>
+  <path class="aa" d="M292 78 L340 78" stroke-width="1.5" marker-end="url(#a2)"/>
+  <text class="t" x="348" y="74">触发源：引擎定时器（无人操作）</text>
+  <text class="t" x="348" y="94">典型：提交后冷却 3 天再复审</text>
+
+  <g><rect class="blu" x="140" y="142" width="150" height="52" rx="12" stroke-width="0.5"/><text class="tb" x="215" y="162" text-anchor="middle" dominant-baseline="central">消息捕获</text><text class="t" x="215" y="182" text-anchor="middle" dominant-baseline="central">等外部系统回调</text></g>
+  <path class="ab" d="M292 168 L340 168" stroke-width="1.5" marker-end="url(#a2)"/>
+  <text class="t" x="348" y="164">触发源：宿主调 triggerMessage</text>
+  <text class="t" x="348" y="184">典型：等第三方风控审核结果</text>
+
+  <g><rect class="red" x="140" y="232" width="150" height="52" rx="12" stroke-width="0.5"/><text class="tr" x="215" y="252" text-anchor="middle" dominant-baseline="central">错误捕获</text><text class="t" x="215" y="272" text-anchor="middle" dominant-baseline="central">等实例内抛错</text></g>
+  <path class="ar" d="M292 258 L340 258" stroke-width="1.5" marker-end="url(#a2)"/>
+  <text class="t" x="348" y="254">触发源：宿主调 throwError</text>
+  <text class="t" x="348" y="274">典型：审批链任何环节失败后统一善后</text>
+
+  <path d="M40 78 L138 78" fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="1.5" marker-end="url(#a2)"/>
+  <text class="t" x="42" y="68">流程走到这里</text>
+  <text class="t" x="42" y="88">三种都停下等待</text>
+  <path d="M40 168 L138 168" fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="1.5" marker-end="url(#a2)"/>
+  <path d="M40 258 L138 258" fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="1.5" marker-end="url(#a2)"/>
+  <text class="t" x="40" y="318">共同点：停留期间无待办、不生成审批历史；继续后沿各自出口推进</text>
+</svg>

@@ -1,0 +1,45 @@
+<svg viewBox="0 0 680 300" width="100%" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>示例六：注销结果通知的链路</title>
+  <desc>上游流程消息抛出，引擎回调宿主发布器；宿主用同一个消息名调 startByMessage 启动下游流程，链路靠宿主代码串起来</desc>
+  <defs>
+    <marker id="a56" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <style>
+    .h{font:500 14px sans-serif;fill:#2C2C2A}.t{font:400 12px sans-serif;fill:#5F5E5A}
+    .blu{fill:#E6F1FB;stroke:#185FA5}.gry{fill:#F1EFE8;stroke:#888780}.grn{fill:#EAF3DE;stroke:#3B6D11}
+    .tb{font:500 14px sans-serif;fill:#0C447C}.tg{font:500 14px sans-serif;fill:#444441}
+    .ag{font:500 14px sans-serif;fill:#27500A}
+    .ab{stroke:#185FA5;fill:none}
+  </style>
+
+  <text class="h" x="40" y="28">示例六：注销结果通知 —— 被示例四抛出的消息启动</text>
+  <text class="t" x="40" y="50">引擎不做消息路由：把两个流程串起来的是下面中间那段宿主订阅代码</text>
+
+  <g><rect class="blu" x="28" y="100" width="170" height="80" rx="12" stroke-width="0.5"/>
+    <text class="tb" x="113" y="122" text-anchor="middle" dominant-baseline="central">上游：注销冷静期</text>
+    <text class="t" x="113" y="146" text-anchor="middle" dominant-baseline="central">MESSAGE_THROW</text>
+    <text class="t" x="113" y="166" text-anchor="middle" dominant-baseline="central">membership.cancelled</text></g>
+
+  <path class="ab" d="M198 140 L246 140" stroke-width="1.5" marker-end="url(#a56)"/>
+  <text class="t" x="222" y="126" text-anchor="middle">① 回调</text>
+
+  <g><rect class="gry" x="250" y="100" width="180" height="80" rx="8" stroke-width="0.5"/>
+    <text class="tg" x="340" y="122" text-anchor="middle" dominant-baseline="central">宿主订阅器</text>
+    <text class="t" x="340" y="146" text-anchor="middle" dominant-baseline="central">DemoMessageSubscriber</text>
+    <text class="t" x="340" y="166" text-anchor="middle" dominant-baseline="central">收到消息 → 启动下游</text></g>
+
+  <path class="ab" d="M430 140 L478 140" stroke-width="1.5" marker-end="url(#a56)"/>
+  <text class="t" x="454" y="126" text-anchor="middle">② 启动</text>
+
+  <g><rect class="blu" x="482" y="100" width="170" height="80" rx="12" stroke-width="0.5"/>
+    <text class="tb" x="567" y="122" text-anchor="middle" dominant-baseline="central">下游：注销通知</text>
+    <text class="t" x="567" y="146" text-anchor="middle" dominant-baseline="central">MESSAGE_START</text>
+    <text class="t" x="567" y="166" text-anchor="middle" dominant-baseline="central">membership.cancelled</text></g>
+
+  <line x1="40" y1="206" x2="640" y2="206" stroke="rgba(0,0,0,0.15)" stroke-width="0.5"/>
+  <text class="t" x="40" y="230">① 引擎到达 MESSAGE_THROW 时同步回调注册的 EventPublisher，投不投出去、投到哪里由宿主决定</text>
+  <text class="t" x="40" y="252">② 宿主收到消息后，用同一消息名调 startByMessage("membership.cancelled", payload) 启动下游</text>
+  <text class="t" x="40" y="274">③ 下游「发送注销通知」是 admin 待办；办完到达 MESSAGE_END，结束前再回调一次发布器（notify.done）</text>
+</svg>
