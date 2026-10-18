@@ -24,17 +24,17 @@
 
 ## 2、匹配规则
 - 1、常规匹配规则：`xxx@@yyy|zzz`，`xxx`为表达式类型，其中`yyy`为变量名，最后的`zzz`为变量值。
-<div><img src="https://foruda.gitee.com/images/1754531858724397764/de4b4e75_2218307.png"></div>
+<div><img src="/img/de4b4e75_2218307.png" alt="2、匹配规则"></div>
 
 - 2、默认表达式：`default@@${flag == 5 && flag > 4}`，其中`flag`为变量名。
 > 实际上是基于spring的spel表达式简化使用，会把flag替换成#flag，然后由spel执行#flag == 5 && #flag > 4
 
-<div><img src="https://foruda.gitee.com/images/1742270414653294800/a10fec4f_2218307.png"></div>
+<div><img src="/img/a10fec4f_2218307.png" alt="2、匹配规则"></div>
 
 - 3、Spring Expression Language（SpEL）表达式: 
 `spel@@#{@user.eval(#flag)}`表达式，`#flag`为变量和以下方法入参命名一致，可不设置入参。
 
-<div><img src="https://foruda.gitee.com/images/1727163098727096928/c29d9af5_2218307.png"></div>
+<div><img src="/img/c29d9af5_2218307.png" alt="2、匹配规则"></div>
 
 - 4、代码实现:
 

@@ -95,7 +95,7 @@ function detail(dictId) {
 
 ## 2. 提示信息
 
-<div><img src="https://foruda.gitee.com/images/1754531628206354303/b4c16c18_2218307.png" width="800"></div>
+<div><img src="/img/b4c16c18_2218307.png" alt="2. 提示信息" width="800"></div>
 
 **实现ChartExtService接口**
 
@@ -317,7 +317,7 @@ warm-flow:
   top-text-show: true
 ```
 
-<div><img src="https://foruda.gitee.com/images/1754016903287080176/a5001480_2218307.png" width="800"></div>
+<div><img src="/img/a5001480_2218307.png" alt="是否显示流程图顶部文字，默认为true：显示" width="800"></div>
 
 ## 4. 显示网格
 
@@ -377,7 +377,7 @@ warm-flow:
 ```
 
 **效果图**
-<div><img src="https://foruda.gitee.com/images/1749192268410702889/080ed0c7_2218307.png" width="800"></div>
+<div><img src="/img/080ed0c7_2218307.png" alt="已办理" width="800"></div>
 
 
 ## 6. 流程图渲染规则

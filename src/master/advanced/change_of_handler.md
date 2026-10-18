@@ -39,7 +39,7 @@
 - 本节点前任意节点办理时，在流程变量中传入 `${handler1}` 的值
 - 办理完成会生成本节点任务，并且替换 `flow_user` 表中的表达式
 
-<div><img src="https://foruda.gitee.com/images/1745558346409798689/0bc86581_2218307.png" width="500" /></div>
+<div><img src="/img/0bc86581_2218307.png" alt="2.1、动态指定办理人" width="500" /></div>
 
 ::: code-tabs#handler-variable
 

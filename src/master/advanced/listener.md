@@ -33,7 +33,7 @@
 
 <a id="_3、监听器生命周期图"></a>
 
-<div><img src="https://foruda.gitee.com/images/1744189606356147579/9904c854_2218307.png" width="800"></div>
+<div><img src="/img/9904c854_2218307.png" alt="2、生命周期" width="800"></div>
 
 ::: warning 创建监听器的时机
 `create` 在下一个任务生成前执行。例如 A → B，办理 A 时会触发 B 上配置的创建监听器。超时自动审批应挂在创建监听器上，详见 [监听器 + 节点扩展属性的妙用](../enhance/listenerAndNode.md)。
@@ -285,13 +285,13 @@ public class CustomGlobalListener implements GlobalListener {
 
 在流程节点中配置，只作用于当前节点。
 
-<div><img src="https://foruda.gitee.com/images/1732545153700629064/3183155f_2218307.png" width="500"></div>
+<div><img src="/img/3183155f_2218307.png" alt="4.1、页面配置" width="500"></div>
 
 @tab 流程监听器
 
 在流程定义中配置，作用于当前流程的所有节点。
 
-<div><img src="https://foruda.gitee.com/images/1732548175204139076/1f88c928_2218307.png" width="600px"></div>
+<div><img src="/img/1f88c928_2218307.png" alt="4.1、页面配置" width="600px"></div>
 
 :::
 
@@ -314,7 +314,7 @@ public class CustomGlobalListener implements GlobalListener {
 
 > 配置下拉框后，页面上可以直接选择监听器，不必手动输入类路径
 
-<div><img src="https://foruda.gitee.com/images/1773978545571972576/2f631819_2218307.png" width="800px"></div>
+<div><img src="/img/2f631819_2218307.png" alt="4.3、监听器下拉框" width="800px"></div>
 
 实现 `ListenerListService.listenerList()`，返回 `List<ListenerVo>`：
 
@@ -361,7 +361,7 @@ public class ListenerListServiceImpl implements ListenerListService {
 com.xx.FinishListener({"name":"John Doe","age":30})
 ```
 
-<div><img src="https://foruda.gitee.com/images/1732548102324679120/544ff483_2218307.png" width="600px"></div>
+<div><img src="/img/544ff483_2218307.png" alt="5.1、监听器参数" width="600px"></div>
 
 ```java
 public void notify(ListenerVariable variable) {

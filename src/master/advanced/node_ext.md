@@ -252,8 +252,8 @@ public interface NodeExtService {
 
 
 ## 3、设计器渲染效果
-<div><img src="https://foruda.gitee.com/images/1740388220090328621/a87819cd_2218307.png" width="800"></div>
-<div><img src="https://foruda.gitee.com/images/1740388227772388546/b759aab9_2218307.png" width="800"></div>
+<div><img src="/img/a87819cd_2218307.png" alt="3、设计器渲染效果" width="800"></div>
+<div><img src="/img/b759aab9_2218307.png" alt="3、设计器渲染效果" width="800"></div>
 
 ## 4、扩展属性入库
 点击保存后，保存到节点表的`ext`字段，格式如下：

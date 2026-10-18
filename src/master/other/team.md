@@ -13,7 +13,7 @@
     </thead>
     <tbody>
         <tr v-for="(item, index) in authorsList" :key="index">
-            <td><img :src="avatarOf(item)" width="30px"></td>
+            <td><img :src="avatarOf(item)" :alt="displayName(item) + ' 的头像'" width="30px"></td>
             <td>
                 <a v-if="item.html_url" :href="item.html_url" target="_blank">{{ displayName(item) }}</a>
                 <span v-else>{{ displayName(item) }}</span>
@@ -35,7 +35,7 @@ export default {
     // 头像映射：Gitee 的 contributors 接口不返回头像，且返回的 name 可能是昵称，
     // 需要在工作流引擎仓库有提交记录的成员，在此手动配置 Gitee 头像地址
     const AVATARS = {
-      'gssong': 'https://foruda.gitee.com/avatar/1686117388709737644/5363069_sgs98_1686117388.png',
+      'gssong': '/img/5363069_sgs98_1686117388.png',
     };
 
     const avatarOf = (item) => item.avatar_url || AVATARS[item.name] || '/logo.png';

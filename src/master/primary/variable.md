@@ -52,7 +52,7 @@ public class FinishListener implements Listener {
 ## 存储流程变量
 存储在flow_instance表中的variable
 
-<div><img src="https://foruda.gitee.com/images/1743128143393789644/a2b7eef4_2218307.png" width="700px"></div>
+<div><img src="/img/a2b7eef4_2218307.png" alt="存储流程变量" width="700px"></div>
 
 ## 获取流程变量
 ```java

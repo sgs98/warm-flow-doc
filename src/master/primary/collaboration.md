@@ -30,7 +30,7 @@
 
 ## 3、使用演示
 ### 3.1、或签
-<div><img src="https://foruda.gitee.com/images/1754532248385621301/50101415_2218307.png"/></div>
+<div><img src="/img/50101415_2218307.png" alt="3.1、或签"/></div>
 
 ### 3.2、票签
 - **票签策略**
@@ -43,25 +43,25 @@
 <table>
     <tbody>
         <tr>
-            <td><img src="https://foruda.gitee.com/images/1763080128080284358/a86fdeb3_2218307.png"/></td>
+            <td><img src="/img/a86fdeb3_2218307.png" alt="3.2、票签"/></td>
         </tr>
         <tr>
-            <td><img src="https://foruda.gitee.com/images/1763080154885581373/e5a209ea_2218307.png"/></td>
+            <td><img src="/img/e5a209ea_2218307.png" alt="3.2、票签"/></td>
         </tr>
         <tr>
-            <td><img src="https://foruda.gitee.com/images/1763080173837682535/c90154b9_2218307.png"/></td>
+            <td><img src="/img/c90154b9_2218307.png" alt="3.2、票签"/></td>
         </tr>
         <tr>
-            <td><img src="https://foruda.gitee.com/images/1763080204929428483/034dd696_2218307.png"/></td>
+            <td><img src="/img/034dd696_2218307.png" alt="3.2、票签"/></td>
         </tr>
         <tr>
-            <td><img src="https://foruda.gitee.com/images/1763080220404138371/60a850e0_2218307.png"/></td>
+            <td><img src="/img/60a850e0_2218307.png" alt="3.2、票签"/></td>
         </tr>
     </tbody>
 </table>
 
 ### 3.3、会签
-<div><img src="https://foruda.gitee.com/images/1754532261962167543/23ce23da_2218307.png"/></div>
+<div><img src="/img/23ce23da_2218307.png" alt="3.3、会签"/></div>
 
 ## 4、票签策略注意事项
 > 通过策略特别需要讲一下<span class="wf-em">默认表达式和spel表达</span>，因为不管通过什么方式，通常需要知道已通过的

@@ -362,8 +362,8 @@ warm-flow:
 
 ### 5.1 办理人权限选择弹框页面
 
-<div><img src="https://foruda.gitee.com/images/1776740107354127927/2f87ee6b_2218307.png"></div>
-<div><img src="https://foruda.gitee.com/images/1776739731748668439/747440f8_2218307.png"></div>
+<div><img src="/img/2f87ee6b_2218307.png" alt="5.1 办理人权限选择弹框页面"></div>
+<div><img src="/img/747440f8_2218307.png" alt="5.1 办理人权限选择弹框页面"></div>
 <br>
 
 ### 5.2 实现接口获取办理人列表数据
@@ -527,7 +527,7 @@ public class HandlerSelectServiceImpl implements HandlerSelectService {
 > 回显该节点权限办理人名称，比如上一步选择后保存入库主键，下一次重新打开以下页面
 
 ### 6.1 设计器办理人列表页面
-<div><img src="https://foruda.gitee.com/images/1776740107354127927/2f87ee6b_2218307.png" width="700"></div>
+<div><img src="/img/2f87ee6b_2218307.png" alt="6.1 设计器办理人列表页面" width="700"></div>
 <br>
 
 ### 6.2 实现接口获取办理人列表回显
@@ -650,7 +650,7 @@ public class HandlerSelectServiceImpl implements HandlerSelectService {
 > 流程类别通常是业务系统用来做细分的，比如请假，出差，项目，采购，销售，等等流程
 
 ### 7.1 基础信息类别设置
-<div><img src="https://foruda.gitee.com/images/1750865204014479953/75d003e7_2218307.png"></div>
+<div><img src="/img/75d003e7_2218307.png" alt="7.1 基础信息类别设置"></div>
 <br>
 
 ### 7.2 实现接口获取类别信息
@@ -710,8 +710,8 @@ public class CategoryServiceImpl implements CategoryService {
 > 本工作流引擎只提供接入外部表单的能力，具体表单的实现，请自行实现
 
 ### 8.1 基础和节点信息设置页面
-<div><img src="https://foruda.gitee.com/images/1761269019339921031/8ca35ab8_2218307.png"></div>
-<div><img src="https://foruda.gitee.com/images/1761269060322730851/29f697d6_2218307.png"></div>
+<div><img src="/img/8ca35ab8_2218307.png" alt="8.1 基础和节点信息设置页面"></div>
+<div><img src="/img/29f697d6_2218307.png" alt="8.1 基础和节点信息设置页面"></div>
 <br>
 
 ### 8.2 实现接口获取自定义表单路径信息

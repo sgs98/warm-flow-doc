@@ -18,16 +18,16 @@
             - warm-flow-plugin-vue3-ui:              设计器前端编译后jar包引入模块
     - warm-flow-ui:                              设计器前端模块, 基于logic-flow开发
 
-<div><img src="https://foruda.gitee.com/images/1754016507623081125/62e2f1b9_2218307.png" width="400"></div>
-<div><img src="https://foruda.gitee.com/images/1730958025453602251/ae415296_2218307.png"></div>
+<div><img src="/img/62e2f1b9_2218307.png" alt="1 下载设计器源码，改造" width="400"></div>
+<div><img src="/img/ae415296_2218307.png" alt="1 下载设计器源码，改造"></div>
 
 ## 2 源码调试
 - 设计器需要配置业务系统的代理地址，否则无法访问业务系统
 - 独立启动该设计器
 - 业务系统配置设计器的地址
 
-<div><img src="https://foruda.gitee.com/images/1754016548953059153/82d1314c_2218307.png"></div>
-<div><img src="https://foruda.gitee.com/images/1730825131504921296/a17821eb_2218307.png"></div>
+<div><img src="/img/82d1314c_2218307.png" alt="2 源码调试"></div>
+<div><img src="/img/a17821eb_2218307.png" alt="2 源码调试"></div>
 
 ## 3 部署
 ### 3.1 先排除原依赖的前端代码
@@ -49,7 +49,7 @@
 - 打包项目，把打包后的文件`dist`复制到业务系统`src/main/META-INF/resources`,或者`src/main/resources`目录下都可以,改名为warm-flow-ui
 - 独立服务
 
-<div><img src="https://foruda.gitee.com/images/1730822519593337466/41e4ce38_2218307.png" width="400"></div>
+<div><img src="/img/41e4ce38_2218307.png" alt="3.2 设计器不分离部署(部署方案一)" width="400"></div>
 
 ### 3.3 设计器独立部署/分离部署(部署方案二)
 - 打包项目，把打包后的文件`dist`复制到nginx的html目录下,改名为warm-flow-ui

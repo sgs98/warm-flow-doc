@@ -11,15 +11,15 @@
 :::
 
 ## 演示图
-<div class="yat"><img src="https://foruda.gitee.com/images/1776739537510375032/dce0a7ff_2218307.png"/></div>
-<div class="yat"><img src="https://foruda.gitee.com/images/1776740085076272652/714f6ddf_2218307.png"/></div>
-<div class="yat"><img src="https://foruda.gitee.com/images/1776740107354127927/2f87ee6b_2218307.png"/></div>
-<div class="yat"><img src="https://foruda.gitee.com/images/1776739731748668439/747440f8_2218307.png"/></div>
-<div class="yat"><img src="https://foruda.gitee.com/images/1776740172077541832/82482501_2218307.png"/></div>
-<div class="yat"><img src="https://foruda.gitee.com/images/1776740190813508285/188fc6e5_2218307.png"/></div>
-<div class="yat"><img src="https://foruda.gitee.com/images/1776740274795003093/1f4ba9e2_2218307.png"/></div>
-<div class="yat"><img src="https://foruda.gitee.com/images/1776739866093815957/c3cbacfa_2218307.png"/></div>
-<div class="yat"><img src="https://foruda.gitee.com/images/1776739885334629468/7804d568_2218307.png"/></div>
+<div class="yat"><img src="/img/dce0a7ff_2218307.png" alt="演示图"/></div>
+<div class="yat"><img src="/img/714f6ddf_2218307.png" alt="演示图"/></div>
+<div class="yat"><img src="/img/2f87ee6b_2218307.png" alt="演示图"/></div>
+<div class="yat"><img src="/img/747440f8_2218307.png" alt="演示图"/></div>
+<div class="yat"><img src="/img/82482501_2218307.png" alt="演示图"/></div>
+<div class="yat"><img src="/img/188fc6e5_2218307.png" alt="演示图"/></div>
+<div class="yat"><img src="/img/1f4ba9e2_2218307.png" alt="演示图"/></div>
+<div class="yat"><img src="/img/c3cbacfa_2218307.png" alt="演示图"/></div>
+<div class="yat"><img src="/img/7804d568_2218307.png" alt="演示图"/></div>
 <BiliBili bvid="BV1mkd1B2En7" />
 
 
@@ -30,8 +30,8 @@
 - 审批表单路径：记录待办任务需要显示的待办信息页面，点击待办时候获取这个路径，动态加载这个页面
 :::
 
-<div><img src="https://foruda.gitee.com/images/1742803956071384899/eb563152_2218307.png" width="700"></div>
-<div><img src="https://foruda.gitee.com/images/1742804032489030182/89b15652_2218307.png" width="700"></div>
+<div><img src="/img/eb563152_2218307.png" alt="1、新增定义" width="700"></div>
+<div><img src="/img/89b15652_2218307.png" alt="1、新增定义" width="700"></div>
 
 
 ## 2、流程设计
@@ -43,9 +43,9 @@
 :::
 
 
-<div><img src="https://foruda.gitee.com/images/1734589294761157636/ac74e327_2218307.png" width="700" /></div>
-<div><img src="https://foruda.gitee.com/images/1742261152703131620/939d9684_2218307.png" width="700" /></div>
-<div><img src="https://foruda.gitee.com/images/1732545153700629064/3183155f_2218307.png" width="700" /></div>
+<div><img src="/img/ac74e327_2218307.png" alt="2、1节点设置" width="700" /></div>
+<div><img src="/img/939d9684_2218307.png" alt="2、1节点设置" width="700" /></div>
+<div><img src="/img/3183155f_2218307.png" alt="2、1节点设置" width="700" /></div>
 
 ### 2、2跳转线设置
 ::: tip 
@@ -53,8 +53,8 @@
 :::
 
 
-![](https://foruda.gitee.com/images/1754531858724397764/de4b4e75_2218307.png)
-![](https://foruda.gitee.com/images/1754532009371254336/6466d91c_2218307.png)
+![2、2跳转线设置](/img/de4b4e75_2218307.png)
+![2、2跳转线设置](/img/6466d91c_2218307.png)
 ## 3、开启流程实例
 ::: tip
 hh-vue项目已经准备了七套流程，以及开启流程代码，开启流程会直接执行到开始节点后一个节点
@@ -69,7 +69,7 @@ hh-vue项目已经准备了七套流程，以及开启流程代码，开启流�
 :::
 
 
-![输入图片说明](https://foruda.gitee.com/images/1703668493778770778/d77716b5_2218307.png "屏幕截图")
+![4、提交流程](/img/d77716b5_2218307.png "屏幕截图")
 
 
 ## 5、办理流程
@@ -78,4 +78,4 @@ hh-vue项目已经准备了七套流程，以及开启流程代码，开启流�
 :::
 
 
-![输入图片说明](https://foruda.gitee.com/images/1703668882786849328/0b9554ec_2218307.png "屏幕截图")
+![5、办理流程](/img/0b9554ec_2218307.png "屏幕截图")

@@ -145,7 +145,7 @@ drwxr-xr-x 2 root root 4096 5月  17 11:40 zhFonts
 **docker环境：安装中文字体**
 - 以ruoyi-vue-plus-4.x中dockerfile为例，添加中文字体即可  （感谢【格调@main】提供的方案）
 
-<div><img src="https://foruda.gitee.com/images/1730708137813267165/0ff99854_2218307.png" width="700" /></div>
+<div><img src="/img/0ff99854_2218307.png" alt="2、流程图片中文乱码" width="700" /></div>
 
 
 
@@ -193,17 +193,17 @@ restart.include.flow=/org[.]dromara[.]warm
 ## 7、 StackOverflowError 错误
 - 查看跳转线退回的，是否设置为退回类型，后续有时间再做校验
 
-<div><img src="https://foruda.gitee.com/images/1730877942385830500/baf394aa_2218307.png" width="700"/></div>
+<div><img src="/img/baf394aa_2218307.png" alt="7、 StackOverflowError 错误" width="700"/></div>
 
 ## 8、 后端接收流程xml部分丢失
 - 一般是xxs过滤导致，排查下接口就行或者对象就行（新版本已经不用xml）
 
-<div><img src="https://foruda.gitee.com/images/1733466289672727602/b693f617_2218307.png" width="700"/></div>
-<div><img src="https://foruda.gitee.com/images/1733466264479226712/de836c18_2218307.png" width="700"/></div>
+<div><img src="/img/b693f617_2218307.png" alt="8、 后端接收流程xml部分丢失" width="700"/></div>
+<div><img src="/img/de836c18_2218307.png" alt="8、 后端接收流程xml部分丢失" width="700"/></div>
 
 ## 9、 演示项目请假类型为啥使用字典
 因为要在一个模块中展示不同的流程案例，所以使用字典，字典映射流程定义
-<div><img src="https://foruda.gitee.com/images/1742523937795259637/a55fbbda_2218307.png" width="700"/></div>
+<div><img src="/img/a55fbbda_2218307.png" alt="9、 演示项目请假类型为啥使用字典" width="700"/></div>
 
 ## 10、 按任务id办理和按实例id终止的区别
 

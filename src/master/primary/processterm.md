@@ -21,7 +21,7 @@
 | [或签](./collaboration.md)                          | 一名办理人审批通过，审批节点才会通过                |
 | 暂存                       | 复杂表单，一次性填写不完，需要保存草稿功能，开始节点的暂存     |
 
-<div><img src="https://foruda.gitee.com/images/1745804178899715688/960f27b5_2218307.png"></div>
+<div><img src="/img/960f27b5_2218307.png" alt="支持的功能"></div>
 
 # 流程规则
 

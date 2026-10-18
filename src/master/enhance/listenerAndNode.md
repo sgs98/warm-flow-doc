@@ -40,7 +40,7 @@ childs3.add(childNode12);
 ```
 
 > 配置超时时间，和超时后节点会自动执行的动作
-<div><img src="https://foruda.gitee.com/images/1773976267016733961/ff42ecae_2218307.png" width="600px"></div>
+<div><img src="/img/ff42ecae_2218307.png" alt="1.1、节点扩展属性" width="600px"></div>
 <br>
 
 ### 1.2、创建监听器
@@ -121,7 +121,7 @@ childs3.add(childNode16);
 ```
 
 > 配置超时时间，和超时后节点会自动执行的动作
-<div><img src="https://foruda.gitee.com/images/1773979979897448978/f15779bc_2218307.png" width="600px"></div>
+<div><img src="/img/f15779bc_2218307.png" alt="2.1、节点扩展属性" width="600px"></div>
 <br>
 
 ### 2.2、完成监听器
@@ -174,7 +174,7 @@ childs3.add(childNode17);
 ```
 
 > 配置超时时间，和超时后节点会自动执行的动作
-<div><img src="https://foruda.gitee.com/images/1773979992154566596/d16bf994_2218307.png" width="600px"></div>
+<div><img src="/img/d16bf994_2218307.png" alt="3.1、节点扩展属性" width="600px"></div>
 <br>
 
 ### 3.2、完成监听器
