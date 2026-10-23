@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
-"""Warm-Flow 功能思维导图 SVG 生成器（2.0.1 内容，品牌设计语言）。
+"""Warm-Flow 功能思维导图 SVG 生成器（2.1.0 内容，品牌设计语言）。
 内容事实来源：warm-flow 引擎源码 enums（NodeType/EventType/CooperateType/Listener）。
-重新生成：python3 gen-mindmap.py > mindmap.svg
+重新生成：python3 gen-mindmap.py > ../src/.vuepress/public/mindmap.svg
 """
 import html
 
 # ---------- 内容数据（右侧 / 左侧分支） ----------
 RIGHT = [
     ("基础功能", None, ["通过", "退回", "撤销", "拿回", "任意跳转", "终止", "转办", "委派", "会签 / 票签", "加签 / 减签"]),
-    ("事件能力", "2.0 新增", ["定时启动", "消息启动", "定时捕获", "消息捕获", "消息抛出", "定时边界", "消息边界", "错误边界", "错误捕获", "终止结束", "消息结束"]),
+    ("事件能力", "2.1 新增", ["定时启动", "消息启动", "定时捕获", "消息捕获", "消息抛出", "定时边界", "消息边界", "错误边界", "错误捕获", "终止结束", "消息结束"]),
     ("流程网关", None, ["互斥网关", "并行网关", "包含网关"]),
     ("流程图", None, ["自带流程图", "节点状态着色", "运行态流程图", "实例历史图"]),
 ]
 LEFT = [
     ("表达式", None, ["条件表达式（内置 + SpEL）", "自定义条件扩展", "办理人 ${handler} 变量", "发起人 / 固定办理人", "角色 / 部门 / 权限标识", "SpEL 动态指定办理人"]),
     ("监听器", None, ["create 创建", "start 启动", "assignment 转派", "finish 完成", "formLoad 表单", "全局 / 流程 / 节点作用域", "支持 SpEL 监听"]),
-    ("服务任务", "2.0 新增", ["自动执行", "脚本处理", "Handler 扩展"]),
-    ("多生态支持", None, ["MyBatis / MyBatis-Plus（官方）", "JPA / BeetlSql（社区）", "MySQL / Oracle / PostgreSQL / SQL Server", "snack3/4 · Jackson2/3 · Fastjson2 · Gson", "Spring Boot 3 / 4 · JDK 17+"]),
+    ("服务任务", "2.1 新增", ["自动执行", "脚本处理", "Handler 扩展"]),
+    ("多生态支持", None, ["MyBatis / MyBatis-Plus（当前仓库维护）", "JPA / BeetlSql（社区）", "MySQL / Oracle / PostgreSQL / SQL Server", "snack3/4 · Jackson2/3 · Fastjson2 · Gson", "Spring Boot 3 / 4 · JDK 17+"]),
 ]
 
 # ---------- 设计令牌 ----------
@@ -125,7 +125,7 @@ rx, ry = cx - cw / 2, cy - ch / 2
 svg.append(f'<rect x="{rx:.1f}" y="{ry:.1f}" width="{cw}" height="{ch}" rx="16" fill="{BRAND}" />')
 svg.append(f'<rect x="{rx:.1f}" y="{ry:.1f}" width="{cw}" height="{ch}" rx="16" fill="none" stroke="{BRAND_INK}" stroke-width="1.5" opacity=".5"/>')
 svg.append(f'<text x="{cx:.1f}" y="{cy - 4:.1f}" text-anchor="middle" font-size="26" font-weight="800" fill="#ffffff" letter-spacing=".5">Warm-Flow</text>')
-svg.append(f'<text x="{cx:.1f}" y="{cy + 24:.1f}" text-anchor="middle" font-size="11.5" fill="#cfe4f5">Dromara · 国产轻量级工作流引擎</text>')
+svg.append(f'<text x="{cx:.1f}" y="{cy + 24:.1f}" text-anchor="middle" font-size="11.5" fill="#cfe4f5">上游二次开发 · 国产轻量级工作流引擎</text>')
 
 svg.append("</svg>")
 print("\n".join(svg))

@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 const stats = [
-  { value: "7", label: "核心表" },
+  { value: "8", label: "核心表" },
   { value: "2", label: "设计器模式" },
   { value: "15+", label: "审批动作" },
   { value: "4", label: "ORM 框架" },

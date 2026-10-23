@@ -45,11 +45,11 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 
 | 列                          | 编码含义 | 取值                                                              |
 | --------------------------- | -------- | ----------------------------------------------------------------- |
-| `flow_instance.flow_status` | 实例状态 | 0待提交 1审批中 4终止 5作废 6撤销 7取回 8已完成 9已退回 12重启 13暂存 |
-| `flow_task.flow_status`     | 任务状态 | 1待办理 2通过 8结束 9退回 10失效 11拿回                              |
-| `flow_his_task.flow_status` | 任务状态 | 同上                                                              |
+| `flow_instance.flow_status` | 实例状态 | `draft` 待提交、`waiting` 审批中、`termination` 终止、`invalid` 作废、`cancel` 撤销、`finish` 已完成、`back` 已退回、`restart` 重启 |
+| `flow_task.flow_status`     | 任务状态 | `pending` 待审批、`pass` 通过、`auto_pass` 自动审批、`back` 退回、`invalid` 失效、`take_back` 拿回、`copy` 抄送 |
+| `flow_his_task.flow_status` | 任务状态 | 同上；撤回归档可能写 `cancel` |
 
-同一个 `8` 在实例表里是「已完成」、在任务表里是「结束」，查询与展示时注意区分。宿主想换成自己的编码见 [自定义流程状态](../enhance/customstatus.md)。
+实例与任务是两张表、两套独立编码空间，即使编码字面相同也不能混用；例如任务通过是 `pass`，实例已完成是 `finish`。宿主想换成自己的编码见 [自定义流程状态](../enhance/customstatus.md)。
 :::
 
 ### 1.3.1 **flow_definition [**流程定义表**]**
@@ -69,12 +69,13 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 | 11    | listener_type   | 监听器类型                                     | VARCHAR(100) |          |          |            |              |
 | 12    | listener_path   | 监听器路径                                     | VARCHAR(400) |          |          |            |              |
 | 13    | ext             | 业务详情 存业务表对象json字符串                | VARCHAR(500) |          |          |            |              |
-| 14    | create_time     | 创建时间                                       | DATETIME     |          |          |            |              |
-| 15    | create_by       | 创建人                                                       | VARCHAR(64)  |          |          |            |              |
-| 16    | update_time     | 更新时间                                       | DATETIME     |          |          |            |              |
-| 17    | update_by       | 更新人                                                       | VARCHAR(64)  |          |          |            |              |
-| 18    | del_flag        | 删除标志                                       | CHAR(1)      |          |          | '0'        |              |
-| 19    | tenant_id       | 租户id                                         | VARCHAR(40)  |          |          |            |              |
+| 14    | def_config      | 流程定义配置（自动审批等引擎配置与自定义扩展属性json） | TEXT         |          |          |            |              |
+| 15    | create_time     | 创建时间                                       | DATETIME     |          |          |            |              |
+| 16    | create_by       | 创建人                                                       | VARCHAR(64)  |          |          |            |              |
+| 17    | update_time     | 更新时间                                       | DATETIME     |          |          |            |              |
+| 18    | update_by       | 更新人                                                       | VARCHAR(64)  |          |          |            |              |
+| 19    | del_flag        | 删除标志                                       | CHAR(1)      |          |          | '0'        |              |
+| 20    | tenant_id       | 租户id                                         | VARCHAR(40)  |          |          |            |              |
 
 ### 1.3.2 **flow_his_task [**历史任务记录表**]**
 
@@ -90,19 +91,20 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 | 8     | target_node_code | 目标节点编码                                                 | VARCHAR(200) |          |          |            |              |
 | 9     | target_node_name | 结束节点名称                                                 | VARCHAR(200) |          |          |            |              |
 | 10    | approver        | 审批者                                                       | VARCHAR(40)  |          |          |            |              |
-| 11    | cooperate_type  | 协作方式（1无 2转办 3委派 4会签 5票签 6加签 7减签；行为维度，结果见 flow_status） | TINYINT(1)       |          | √        | 0          |              |
+| 11    | cooperate_type  | 协作方式（none无 transfer转办 delegate委派 add_signer加签 remove_signer减签；行为维度，结果见 flow_status） | VARCHAR(20)  |          | √        | 'none'     |              |
 | 12    | collaborator    | 协作人                                                       | VARCHAR(500) |          |          |            |              |
 | 13    | skip_type       | 流转类型（PASS通过 REJECT退回 NONE无动作）                   | VARCHAR(10)  |          | √        |            |              |
-| 14    | flow_status     | 任务状态（1待办理 2通过 8结束 9退回 10失效 11拿回） | VARCHAR(20)  |          | √        |            |              |
+| 14    | flow_status     | 任务状态（pending待审批 pass通过 auto_pass自动审批 back退回 invalid失效 take_back拿回 copy抄送） | VARCHAR(20)  |          | √        |            |              |
 | 15    | form_custom     | 审批表单是否自定义（Y是 N否）                                | CHAR(1)      |          |          | 'N'        |              |
 | 16    | form_path       | 审批表单路径                                                 | VARCHAR(100) |          |          |            |              |
 | 17    | message         | 审批意见                                                     | VARCHAR(500) |          |          |            |              |
 | 18    | variable        | 任务变量                                                     | TEXT         |          |          |            |              |
 | 19    | ext             | 业务详情 存业务表对象json字符串                              | TEXT         |          |          |            |              |
-| 20    | create_time     | 任务开始时间                                                 | DATETIME     |          |          |            |              |
-| 21    | update_time     | 审批完成时间                                                 | DATETIME     |          |          |            |              |
-| 22    | del_flag        | 删除标志                                                     | CHAR(1)      |          |          | '0'        |              |
-| 23    | tenant_id       | 租户id                                                       | VARCHAR(40)  |          |          |            |              |
+| 20    | node_config     | 节点配置（服务任务等引擎配置与自定义扩展属性json）             | TEXT         |          |          |            |              |
+| 21    | create_time     | 任务开始时间                                                 | DATETIME     |          |          |            |              |
+| 22    | update_time     | 审批完成时间                                                 | DATETIME     |          |          |            |              |
+| 23    | del_flag        | 删除标志                                                     | CHAR(1)      |          |          | '0'        |              |
+| 24    | tenant_id       | 租户id                                                       | VARCHAR(40)  |          |          |            |              |
 
 ### 1.3.3 **flow_instance [**流程实例表**]**
 
@@ -115,7 +117,7 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 | 5     | node_code       | 流程节点编码                                                 | VARCHAR(40)  |          | √        |            |              |
 | 6     | node_name       | 流程节点名称                                                 | VARCHAR(100) |          |          |            |              |
 | 7     | variable        | 任务变量                                                     | TEXT         |          |          |            |              |
-| 8     | flow_status     | 实例状态（0待提交 1审批中 4终止 5作废 6撤销 7取回 8已完成 9已退回 12重启 13暂存） | VARCHAR(20)  |          | √        |            |              |
+| 8     | flow_status     | 实例状态（draft待提交 waiting审批中 termination终止 invalid作废 cancel撤销 finish已完成 back已退回 restart重启） | VARCHAR(20)  |          | √        |            |              |
 | 9     | activity_status | 流程激活状态（0挂起 1激活）                                  | TINYINT(1)       |          | √        | 1          |              |
 | 10    | def_json        | 流程定义json                                                 | TEXT         |          |          |            |              |
 | 11    | create_time     | 创建时间                                                     | DATETIME     |          |          |            |              |
@@ -220,7 +222,7 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 | 4     | node_code       | 节点编码                                                     | VARCHAR(100) |          | √        |            |              |
 | 5     | node_name       | 节点名称                                                     | VARCHAR(100) |          |          |            |              |
 | 6     | node_type       | 节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关 5包容网关 6服务任务） | TINYINT(1)       |          | √        |            |              |
-| 7     | flow_status     | 任务状态（1待办理 2通过 8结束 9退回 10失效 11拿回） | VARCHAR(20)  |          | √        |            |              |
+| 7     | flow_status     | 任务状态（pending待审批 pass通过 auto_pass自动审批 back退回 invalid失效 take_back拿回 copy抄送） | VARCHAR(20)  |          | √        |            |              |
 | 8     | form_custom     | 审批表单是否自定义（Y是 N否）                                | CHAR(1)      |          |          | 'N'        |              |
 | 9     | form_path       | 审批表单路径                                                 | VARCHAR(100) |          |          |            |              |
 | 10    | create_time     | 创建时间                                                     | DATETIME     |          |          |            |              |
@@ -235,9 +237,9 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 | **#** | **字段**     | **名称**                                                     | **数据类型** | **主键** | **非空** | **默认值** | **备注说明** |
 | ----- | ------------ | ------------------------------------------------------------ | ------------ | -------- | -------- | ---------- | ------------ |
 | 1     | id              | 主键id                                                       | BIGINT       | √        | √        |            |              |
-| 2     | type            | 人员类型（1待办任务的审批人权限 2待办任务的转办人权限 3待办任务的委托人权限） | CHAR(1)      |          | √        |            |              |
+| 2     | type            | 人员类型（1待办任务的审批人权限 2待办任务的转办人权限 3待办任务的委托人权限 4待办任务的抄送人） | CHAR(1)      |          | √        |            |              |
 | 3     | processed_by    | 权限人                                                       | VARCHAR(80)  |          |          |            |              |
-| 4     | associated      | 任务表id                                                     | BIGINT       |          | √        |            |              |
+| 4     | associated      | 关联id（待办任务id；抄送人记录为 flow_his_task.id）            | BIGINT       |          | √        |            |              |
 | 5     | create_time     | 创建时间                                                     | DATETIME     |          |          |            |              |
 | 6     | create_by       | 创建人                                                       | VARCHAR(80)  |          |          |            |              |
 | 7     | update_time     | 更新时间                                                     | DATETIME     |          |          |            |              |

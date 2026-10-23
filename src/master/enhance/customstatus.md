@@ -8,26 +8,26 @@
 | 任务状态 | `TaskStatus` | `flow_task.flow_status`、`flow_his_task.flow_status` | 这条待办 / 历史的结果 |
 | 协作动作 | `CooperateType` | `flow_his_task.cooperate_type` | 转办 / 委派 / 加签 / 减签等行为 |
 
-引擎内部只认语义，落库编码统一由扩展点 `StatusMapper` 解析。宿主用自己的状态枚举（如 `BusinessStatusEnum`）时，实现该接口即可接管编码，**不需要在每个调用点手动传 `flowStatus` / `taskStatus`**。
+引擎内部只认语义，落库编码统一由扩展点 `StatusMapper` 解析。宿主用自己的状态枚举时，实现该接口即可接管编码，**不需要在每个调用点手动传 `flowStatus` / `taskStatus`**。
 
 ## 1、默认编码
 
-未注册映射器时使用内置编码，与历史版本完全一致，升级不需要迁移数据。
+2.1.0 起，三个维度都使用小写英文编码。未注册映射器时，默认实现直接使用枚举 key；从 2.0.1 及更早版本升级的存量数据需要按 [升级指南](../other/upgrade_guide.md#v2-1-0) 迁移。
 
 | 实例 `FlowStatus` | key | | 任务 `TaskStatus` | key |
 | --- | --- | --- | --- | --- |
-| 待提交 | `0` | | 待办理 | `1` |
-| 审批中 | `1` | | 通过 | `2` |
-| 终止 | `4` | | 结束 | `8` |
-| 作废 | `5` | | 退回 | `9` |
-| 撤销 | `6` | | 失效 | `10` |
-| 取回 | `7` | | 拿回 | `11` |
-| 已完成 | `8` | | | |
-| 已退回 | `9` | | | |
-| 重启 | `12` | | | |
-| 暂存 | `13` | | | |
+| 待提交 | `draft` | | 待审批 | `pending` |
+| 审批中 | `waiting` | | 通过 | `pass` |
+| 终止 | `termination` | | 自动审批 | `auto_pass` |
+| 作废 | `invalid` | | 退回 | `back` |
+| 撤销 | `cancel` | | 失效 | `invalid` |
+| 已完成 | `finish` | | 拿回 | `take_back` |
+| 已退回 | `back` | | 抄送 | `copy` |
+| 重启 | `restart` | | | |
 
-协作动作 `CooperateType`：`1` 无、`2` 转办、`3` 委派、`4` 会签、`5` 票签、`6` 加签、`7` 减签。它同时决定引擎行为（转给谁、加谁、减谁），**不参与编码映射**；映射器只决定该动作写进历史时的任务状态。
+协作动作 `CooperateType`：`none` 无、`transfer` 转办、`delegate` 委派、`add_signer` 加签、`remove_signer` 减签。会签 / 票签是节点的多人审批模式（由 `node_ratio` 决定），不是协作动作；抄送结果记在任务状态 `copy`，也不落 `cooperate_type`。
+
+`FlowStatus` 的终态只有 `finish` / `termination` / `invalid`。`cancel`（撤销）和 `back`（已退回）都不是终态，实例仍可修改后继续办理；不要把撤销误判为终态。
 
 ## 2、接管编码
 
@@ -39,48 +39,56 @@ public class BizStatusMapper implements StatusMapper {
     @Override
     public String instanceStatus(FlowStatus semantic) {
         return switch (semantic) {
-            case TOBESUBMIT -> BusinessStatusEnum.DRAFT.getStatus();      // draft
-            case APPROVAL   -> BusinessStatusEnum.WAITING.getStatus();    // waiting
-            case FINISHED   -> BusinessStatusEnum.FINISH.getStatus();     // finish
-            case REJECT     -> BusinessStatusEnum.BACK.getStatus();       // back
-            case TERMINATE  -> BusinessStatusEnum.TERMINATION.getStatus();
-            case CANCEL     -> BusinessStatusEnum.CANCEL.getStatus();
-            case NULLIFY    -> BusinessStatusEnum.INVALID.getStatus();
-            default         -> semantic.getKey();
+            case DRAFT       -> BusinessStatusEnum.DRAFT.getStatus();
+            case WAITING     -> BusinessStatusEnum.WAITING.getStatus();
+            case TERMINATE   -> BusinessStatusEnum.TERMINATION.getStatus();
+            case INVALID     -> BusinessStatusEnum.INVALID.getStatus();
+            case CANCEL      -> BusinessStatusEnum.CANCEL.getStatus();
+            case FINISHED    -> BusinessStatusEnum.FINISH.getStatus();
+            case BACK        -> BusinessStatusEnum.BACK.getStatus();
+            case RESTART     -> BusinessStatusEnum.RESTART.getStatus();
         };
     }
 
     @Override
     public String taskStatus(TaskStatus semantic) {
         return switch (semantic) {
-            case WAITING -> TaskStatusEnum.WAITING.getStatus();   // waiting
-            case PASS    -> TaskStatusEnum.PASS.getStatus();      // pass
-            case REJECT  -> TaskStatusEnum.BACK.getStatus();      // back
-            case INVALID -> TaskStatusEnum.INVALID.getStatus();   // invalid
-            default      -> semantic.getKey();
+            case PENDING   -> TaskStatusEnum.PENDING.getStatus();
+            case PASS      -> TaskStatusEnum.PASS.getStatus();
+            case BACK      -> TaskStatusEnum.BACK.getStatus();
+            case INVALID   -> TaskStatusEnum.INVALID.getStatus();
+            case TAKE_BACK -> TaskStatusEnum.TAKE_BACK.getStatus();
+            case AUTO_PASS -> TaskStatusEnum.AUTO_PASS.getStatus();
+            case COPY      -> TaskStatusEnum.COPY.getStatus();
         };
     }
 
     @Override
     public String cooperateStatus(CooperateType type) {
         return switch (type) {
-            case TRANSFER            -> TaskStatusEnum.TRANSFER.getStatus();
-            case DEPUTE              -> TaskStatusEnum.DEPUTE.getStatus();
-            case ADD_SIGNATURE       -> TaskStatusEnum.SIGN.getStatus();
-            case REDUCTION_SIGNATURE -> TaskStatusEnum.SIGN_OFF.getStatus();
-            default                  -> StatusMapper.super.cooperateStatus(type);
+            case NONE          -> TaskStatusEnum.PENDING.getStatus();
+            case TRANSFER      -> TaskStatusEnum.TRANSFER.getStatus();
+            case DELEGATE      -> TaskStatusEnum.DELEGATE.getStatus();
+            case ADD_SIGNER    -> TaskStatusEnum.ADD_SIGNER.getStatus();
+            case REMOVE_SIGNER -> TaskStatusEnum.REMOVE_SIGNER.getStatus();
         };
     }
 
     @Override
     public boolean isTerminal(String code) {
-        return Set.of("finish", "termination", "cancel", "invalid").contains(code);
+        return Set.of("finish", "termination", "invalid").contains(code);
     }
 
     @Override
     public String label(String code) {
-        // 展示文案：可查自己的枚举，未命中时回落内置文案
+        // 实例维度展示文案；任务维度请重写 taskLabel
         return StatusMapper.super.label(code);
+    }
+
+    @Override
+    public String taskLabel(String code) {
+        // 任务维度展示文案
+        return StatusMapper.super.taskLabel(code);
     }
 }
 ```
@@ -100,9 +108,17 @@ warm-flow:
 
 注册后，发起 / 办理 / 退回 / 终止 / 撤回 / 自动审批 / 服务任务 / 协作动作的默认状态**直接写你的编码**。
 
-### 2.3 终态判定
+### 2.3 终态判定与展示
 
-`isTerminal` 只针对**实例状态**：引擎的状态守卫据此拦截已结束实例上的办理、流转与撤回。默认实现只认内置终态（已完成 / 终止 / 作废 / 撤销），自定义编码必须重写，否则已完成的单子仍会被放行。
+`isTerminal` 只针对**实例状态**：引擎的状态守卫据此拦截已结束实例上的办理、流转与撤回。默认只认 `finish` / `termination` / `invalid`；宿主改用自定义编码后必须同步重写，否则已终结的实例会被放行。
+
+展示文案也按维度解析：
+
+- `label(String)` 只按实例状态解析；
+- `taskLabel(String)` 按任务状态解析；
+- `label(String, boolean)` 按入参选择实例或任务维度。
+
+实例表的 `finish` 和任务表的 `pass` 含义不同，不要用同一个方法混查两套编码。
 
 ## 3、个别场景覆盖
 
@@ -115,10 +131,11 @@ command.setTaskStatus(TaskStatusEnum.PASS.getStatus());   // 覆盖本次任务�
 FlowEngine.workflow().complete(command);
 ```
 
-需要区分「自动完成」「抄送」这类引擎不建模的业务动作时，仍由业务传 `taskStatus`。
+抄送历史固定使用 `StatusMapper.taskStatus(TaskStatus.COPY)`，不会被调用方传入的 `taskStatus` 覆盖；如需修改抄送编码，只覆写 `taskStatus` 中 `COPY` 分支即可。
 
 ## 4、升级注意
 
-- `FlowStatus` 已精简为实例状态：`PASS` / `INVALID` / `TASK_BACK` 移除，改用 `TaskStatus` 对应常量；
+- `FlowStatus` 只保留实例状态；`TaskStatus` 独立表达任务结果，`CooperateType` 只表达协作动作；
 - 扩展点由 `FlowStatusMapper` 更名为 `StatusMapper`，配置项 `flow-status-mapper-path` 改为 `status-mapper-path`；
-- **落库编码未变**，存量数据不需要迁移，只调整代码引用即可。
+- 落库编码由数字改为小写英文，存量数据必须迁移。MySQL 直接按顺序执行 [`warm-flow_2.1.0.sql`](https://github.com/sgs98/warm-flow/blob/main/sql/mysql/v1-upgrade/warm-flow_2.1.0.sql)，其他数据库按对应方言转换；迁移映射见[升级指南](../other/upgrade_guide.md#v2-1-0)；
+- 宿主按旧数字码写的查询、统计与报表 SQL 需同步调整。

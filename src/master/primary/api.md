@@ -81,6 +81,26 @@
 - targetHandlers: 移除的目标办理人集合 [必传]
 - 其余字段同加签
 
+### 抄送
+`WorkflowResult copy(CopyCommand command)`：抄送当前待办，只留痕，不产生待办、不改变任务与实例状态。
+- taskId: 流程任务id [必传]
+- targetHandlers: 抄送人标识集合 [必传]，由 `PermissionHandler#resolveCopyHandlers` 展开成具体用户
+- operator: 操作者 [按需传输]
+- message: 抄送说明 [按需传输]
+
+节点上配置的 `node_config.copy.handlers` 会在到达节点时自动执行；本方法用于办理中临时追加抄送人，待办办结后仍可补抄送。
+
+### 查询当前等待事件
+`List<EventView> waitingEvents(Long instanceId)`：查询实例当前正在等待的事件。
+
+### 查询事件等待记录
+- `Page<EventWait> pageEventWaits(EventWaitQuery query)`：分页查询
+- `List<EventWait> listEventWaits(EventWaitQuery query)`：列表查询
+- `long countEventWaits(EventWaitQuery query)`：计数
+- `EventWait getEventWait(Long id)`：按主键查询
+
+条件对象支持实例、定义、节点、事件名、附着任务、事件类型、等待状态与时间区间等组合；默认只查定时类事件。
+
 ### 返回结果 WorkflowResult
 - success: 本次操作是否成功
 - operation: 操作名称，如start、complete、reject
@@ -186,6 +206,15 @@
 ### 挂起实例 
 `boolean unActive(Long id)`： 挂起实例，流程实例挂起后，该流程实例无法继续流转
 
+### 消息启动流程
+`Instance startByMessage(String businessId, String flowCode, String eventName, Map<String, Object> payload, WorkflowContext context)`：按已发布定义的消息启动事件创建实例。
+
+### 触发消息事件
+`Instance triggerMessage(Long instanceId, String eventName, Map<String, Object> payload, WorkflowContext context)`：触发实例上等待中的消息捕获 / 消息边界事件。
+
+### 抛出实例级错误
+`boolean throwError(Long instanceId, String errorCode, String errorMessage)`：按实例匹配 `ERROR_CATCH`。
+
 ## TaskService待办任务 
 
 ### 流程流转
@@ -205,7 +234,13 @@
 - taskId: 流程任务id [必传]
 - addHandlers: 需要增加的办理人 [按需传输]
 - removeHandlers: 需要移除的办理人 [按需传输]
-- cooperateType: 协作类型，见[协作类型](./collaboration.md) [必传]
+- cooperateType: 协作类型，取 `CooperateType` 的 key，见[协作类型](./collaboration.md) [必传]
+
+### 抄送待办
+`HisTask copy(Long taskId, List<String> handlers, WorkflowContext context)`：对当前待办追加抄送，返回抄送历史；没有新抄送人时返回 `null`，抄送人全解析失败时抛异常。
+
+### 抛出任务级错误
+`boolean throwError(Long taskId, String errorCode, String errorMessage)`：中断附着任务并匹配任务节点上的 `ERROR_BOUNDARY`。
 
 ### 根据实例id查询待办
 `List<Task> getByInsId(instanceId)`：根据流程实例id，查询待办任务集合

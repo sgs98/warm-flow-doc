@@ -19,6 +19,23 @@
 
 
 ## 更新日志
+### v2.1.0  未发布
+- [升级指南](./upgrade_guide.md#v2-1-0)
+- feat：新增服务任务节点（`SERVICE`），支持 `class` / `delegateExpression` / `expression` 三种处理器配置
+- feat：新增定义级自动审批（`def_config.autoPass`），自动审批历史记 `auto_pass`
+- feat：新增流程事件与内置定时器，覆盖定时启动 / 捕获 / 边界、消息启动 / 捕获 / 抛出 / 结束、错误捕获 / 边界、终止结束
+- feat：新增 `flow_event_wait` 等待表、`EventPublisher` 发布器扩展点及等待记录查询 API
+- feat：新增节点级抄送 `node_config.copy`，并提供 `TaskService#copy` 与 `WorkflowService#copy(CopyCommand)` 手动追加抄送
+- feat：节点默认流程变量统一放在 `node_config.variables`，所有节点可配置；旧 `node_config.event.variables` 兼容读取
+- refactor：实例状态、任务状态、协作动作拆为 `FlowStatus` / `TaskStatus` / `CooperateType` 三个维度
+- 破坏性变更：三个维度落库编码由数字改为小写英文，存量数据必须迁移，MySQL 升级脚本 `warm-flow_2.1.0.sql` 已包含迁移段
+- 破坏性变更：`FlowStatusMapper` 更名为 `StatusMapper`，新增任务状态与协作动作映射；扩展点包路径收口到 `core.spi`
+- 行为变更：流程结束或退回一票否决时，未办任务按 `invalid` 归档，不再静默删除
+- 行为变更：`TERMINATE_END` 的实例状态改为 `termination`，普通完成与消息结束仍为 `finish`
+- 行为变更：撤回后实例状态为 `cancel`，撤销不再属于终态；退回仍为 `back`
+- update：设计器支持事件节点、节点默认变量、定义级自动审批、抄送人配置与发起人快捷选择
+- update：四套全量 SQL 同步 `def_config`、`node_config`、事件列与 `flow_event_wait` 表
+
 ### v2.0.1  2026-10-12
 - [升级指南](./upgrade_guide.md#v2-0-1)
 - feat：新增 `DefService#copyDefReturnId`，复制流程定义并返回新定义主键，复制产物固定为未发布草稿

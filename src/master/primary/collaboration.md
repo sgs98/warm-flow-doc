@@ -11,19 +11,19 @@
 > 会签：所有审批人审批通过，审批节点才会通过
 
 ### 协作类型一览
-引擎 `CooperateType` 枚举共 7 种协作方式（`flow_his_task.cooperate_type` 存对应 key）：
+引擎 `CooperateType` 枚举只表达**协作动作**（`flow_his_task.cooperate_type` 存对应 key），会签 / 票签属于节点的多人审批模式，不在此枚举中：
 
 | key | 枚举 | 含义 |
 | --- | --- | --- |
-| 1 | APPROVAL | 无（普通审批） |
-| 2 | TRANSFER | 转办：任务转给其他人办理 |
-| 3 | DEPUTE | 委派：求助他人审批，再参照其意见决定是否通过 |
-| 4 | COUNTERSIGN | 会签：所有审批人通过才算通过 |
-| 5 | VOTE | 票签：达到设定通过率即通过 |
-| 6 | ADD_SIGNATURE | 加签：办理中途增加办理人 |
-| 7 | REDUCTION_SIGNATURE | 减签：办理中途移除办理人 |
+| `none` | NONE | 无（普通办理） |
+| `transfer` | TRANSFER | 转办：任务转给其他人办理 |
+| `delegate` | DELEGATE | 委派：求助他人审批，再参照其意见决定是否通过 |
+| `add_signer` | ADD_SIGNER | 加签：办理中途增加办理人 |
+| `remove_signer` | REMOVE_SIGNER | 减签：办理中途移除办理人 |
 
 > 或签/票签/会签的区分靠 `flow_node.node_ratio`：`0`=或签，`0~100`=票签，`100`=会签。
+>
+> 抄送也不落 `cooperate_type`：结果记在 `flow_his_task.flow_status=copy`，协作列为 `none`。
 
 ## 2、注意事项
 > 票签和会签会会根据用户数量计算通过率或者通过策略等，如果节点配置的是角色，这种情况不好统计，要解决这种问题，请把角色全部转成用户id-[转换办理人](./permission_handler.html)

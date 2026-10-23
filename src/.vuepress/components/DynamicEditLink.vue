@@ -1,6 +1,6 @@
 <template>
   <a :href="dynamicHref" target="_blank" rel="noreferrer" class="warm-edit">
-    <img src="/icons/gitee_home.svg" alt="" aria-hidden="true" />
+    <img src="/icons/github_home.svg" alt="" aria-hidden="true" />
     <span>编辑此页</span>
   </a>
 </template>
@@ -19,7 +19,7 @@ const currentPageUrl = computed(() => {
 
 // 构建最终链接
 const dynamicHref = computed(() => {
-  const baseHref = 'https://gitee.com/warm_4/warm-flow-doc/edit/main/src';
+  const baseHref = 'https://github.com/sgs98/warm-flow-doc/edit/main/src';
   if (!currentPageUrl.value) return baseHref;
   return baseHref + currentPageUrl.value;
 });

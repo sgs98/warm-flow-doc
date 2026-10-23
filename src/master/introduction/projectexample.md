@@ -3,7 +3,7 @@
 
 | 作者         | 项目名称                                                                                                             | 描述                                                                                                           |
 |------------|------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| 晓华         | [hh-vue](https://gitee.com/min290/hh-vue)                                                                        | 官方演示项目，基于ruoyi-vue集成，springboot2+vue2                                                                        |
+| 晓华         | [hh-vue](https://gitee.com/min290/hh-vue)                                                                        | 上游演示项目，基于 ruoyi-vue 集成，springboot2+vue2                                                                        |
 | 疯狂的狮子Li    | [RuoYi-Vue-Plus](https://gitee.com/dromara/RuoYi-Vue-Plus)                                                       | 多租户后台管理系统 重写RuoYi-Vue所有功能 集成 Sa-Token、Mybatis-Plus、Flowable、SpringDoc、Hutool、OSS 定期同步                        |
 | 玲娜贝er      | [ruoyi-plus-vben5](https://gitee.com/dapppp/ruoyi-plus-vben5)                                                    | 基于vben最新版本v5 & ant-design-vue 的 RuoYi-Vue-Plus 前端项目                                                          |
 | lframework | [星云ERP](https://gitee.com/lframework/xingyun)                                                                    | 为中小企业提供开源免费、优质体验的进销存ERP系统，解决开店、管理、数据统计难等问题，实现业务线上化、透明化、简易化等目标。                                               |

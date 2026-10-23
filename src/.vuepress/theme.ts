@@ -5,10 +5,10 @@ import { base } from "./base.js";
 
 export default hopeTheme(
     {
-        hostname: "https://gitee.com/warm_4/warm-flow-doc",
+        hostname: "https://sgs98.github.io/warm-flow-doc",
         author: {
-            name: "Dromara Warm-Flow工作流",
-            url: "https://gitee.com/warm_4/warm-flow-doc",
+            name: "Warm-Flow",
+            url: "https://github.com/sgs98/warm-flow-doc",
         },
         logo: "/logo.svg",
         logoDark: "/logo-dark.svg",
@@ -24,7 +24,7 @@ export default hopeTheme(
                 sidebar,
                 displayFooter: false,
                 metaLocales: {
-                    editLink: "前往 Gitee 编辑此页",
+                    editLink: "前往 GitHub 编辑此页",
                     prev: "上一篇",
                     next: "下一篇",
                 },

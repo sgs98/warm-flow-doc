@@ -220,11 +220,15 @@ TaskService待办任务
 `terminateByInstanceId(instanceId, context)`：传入流程实例id，终止流程
 
 ## 11、 抄送功能怎么实现
+- **2.1.0 起已内置抄送**：节点配置 `node_config.copy.handlers` 会在到达节点时自动抄送，也可通过 `FlowEngine.workflow().copy(new CopyCommand())` 或 `FlowEngine.taskService().copy(taskId, handlers, context)` 手动追加。抄送只写 `flow_his_task`（`flow_status=copy`）与 `flow_user`（`type=4`），不产生待办、不改变流程状态。
+- 抄送标识通过 `PermissionHandler#resolveCopyHandlers` 展开成具体用户；展开不到任何用户时，手动抄送会抛异常。抄送人记录挂在抄送历史主键（`flow_his_task.id`）上，而不是待办主键。
+- 如果业务要求抄送绑定实例、业务单据或自建表，仍可按下面两种方式自行扩展。
+
 - 抄送存在情况可能不同，内部做不好统一，抄送人有的是绑定任务表，有的是绑定实例表，有的绑定业务id，
 - 但是组件内部做，只能绑定任务表，没办法满足所有的情况。
 
 **建议仔细实现两种做法**
-- 自行给flow_user表插入抄送人，类型为非1、2、3就行，因为这三种类型组件内部用到，可以参考[hh-vue](https://gitee.com/min290/hh-vue.git)和[ruoyi-vue-plus](https://gitee.com/dromara/RuoYi-Vue-Plus.git)的实现
+- 复用内置抄送历史与 `flow_user.type=4`，按业务需要自行关联实例或业务单据，可参考 [hh-vue](https://gitee.com/min290/hh-vue.git) 和 [ruoyi-vue-plus](https://gitee.com/dromara/RuoYi-Vue-Plus.git) 的实现
 - 结合节点扩展属性，设置抄送人，但是这个抄送人是保存在节点表中的ext字段里面，如果只是发送推送，那没啥影响，如果需要列表展示，需要自己获取插入到对应的表中，比如flow_user，或者自建表
 
 ## 12、 死循环
@@ -233,7 +237,7 @@ TaskService待办任务
 ## 13、 各种数据库支持
 假设现在需要支持国产数据库或者其他数据，步骤如下：
 - orm框架本身支持兼容这种数据库，那就支持。比如目前不修改内核情况下，`warm-flow-mybatis-plus-sb3-starter`这个肯定支持的。
-- 从官方提供的四种表结构脚本[warm-flow-all.sql](https://github.com/sgs98/warm-flow/tree/main/sql)中选出和目标数据最相似，转化成这种数据库就行了。
+- 从仓库提供的四种表结构脚本[warm-flow-all.sql](https://github.com/sgs98/warm-flow/tree/main/sql)中选出和目标数据最相似，转化成这种数据库就行了。
 - 又比如mybatis需要写sql，内核需要调整，那这个肯定不支持。目前`warm-flow-mybatis-sb3-starter`对mysql和oracle支持的比较友好。
 
 </div>

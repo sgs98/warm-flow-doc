@@ -434,13 +434,13 @@ core **不引入**第三方 Cron 依赖；每天固定时间点用 `POINT_IN_TIM
 
 1. 边界事件附着在某个普通任务节点上（`attached_to_node_code` = 任务节点编码），**任务创建的那一刻**生成边界等待（`attached_task_id` = 任务 ID），开始计时。
 2. 任务在时限内**正常完成** → 闹钟取消，边界等待记录置 `CANCELLED`，流程表现和没配边界完全一样。
-3. 时限到了**还没办** → 中断当前任务：任务归档为 `flow_status = INVALID(10)`、备注「定时边界事件中断」，然后沿边界事件出口推进——通常是转交给上级、或生成催办节点。
+3. 时限到了**还没办** → 中断当前任务：任务归档为 `flow_status = invalid`（任务状态「失效」）、备注「定时边界事件中断」，然后沿边界事件出口推进——通常是转交给上级、或生成催办节点。
 
 **业务场景**：请假审批挂 3 天闹钟，主管 3 天没处理就自动升级给部门总监；采购单 24 小时未响应自动改派其他人。
 
 **需要配置**：附着任务节点（下拉选择）、定时策略与时间值；边界出口连到超时后的去处。
 
-**注意**：`INVALID` 表示原审批任务因边界事件**失效**，不代表审批人同意；被附着节点的属性面板会显示「已被 N 个边界事件附着」，不要把它再转成事件节点（会使附着失效）。
+**注意**：任务状态 `invalid` 表示原审批任务因边界事件**失效**，不代表审批人同意；被附着节点的属性面板会显示「已被 N 个边界事件附着」，不要把它再转成事件节点（会使附着失效）。
 
 定时捕获与定时边界的行为差异（捕获是流程自己停下等时间，边界是给正在办理的任务上闹钟）：
 
@@ -543,7 +543,7 @@ Instance ins = FlowEngine.insService().triggerMessage(
 | **不报错但流程没动**，日志有 `消息等待记录已被抢占或不可触发，流程不变 eventName=xxx` | 记录已被抢占 / 已取消 / 已死 | 查该实例的 `flow_event_wait.status` |
 
 - 一次调用只推进**第一条**匹配记录：同一实例有多条同名等待（多分支场景）时，要按业务顺序多次调用，或用不同消息名区分。
-- 触发 `MESSAGE_BOUNDARY` 时行为相同，只是后果是中断：附着任务归档为 `INVALID(10)`、备注「消息边界事件中断」，流程沿边界出口走（对比 [6.5 定时边界](#_6-5、定时边界-timer-boundary)）。
+- 触发 `MESSAGE_BOUNDARY` 时行为相同，只是后果是中断：附着任务归档为 `invalid`、备注「消息边界事件中断」，流程沿边界出口走（对比 [6.5 定时边界](#_6-5、定时边界-timer-boundary)）。
 
 ### 7.3、消息抛出 / 消息结束
 
@@ -569,9 +569,9 @@ Instance ins = FlowEngine.insService().triggerMessage(
 
 | 收口方式 | 实例状态（`flow_instance.flow_status`） | 历史留痕（`flow_his_task`） |
 | --- | --- | --- |
-| 直接走到固定 `END` | 已完成 `8` | 普通已办记录 |
-| 消息结束 `MESSAGE_END` | 已完成 `8` | 额外一条 `task_id=0` 记录，备注「流程由该结束事件节点结束」 |
-| 终止结束 `TERMINATE_END` | **终止 `4`** | 额外一条 `task_id=0` 记录，备注「流程由该终止结束事件终止」 |
+| 直接走到固定 `END` | 已完成 `finish` | 普通已办记录 |
+| 消息结束 `MESSAGE_END` | 已完成 `finish` | 额外一条 `task_id=0` 记录，备注「流程由该结束事件节点结束」 |
+| 终止结束 `TERMINATE_END` | **终止 `termination`** | 额外一条 `task_id=0` 记录，备注「流程由该终止结束事件终止」 |
 
 宿主自定义编码时，两者分别落 `StatusMapper.instanceStatus(FlowStatus.TERMINATE)` 与 `instanceStatus(FlowStatus.FINISHED)`，互不串列。
 :::
@@ -906,7 +906,7 @@ FlowEngine.workflow().complete(complete);
 
 | 观察点 | 3A 正常办理 | 3B 超时触发 |
 | --- | --- | --- |
-| 原「人工审批」任务的已办记录 `flow_his_task.flow_status` | `PASS(2)` 审批通过 | `INVALID(10)` 失效，备注「定时边界事件中断」 |
+| 原「人工审批」任务的已办记录 `flow_his_task.flow_status` | `pass` 审批通过 | `invalid` 失效，备注「定时边界事件中断」 |
 | 流程去向 | 直接结束 | 沿 `timeout` 出口继续到结束 |
 | `waitingEvents(instanceId)` | 边界等待被取消，查不到 | 触发后一次性记录删除，查不到 |
 
@@ -1000,7 +1000,7 @@ FlowEngine.insService().triggerMessage(
 | --- | --- |
 | ② 消息启动 | `startByMessage` 不抛异常、`order.getId()` 有值；`waitingEvents` 能看到 `MESSAGE_CATCH(risk.result)` |
 | ③ 消息触发 | `triggerMessage` 不抛异常；`waitingEvents` 里 `risk.result` 消失；`flow_task` 出现「对账确认」待办 |
-| ④ 消息抛出 | 日志出现发布器里的 `流程发来消息：order.settled`；实例随后进入终态（`flow_status = FINISHED(8)`）。抛出是直通节点，**不产生待办与历史任务** |
+| ④ 消息抛出 | 日志出现发布器里的 `流程发来消息：order.settled`；实例随后进入终态（`flow_status = finish`）。抛出是直通节点，**不产生待办与历史任务** |
 
 ::: warning 两个别误判的点
 - 「实例停在事件节点、待办列表里什么都没有」是**正常**的，事件节点本来就不产生待办。
@@ -1061,7 +1061,7 @@ Long payTaskId = ...;
 FlowEngine.taskService().throwError(payTaskId, "PAY_FAILED", "卡余额不足");
 ```
 
-**怎么确认**：已办里原「财务执行付款」记录 `flow_status = INVALID(10)`（备注「错误边界事件中断」），流程进入「善后确认」并产生 admin 待办。
+**怎么确认**：已办里原「财务执行付款」记录 `flow_status = invalid`（备注「错误边界事件中断」），流程进入「善后确认」并产生 admin 待办。
 
 **抛错失败时**（错误码不匹配、或作用域用错——任务级抛错匹配不到实例捕获）：会抛 `流程错误未被捕获`，**实例 / 任务状态完全不变**，由调用方事务回滚，是否终止由宿主决定，见 [第 8 节](#_8、错误事件)。
 
@@ -1225,7 +1225,7 @@ List<EventView> waiting = FlowEngine.workflow().waitingEvents(instanceId);
 | 发布成功 | 日志 `流程定义 xxx 发布，已创建定时启动等待 node=timerStart nextTriggerAt=...`；`flow_event_wait` 有 1 行且 `instance_id` 为空 |
 | 到点自动发起 | `flow_instance` 出现新实例，`flow_code = docDailyCheckFlow`，没有发起人 |
 | 分流生效 | 办理「风控否决判定」时带 `veto=1` → 实例直接到终态；带 `veto=0` → 待办继续走到 `gw2` 汇聚之后（不带该变量会抛 `跳转条件不能为空!`） |
-| 严重异常终止 | 实例状态为**终止**（`flow_status=4`，不是「已完成」）；另一条支线没办完的待办按「失效」归档进 `flow_his_task`，该实例的其它等待记录被取消 |
+| 严重异常终止 | 实例状态为**终止**（`flow_status=termination`，不是「已完成」）；另一条支线没办完的待办按「失效」归档进 `flow_his_task`，该实例的其它等待记录被取消 |
 | 没到点 | 定义级等待的 `next_trigger_at` 就是下次 09:00，用 `listEventWaits` + `definitionId` 可查 |
 
 ::: warning 定时启动不是「一发布就跑」

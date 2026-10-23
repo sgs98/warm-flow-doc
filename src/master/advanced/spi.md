@@ -1,8 +1,8 @@
 # SPI 扩展点
 
 ::: tip
-- warm-flow 的扩展点（SPI）在 2.0.1 版本后收敛为两级：<span class="wf-em">业务扩展点</span> 和 <span class="wf-em">引擎内部策略</span>
-- 业务扩展点统一放在 `org.dromara.warm.flow.core.spi` 包，实现后注册为 Bean 即生效，<span class="wf-em">无任何类路径字符串配置</span>
+- warm-flow 的扩展点在 2.0.1 版本后收敛为两级：<span class="wf-em">业务扩展点</span> 和 <span class="wf-em">引擎内部策略</span>
+- 业务扩展点主要放在 `org.dromara.warm.flow.core.spi` 包；`EventPublisher` 位于 `org.dromara.warm.flow.core.service.event`，同样通过 Bean 注册后生效
 - 引擎内部策略放在 `org.dromara.warm.flow.core.strategy` 包，业务方一般无需触碰
 :::
 
@@ -12,7 +12,7 @@
 
 | 层级 | 所在包 | 谁来实现 | 注册方式 |
 | :--- | :--- | :--- | :--- |
-| 业务扩展点 | `core/spi` | 宿主业务方 | Spring Bean（`@Component` / `@Bean`），或 `FlowEngine.initXxx(...)` |
+| 业务扩展点 | `core/spi`，`EventPublisher` 在 `core/service/event` | 宿主业务方 | Spring Bean（`@Component` / `@Bean`），或 `FlowEngine.initXxx(...)` |
 | 引擎内部策略 | `core/strategy` | 引擎内置 + 表达式扩展模块 | `ExpressionUtil.setExpression(...)` 程序化注册 |
 
 ```
@@ -48,6 +48,7 @@ warm-flow-core
 | `DataFillHandler` | 实体字段自动填充 | 实体保存 / 更新前 | default 方法内置默认行为 |
 | `TenantHandler` | 多租户隔离 | ORM 查询 / 保存 / 逻辑删除 | 无，未注册即不启用租户 |
 | `StatusMapper` | 状态语义 → 宿主状态编码 | 状态持久化与终态判断 | `DefaultStatusMapper`（空透传） |
+| `EventPublisher`（`core.service.event`） | 消息抛出 / 消息结束发布器 | 到达 `MESSAGE_THROW` / `MESSAGE_END` | 无，未注册时上报 `EVENT_PUBLISHER_MISSING` 并跳过 |
 
 ::: warning 与旧版本的差异
 自 2.0.1 起，`warm-flow.global-listener-path` 配置项已移除。全局监听器按 SPI/Bean 方式注册：实现 `GlobalListener` 并交给容器管理即可，不再支持类路径字符串配置。
@@ -146,6 +147,7 @@ public class DemoTaskListener implements Listener {
 | `permissions()` | 当前用户权限集合，用于匹配节点配置的办理权限 |
 | `getHandler()` | 当前办理人唯一标识（用户 id），用于入库记录发起人 / 办理人 |
 | `convertPermissions(...)` | 可选。把设计器里配置的角色 / 部门标识转换成真实用户 id |
+| `resolveCopyHandlers(...)` | 可选。把抄送人标识展开为具体用户；默认复用 `convertPermissions` |
 
 详见 [办理人权限处理器](../primary/permission_handler.md)。
 
@@ -174,7 +176,8 @@ public class DemoTaskListener implements Listener {
 | `instanceStatus(FlowStatus)` | 实例状态语义 → 宿主实例状态编码 |
 | `taskStatus(TaskStatus)` | 任务状态语义 → 宿主任务状态编码 |
 | `cooperateStatus(CooperateType)` | 转办 / 委派 / 加签 / 减签留下的历史状态编码 |
-| `isFinished(String)` | 判断编码是否为实例终态 |
+| `isTerminal(String)` | 判断编码是否为实例终态 |
+| `label(String)` / `taskLabel(String)` | 按实例 / 任务维度解析展示文案 |
 
 未实现时使用兜底 `DefaultStatusMapper`（空透传，直接用语义 key 作为编码）。自定义状态编码详见 [自定义状态](../enhance/customstatus.md)。
 
@@ -223,5 +226,7 @@ ExpressionUtil.setExpression(new VoteSignStrategySpel());
 | 实体审计字段自动填充 | `DataFillHandler` |
 | 多租户隔离 | `TenantHandler` |
 | 对接宿主系统自己的状态编码 | `StatusMapper` |
+| 消息抛出 / 消息结束回调宿主系统 | `EventPublisher` |
+| 把部门 / 角色等抄送标识展开成具体用户 | `PermissionHandler#resolveCopyHandlers` |
 | 新的条件 / 办理人表达式语法 | `ExpressionStrategy` + `ExpressionUtil.setExpression` |
 | 流程节点 / 连线上的动态业务数据 | 节点扩展属性，见 [节点扩展属性](./node_ext.md) |

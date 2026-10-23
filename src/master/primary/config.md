@@ -17,8 +17,7 @@ warm-flow:
   tenant-handler-path: com.ruoyi.system.handle.CustomTenantHandler
   # 办理人权限处理器类路径
   permission-handler-path: com.warm.flow.handle.CustomPermissionHandler
-  # 全局监听器类路径
-  global-listener-path: com.warm.flow.listener.CustomGlobalListener
+  # 全局监听器：实现 GlobalListener 并注册为容器 Bean，不再支持类路径配置
   # 状态映射器类路径：实例 / 任务 / 协作三维语义 → 宿主自己的编码，不配置则用内置编码，详见[自定义流程状态](../enhance/customstatus.md)
   status-mapper-path: com.warm.flow.status.CustomStatusMapper
   # 当所用 ORM 扩展包自身不提供逻辑删除时（如 MyBatis 扩展包），可通过此方式开启；MyBatis-Plus 走自身 @TableLogic，不读取该配置

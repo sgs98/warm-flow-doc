@@ -17,7 +17,7 @@
 <script setup lang="ts">
 const base = import.meta.env.BASE_URL;
 const features = [
-  { icon: "[]", title: "7 张表起步", details: "表结构一目了然，代码量少，可快速上手与集成，不背历史包袱。", link: "master/primary/table.html", linkText: "表结构" },
+  { icon: "[]", title: "8 张表起步", details: "表结构一目了然，事件能力默认关闭；核心审批只需 7 张表即可运行。", link: "master/primary/table.html", linkText: "表结构" },
   { icon: "↦", title: "15+ 审批动作", details: "通过、退回、撤销、拿回、任意跳转、终止、转办、票签、委派、加减签、并行互斥。", link: "master/primary/started.html", linkText: "快速入门" },
   { icon: "◇", title: "双模式设计器", details: "jar 包形式快速集成，原生支持经典与仿钉钉两种模式，节点属性可扩展。", link: "master/primary/designerIntroduced.html", linkText: "设计器介绍" },
   { icon: "${}", title: "表达式体系", details: "内置 ${handler} 办理人表达式与常见 SpEL 条件表达式，可自定义扩展。", link: "master/advanced/variableStategy.html", linkText: "办理人表达式" },

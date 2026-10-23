@@ -47,6 +47,14 @@ public interface PermissionHandler {
         return permissions;
     }
 
+    /**
+     * 解析抄送人，把节点上配置的标识展开成具体用户。
+     * 默认复用 convertPermissions。
+     */
+    default List<String> resolveCopyHandlers(List<String> handlers) {
+        return convertPermissions(handlers);
+    }
+
 }
 ```
 

@@ -22,7 +22,7 @@
         </div>
       </div>
       <p class="wf-cr">
-        Dromara Warm-Flow · 国产自研工作流引擎<br />MIT License · Copyright © 2024-2026
+        Warm-Flow · 基于上游 dromara/warm-flow 二次开发<br />Apache License 2.0 · Copyright © 2024-2026
       </p>
     </div>
   </footer>

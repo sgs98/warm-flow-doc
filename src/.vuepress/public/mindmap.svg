@@ -82,7 +82,7 @@
 <rect x="910.0" y="648.0" width="96.0" height="34" rx="9" fill="#e8f1f9" stroke="#126bae" stroke-width="1.4"/>
 <text x="946.0" y="670.2" text-anchor="middle" font-size="15" font-weight="700" fill="#0b4d7e">事件能力</text>
 <rect x="941.0" y="639.0" width="61" height="17" rx="8.5" fill="#e08a2e"/>
-<text x="971.5" y="651.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">2.0 新增</text>
+<text x="971.5" y="651.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">2.1 新增</text>
 <rect x="1058.0" y="481.5" width="78.0" height="27" rx="7" fill="#f3f7fb" stroke="#d5e1ec" stroke-width="1"/>
 <text x="1097.0" y="499.4" text-anchor="middle" font-size="12.5" fill="#1c2933">定时启动</text>
 <rect x="1058.0" y="515.5" width="78.0" height="27" rx="7" fill="#f3f7fb" stroke="#d5e1ec" stroke-width="1"/>
@@ -156,7 +156,7 @@
 <rect x="450.0" y="652.0" width="96.0" height="34" rx="9" fill="#e8f1f9" stroke="#126bae" stroke-width="1.4"/>
 <text x="510.0" y="674.2" text-anchor="middle" font-size="15" font-weight="700" fill="#0b4d7e">服务任务</text>
 <rect x="454.0" y="643.0" width="61" height="17" rx="8.5" fill="#e08a2e"/>
-<text x="484.5" y="655.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">2.0 新增</text>
+<text x="484.5" y="655.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">2.1 新增</text>
 <rect x="320.0" y="621.5" width="78.0" height="27" rx="7" fill="#f3f7fb" stroke="#d5e1ec" stroke-width="1"/>
 <text x="359.0" y="639.4" text-anchor="middle" font-size="12.5" fill="#1c2933">自动执行</text>
 <rect x="320.0" y="655.5" width="78.0" height="27" rx="7" fill="#f3f7fb" stroke="#d5e1ec" stroke-width="1"/>
@@ -165,8 +165,8 @@
 <text x="340.5" y="707.4" text-anchor="middle" font-size="12.5" fill="#1c2933">Handler 扩展</text>
 <rect x="442.5" y="826.0" width="111.0" height="34" rx="9" fill="#e8f1f9" stroke="#126bae" stroke-width="1.4"/>
 <text x="498.0" y="848.2" text-anchor="middle" font-size="15" font-weight="700" fill="#0b4d7e">多生态支持</text>
-<rect x="150.0" y="761.5" width="248.0" height="27" rx="7" fill="#f3f7fb" stroke="#d5e1ec" stroke-width="1"/>
-<text x="274.0" y="779.4" text-anchor="middle" font-size="12.5" fill="#1c2933">MyBatis / MyBatis-Plus（官方）</text>
+<rect x="100.0" y="761.5" width="298.0" height="27" rx="7" fill="#f3f7fb" stroke="#d5e1ec" stroke-width="1"/>
+<text x="249.0" y="779.4" text-anchor="middle" font-size="12.5" fill="#1c2933">MyBatis / MyBatis-Plus（当前仓库维护）</text>
 <rect x="212.0" y="795.5" width="186.0" height="27" rx="7" fill="#f3f7fb" stroke="#d5e1ec" stroke-width="1"/>
 <text x="305.0" y="813.4" text-anchor="middle" font-size="12.5" fill="#1c2933">JPA / BeetlSql（社区）</text>
 <rect x="60.0" y="829.5" width="338.0" height="27" rx="7" fill="#f3f7fb" stroke="#d5e1ec" stroke-width="1"/>
@@ -178,5 +178,5 @@
 <rect x="633.0" y="572.0" width="190" height="92" rx="16" fill="#126bae" />
 <rect x="633.0" y="572.0" width="190" height="92" rx="16" fill="none" stroke="#0b4d7e" stroke-width="1.5" opacity=".5"/>
 <text x="728.0" y="614.0" text-anchor="middle" font-size="26" font-weight="800" fill="#ffffff" letter-spacing=".5">Warm-Flow</text>
-<text x="728.0" y="642.0" text-anchor="middle" font-size="11.5" fill="#cfe4f5">Dromara · 国产轻量级工作流引擎</text>
+<text x="728.0" y="642.0" text-anchor="middle" font-size="11.5" fill="#cfe4f5">上游二次开发 · 国产轻量级工作流引擎</text>
 </svg>
