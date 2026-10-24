@@ -19,7 +19,7 @@
 
 
 ## 更新日志
-### v2.1.0  未发布
+### v2.1.0  2026-10-24
 - [升级指南](./upgrade_guide.md#v2-1-0)
 - feat：新增服务任务节点（`SERVICE`），支持 `class` / `delegateExpression` / `expression` 三种处理器配置
 - feat：新增定义级自动审批（`def_config.autoPass`），自动审批历史记 `auto_pass`
