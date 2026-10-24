@@ -409,6 +409,7 @@ core **不引入**第三方 Cron 依赖；每天固定时间点用 `POINT_IN_TIM
 - 业务 ID 由引擎生成：`T{等待行id}_{计划触发时间毫秒}`，同一次计划触发重试时复用。
 - 定义取消发布 / 挂起 / 失效会取消对应等待记录；重新激活时从激活时间重新计算计划，**不补发**挂起期间错过的触发。
 - 同一定义不能混用 `MESSAGE_START` 与 `TIMER_START`。
+- 发起动作由 `EventTaskHandler` 完成（默认实现 `EventRuntimeHandler` 已由 ORM starter 注册，开箱即用）。需要「定时启动也绑定业务」（到点先建工单、以工单主键发起）时自定义该处理器，见 [10](#_10、扩展点与触发身份) 的 10.1。
 
 ### 6.4、定时捕获 TIMER_CATCH
 
@@ -732,6 +733,51 @@ EventWait one = FlowEngine.workflow().getEventWait(waitId);
 | `EventTaskHandler` | 容器 Bean | `EventRuntimeHandler`（由 ORM starter 注册），宿主可定义同类型 Bean 覆盖以接管事务边界 |
 
 触发身份与租户按「**调用方显式传入 > 系统兜底**」解析：`startByMessage` / `triggerMessage` 的 `WorkflowContext` 里 `handler` / `tenantId` 优先；未传时定时 / 消息触发的审计身份回退到 `warm-flow.system-handler`（默认 `system`），租户回退到 `TenantHandler` 的线程取值。
+
+### 10.1、自定义 `EventTaskHandler`：定时启动也绑定业务
+
+默认处理器发起的实例是「**定义级**」的：没有前置业务数据，`business_id` 是引擎生成的技术标识，仅供幂等与追踪。
+
+如果业务要求「定时到点**先造一条业务数据，再对它发起审批**」（比如每天定时生成巡检工单、并对工单发起审批），实现一个同类型 Bean 覆盖默认处理器即可：
+
+```java
+@Component
+public class DemoTimerInspectHandler implements EventTaskHandler {
+
+    /** 非本流程的事件委托给它：引擎内置默认实现 */
+    private final EventTaskHandler defaultHandler = new EventRuntimeHandler();
+
+    /** 定时调度入口（无上下文）：统一处理 */
+    @Override
+    public void handle(EventWait wait) {
+        if (isInspectTimerStart(wait)) {
+            // 业务先行：创建巡检工单，以工单主键作为 businessId 发起审批
+            String orderNo = "XC" + wait.getId();
+            FlowEngine.insService().startByTimer(orderNo, wait.getDefinitionId(),
+                wait.getNodeCode(), null, null);
+            return;
+        }
+        // 非本流程的事件：委托默认处理器，保持定时启动与边界事件原生行为
+        defaultHandler.handle(wait);
+    }
+
+    /** 只拦截本演示流程的定时启动事件 */
+    private boolean isInspectTimerStart(EventWait wait) {
+        return EventType.TIMER_START.getValue().equals(wait.getEventType())
+            && "demo_timer_inspect".equals(FlowEngine.defService()
+                .getById(wait.getDefinitionId()).getFlowCode());
+    }
+}
+```
+
+要点：
+
+| 要点 | 说明 |
+| --- | --- |
+| 让位关系 | 注册自定义 Bean 后，starter 注册的默认处理器自动让位；因此**非目标事件必须委托默认实现**（`EventRuntimeHandler` 可直接实例化），否则会顶掉引擎原生的定时启动与边界事件行为 |
+| 触发入口 | 1 参 `handle(EventWait)` 是定时调度路径；消息 / 错误触发携带 `WorkflowContext` 走 2 参 |
+| 发起 API | 业务绑定用 `startByTimer(businessId, definitionId, nodeCode, payload, context)`，businessId 由调用方指定（业务表主键） |
+| 幂等 | 发起成功但完成标记丢失时调度会重放 handler，生产环境按业务键做幂等防重复建单 |
 
 ## 11、等待记录生命周期
 
