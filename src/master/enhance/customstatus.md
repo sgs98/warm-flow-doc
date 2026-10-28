@@ -29,6 +29,12 @@
 
 `FlowStatus` 的终态只有 `finish` / `termination` / `invalid`。`cancel`（撤销）和 `back`（已退回）都不是终态，实例仍可修改后继续办理；不要把撤销误判为终态。
 
+::: tip 两个维度不共用取值（2.1.1 起）
+`waiting`（审批中）**只出现在** `flow_instance.flow_status`；`flow_task.flow_status` 与 `flow_his_task.flow_status` 只记任务维度编码，新建待办是 `pending`。2.1.0 及更早版本里，定时启动等链路会把实例码 `waiting` 写进待办与历史行，2.1.1 已修正，别再按 `waiting` 查待办。
+
+任务维度目前的唯一例外是**终止归档**：流程被终止时，在途待办归档进 `flow_his_task` 会写实例终态码 `termination`，宿主字典需为它留一行标签。撤回归档从 2.1.1 起是 `back`（不再是 `cancel`）。
+:::
+
 ## 2、接管编码
 
 ### 2.1 实现 `StatusMapper`
@@ -138,4 +144,5 @@ FlowEngine.workflow().complete(command);
 - `FlowStatus` 只保留实例状态；`TaskStatus` 独立表达任务结果，`CooperateType` 只表达协作动作；
 - 扩展点由 `FlowStatusMapper` 更名为 `StatusMapper`，配置项 `flow-status-mapper-path` 改为 `status-mapper-path`；
 - 落库编码由数字改为小写英文，存量数据必须迁移。MySQL 直接按顺序执行 [`warm-flow_2.1.0.sql`](https://github.com/sgs98/warm-flow/blob/main/sql/mysql/v1-upgrade/warm-flow_2.1.0.sql)，其他数据库按对应方言转换；迁移映射见[升级指南](../other/upgrade_guide.md#v2-1-0)；
+- 2.1.1 起任务状态不再被实例状态污染：待办固定按任务维度落码，撤回归档由 `cancel` 改为 `back`；只改 jar 版本号即可，无表结构变更，详见[升级指南](../other/upgrade_guide.md#v2-1-1)；
 - 宿主按旧数字码写的查询、统计与报表 SQL 需同步调整。

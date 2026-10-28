@@ -6,7 +6,7 @@
     <pre class="wf-code"><span class="step">1</span> <span class="k">&lt;dependency&gt;</span>
    <span class="k">&lt;groupId&gt;</span><span class="s">io.github.sgs98</span><span class="k">&lt;/groupId&gt;</span>
    <span class="k">&lt;artifactId&gt;</span><span class="s">warm-flow-mybatis-plus-sb3-starter</span><span class="k">&lt;/artifactId&gt;</span>
-   <span class="k">&lt;version&gt;</span><span class="s">2.1.0</span><span class="k">&lt;/version&gt;</span>
+   <span class="k">&lt;version&gt;</span><span class="s">2.1.1</span><span class="k">&lt;/version&gt;</span>
  <span class="k">&lt;/dependency&gt;</span>
 <span class="step">2</span> <span class="c">-- 执行建表 SQL（8 张核心表；事件能力关闭时实际使用 7 张）</span>
 <span class="step">3</span> <span class="a">@Autowired</span> <span class="k">private</span> <span class="t">WorkflowService</span> <span class="v">workflowService</span>;

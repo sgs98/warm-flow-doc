@@ -47,7 +47,7 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 | --------------------------- | -------- | ----------------------------------------------------------------- |
 | `flow_instance.flow_status` | 实例状态 | `draft` 待提交、`waiting` 审批中、`termination` 终止、`invalid` 作废、`cancel` 撤销、`finish` 已完成、`back` 已退回、`restart` 重启 |
 | `flow_task.flow_status`     | 任务状态 | `pending` 待审批、`pass` 通过、`auto_pass` 自动审批、`back` 退回、`invalid` 失效、`take_back` 拿回、`copy` 抄送 |
-| `flow_his_task.flow_status` | 任务状态 | 同上；撤回归档可能写 `cancel` |
+| `flow_his_task.flow_status` | 任务状态 | 同上；2.1.0 的撤回归档曾写实例码 `cancel`，2.1.1 起改为 `back`，目前唯一例外是终止归档写 `termination` |
 
 实例与任务是两张表、两套独立编码空间，即使编码字面相同也不能混用；例如任务通过是 `pass`，实例已完成是 `finish`。宿主想换成自己的编码见 [自定义流程状态](../enhance/customstatus.md)。
 :::
@@ -94,7 +94,7 @@ Warm-Flow的表结构设计简洁明了，主要分为流程定义相关表和�
 | 11    | cooperate_type  | 协作方式（none无 transfer转办 delegate委派 add_signer加签 remove_signer减签；行为维度，结果见 flow_status） | VARCHAR(20)  |          | √        | 'none'     |              |
 | 12    | collaborator    | 协作人                                                       | VARCHAR(500) |          |          |            |              |
 | 13    | skip_type       | 流转类型（PASS通过 REJECT退回 NONE无动作）                   | VARCHAR(10)  |          | √        |            |              |
-| 14    | flow_status     | 任务状态（pending待审批 pass通过 auto_pass自动审批 back退回 invalid失效 take_back拿回 copy抄送） | VARCHAR(20)  |          | √        |            |              |
+| 14    | flow_status     | 任务状态（pending待审批 pass通过 auto_pass自动审批 back退回 invalid失效 take_back拿回 copy抄送；2.1.1 起终止归档写 termination） | VARCHAR(20)  |          | √        |            |              |
 | 15    | form_custom     | 审批表单是否自定义（Y是 N否）                                | CHAR(1)      |          |          | 'N'        |              |
 | 16    | form_path       | 审批表单路径                                                 | VARCHAR(100) |          |          |            |              |
 | 17    | message         | 审批意见                                                     | VARCHAR(500) |          |          |            |              |

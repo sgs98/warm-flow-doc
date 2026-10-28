@@ -1,6 +1,6 @@
 <template>
   <header class="wf-hero">
-    <p class="wf-eyebrow">基于上游二次开发 · 社区共同维护 · v2.1.0</p>
+    <p class="wf-eyebrow">基于上游二次开发 · 社区共同维护 · v2.1.1</p>
 
     <h1 class="wf-h1">
       <em>8 张表</em>，一个依赖，<br />跑通整条审批流

@@ -19,6 +19,17 @@
 
 
 ## 更新日志
+### v2.1.1  2026-10-28
+- [升级指南](./upgrade_guide.md#v2-1-1)
+- fix：新建待办的 `flow_task.flow_status` 不再跟随实例状态——定时启动等「实例已进入 `waiting`、同时创建首个待办」的链路，此前会把实例码 `waiting` 直接写进待办行，现只按任务维度推导（普通审批节点为 `pending`）
+- fix：审批留痕 `flow_his_task.flow_status` 只记任务维度编码（办理 / 转办 / 委派 / 加签减签 / 会签票签），不再回落实例状态
+- fix：事件中断附着任务、终止归档不再把任务状态写进上下文的实例状态字段
+- 行为变更：被撤回归档的历史记录由 `cancel` 改为按退回语义推导的 `back`；实例状态仍是 `cancel`
+- 注意：终止归档的历史记录仍写实例终态码 `termination`（与 2.1.0 一致），这是任务维度目前唯一会出现实例码的位置，宿主字典需为它保留标签
+- update：设计器节点扩展属性长标签改为固定列宽折行显示，不再被面板裁掉左半截；单选 / 多选选项超长省略并悬浮显示全文
+- update：Demo 的 `HistoryVo` / `TaskVo` / `InstanceVo` 状态字段收口，任务维度只留 `taskStatus` / `taskStatusName`，实例维度只留 `flowStatusKey` / `flowStatusName`
+- 无表结构变更，不需要执行升级脚本
+
 ### v2.1.0  2026-10-24
 - [升级指南](./upgrade_guide.md#v2-1-0)
 - feat：新增服务任务节点（`SERVICE`），支持 `class` / `delegateExpression` / `expression` 三种处理器配置
