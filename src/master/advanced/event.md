@@ -202,6 +202,8 @@ warm-flow:
   system-handler: system
   # 定时器执行线程池大小，默认 2
   timer-pool-size: 2
+  # 定时器执行线程池队列容量（抢占后等待执行的最大积压条数），默认 1000
+  timer-queue-capacity: 1000
   # 扫描间隔（毫秒），默认 5000
   timer-scan-interval: 5000
   # 单轮扫描目标条数，默认 100
@@ -210,7 +212,7 @@ warm-flow:
   timer-max-scan-pages: 10
   # 抢占租约时长（秒），默认 60
   timer-lease-seconds: 60
-  # 最大重试次数，超过后等待记录转为 DEAD，默认 3
+  # 最大重试次数，默认 3（即第 4 次失败转 DEAD，见 11.2）
   timer-max-retry-count: 3
   # 执行器租约续期间隔（毫秒），默认 20000
   timer-lease-renew-interval: 20000
