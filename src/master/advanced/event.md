@@ -783,7 +783,7 @@ public class DemoTimerInspectHandler implements EventTaskHandler {
 
 - **一次性事件**（`AFTER` 的定时捕获、消息捕获、错误捕获、启动事件等）：成功后删除等待记录。
 - **重复事件**（`FIXED` / `POINT_IN_TIME`）：成功后计算下一次 `next_trigger_at` 继续等待。
-- **执行失败**：进入 `RETRY` 并按 `timer-max-retry-count` 重试，超过后转 `DEAD`（保留 `last_error`、`retry_count`）。
+- **执行失败**：进入 `RETRY` 并按 `timer-max-retry-count` 重试，超过后转 `DEAD`（保留 `last_error`、`retry_count`）。判定口径、时间线与救活方式见 [11.2](#_11-2、dead-已死-是怎么来的-怎么救)。
 - **取消**：边界等待随附着任务完成 / 撤回 / 终止 / 作废 / 级联删除一并取消，状态置 `CANCELLED`（按保留期由清理任务删除）；
   实例到达结束节点（普通结束、终止结束、消息结束）时同样会取消本实例的全部等待记录，避免流程完成后仍有僵尸等待被外部事件唤醒。
 - 消息触发**不经过定时扫描**（`next_trigger_at` 为 NULL），因此不参与重试调度。
@@ -829,6 +829,42 @@ SELECT status, COUNT(*) FROM flow_event_wait GROUP BY status;
 
 ::: warning 逻辑删除默认开启
 `warm-flow.logic-delete` 默认为 `true`，引擎的「删除」是**软删除**（`del_flag = '1'`）。手写 SQL 排查时按需加 `del_flag = '0'`；关闭逻辑删除（`logic-delete: false`）才是物理删除，切换前要先清理存量 `del_flag = '1'` 数据。
+:::
+
+### 11.2、`DEAD`（已死）是怎么来的、怎么救
+
+判定只有一个口径：**同一条等待记录的失败次数超过 `max_retry_count`**。默认上限 3（配置项 `timer-max-retry-count`），也就是第 1～3 次失败进 `RETRY`、**第 4 次失败转 `DEAD`**。退避按 10s / 30s / 60s 递进，扫描间隔默认 5s，因此从首次失败到 `DEAD` 实测约 100～120 秒。
+
+算一次失败的情形：
+
+| 来源 | 说明 |
+| --- | --- |
+| 触发时抛异常 | 定时启动建实例、事件节点推进、边界事件中断过程中抛出的任何异常——启动监听器、办理人 / 条件表达式、服务任务处理器、ID 生成、写库冲突等 |
+| 租约过期 | 记录停在 `RUNNING` 且 `lock_until` 已过（进程宕机、线程卡死），恢复时按一次失败计入 |
+
+只取消、不计失败的情形：
+
+| 情形 | 实际结果 |
+| --- | --- |
+| 定义取消发布 / 删除 / 挂起，或启动事件拓扑与等待记录不匹配 | 直接 `CANCELLED`，不走重试 |
+| 抢占后发现暂不可执行（如实例被挂起） | 释放抢占回原状态，不消耗重试次数 |
+| `TIMER_START` 的确定性 `businessId` 已存在实例 | 视为幂等成功，记录照常重排期 / 删除 |
+
+::: warning 重复型事件的失败次数是累计的
+成功重排期**不清零** `retry_count`，所以 `FIXED` / `POINT_IN_TIME` 是「这条记录累计失败 4 次」就 `DEAD`，而不是「连续失败 4 次」。每天都跑的任务，历史上零零散散失败够 4 次也会死；用下文的复活接口可把计数重置归零。
+:::
+
+已经死了怎么救：
+
+| 等待类型 | 处理方式 |
+| --- | --- |
+| 实例级（`TIMER_CATCH` / `*_BOUNDARY` / `MESSAGE_CATCH` / `ERROR_CATCH`） | `WorkflowService#reviveEvent(new ReviveEventCommand().setEventWaitId(id))`，或底层的 `EventWaitService#revive(id)`；校验通过后回 `WAITING`、`retry_count` 归零、按触发器重排期 |
+| 定义级 `TIMER_START` | **不能复活**：重新发布，或「挂起 → 激活」定义，引擎会取消旧记录并按当前定义重建一条新记录 |
+
+想主动造一条 `DEAD` 验证链路：把定义的定时参数临时改成 `{"timerType":"FIXED","timerValue":"PT1M"}`，再给首个审批节点挂一个必然抛异常的 `create` 监听器，发布后约 100 秒即可在定时任务页看到 `WAITING → RETRY ×3 → DEAD`，`last_error` 就是监听器异常摘要。
+
+::: tip `DEAD` / `CANCELLED` 不会被引擎自动清理
+只有一次性事件成功后才会删除记录。`DEAD` 与 `CANCELLED` 需要宿主按保留期自行清理；重新发布 `TIMER_START` 会取消旧记录并新建，旧行仍留在表里，所以 `GROUP BY status` 看到多条同一流程的记录属正常。
 :::
 
 ## 12、发布校验与常见报错

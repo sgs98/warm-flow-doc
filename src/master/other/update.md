@@ -25,6 +25,8 @@
 - feat：复活只允许 `DEAD → WAITING`，重试计数归零、清空租约、定时类事件按触发器重排期，`last_error` 保留死亡原因
 - feat：复活前校验目标仍有效——实例存在且激活、未越过事件节点；边界事件要求附着待办仍存在；`CANCELLED` 与 `TIMER_START` 不支持复活
 - update：Demo 定时任务页对 `DEAD` 记录提供「复活」操作，接口 `POST /api/event-waits/{id}/revive`
+- 注意：定时任务转 `DEAD` 的口径是「同一条记录失败次数超过 `timer-max-retry-count`（默认 3，即第 4 次失败）」，`RUNNING` 租约过期同样按一次失败计入；重复型事件成功重排期不清零 `retry_count`，属于累计失败，耗尽后可用上述复活接口恢复
+- docs：新增「定时任务 `DEAD` 判定与救活」（事件章节 11.2）与常见问题「定时任务显示已死（DEAD）怎么办」
 - fix：新建待办的 `flow_task.flow_status` 不再跟随实例状态——定时启动等「实例已进入 `waiting`、同时创建首个待办」的链路，此前会把实例码 `waiting` 直接写进待办行，现只按任务维度推导（普通审批节点为 `pending`）
 - fix：审批留痕 `flow_his_task.flow_status` 只记任务维度编码（办理 / 转办 / 委派 / 加签减签 / 会签票签），不再回落实例状态
 - fix：事件中断附着任务、终止归档不再把任务状态写进上下文的实例状态字段

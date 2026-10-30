@@ -240,4 +240,13 @@ TaskService待办任务
 - 从仓库提供的四种表结构脚本[warm-flow-all.sql](https://github.com/sgs98/warm-flow/tree/main/sql)中选出和目标数据最相似，转化成这种数据库就行了。
 - 又比如mybatis需要写sql，内核需要调整，那这个肯定不支持。目前`warm-flow-mybatis-sb3-starter`对mysql和oracle支持的比较友好。
 
+## 14、 定时任务显示已死（DEAD）怎么办
+
+- **先看 `last_error`**：定时任务页或 `flow_event_wait.last_error` 记着最后一次失败原因，常见是启动监听器抛错、表达式解析失败、写库异常。
+- **判定口径**：同一条等待记录的失败次数超过 `max_retry_count`（`timer-max-retry-count`，默认 3）即转 `DEAD`，也就是第 4 次失败；`RUNNING` 的租约过期（进程宕机 / 线程卡死）同样计一次失败。退避 10s / 30s / 60s，通常 100 秒左右走完。
+- **实例级等待**（`TIMER_CATCH` / 边界 / 消息 / 错误）：调 `WorkflowService#reviveEvent(new ReviveEventCommand().setEventWaitId(id))` 或 `EventWaitService#revive(id)`。复活前会校验实例仍存在且激活、未越过该事件节点，边界事件还要求附着待办仍在。
+- **定时启动 `TIMER_START`**：不支持复活——定义可能已被取代或失效，请重新发布，或「挂起 → 激活」定义，引擎会按当前定义重建记录。
+- **注意重试计数是累计的**：重复型事件成功一次不会清零 `retry_count`，长期运行的任务也可能因历史失败累积而 `DEAD`；复活会把计数归零。
+- **`DEAD` / `CANCELLED` 不会自动清理**：只有一次性事件成功后才会删除记录，这两类终态需要宿主按保留期清理。
+
 </div>
