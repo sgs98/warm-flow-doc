@@ -787,6 +787,8 @@ public class DemoTimerInspectHandler implements EventTaskHandler {
 - **取消**：边界等待随附着任务完成 / 撤回 / 终止 / 作废 / 级联删除一并取消，状态置 `CANCELLED`（按保留期由清理任务删除）；
   实例到达结束节点（普通结束、终止结束、消息结束）时同样会取消本实例的全部等待记录，避免流程完成后仍有僵尸等待被外部事件唤醒。
 - 消息触发**不经过定时扫描**（`next_trigger_at` 为 NULL），因此不参与重试调度。
+- **已死复活（2.1.1 起）**：`DEAD` 可以经 `WorkflowService#reviveEvent(new ReviveEventCommand()...)`（或底层的 `EventWaitService#revive(id)`）手工置回 `WAITING`——重试计数归零、清空重试时间与租约，定时类事件按触发器从**当前时间**重排期，`last_error` 保留死亡原因供追溯。
+  复活前引擎会校验目标仍然有效：边界事件要求附着待办还在，实例事件要求实例存在且激活、未越过该事件节点；`CANCELLED` 不能复活；`TIMER_START` 也不支持复活（定义可能已被取代或失效，**重新发布 / 挂起后激活**会按当前定义重建记录）。
 
 状态流转：
 
@@ -794,6 +796,7 @@ public class DemoTimerInspectHandler implements EventTaskHandler {
 创建 ──▶ WAITING ──(抢占)──▶ RUNNING ──成功─┬─▶ 一次性事件：删除
                                           └─▶ 重复事件：回 WAITING，更新 next_trigger_at
                      │           └─失败─▶ RETRY ──(retry_at 到期)──▶ RUNNING … 超过 max_retry_count ──▶ DEAD
+                     │                                                                         └─(reviveEvent / revive)─▶ WAITING，retry_count 归零
                      └─(定义取消发布 / 任务完成 / 撤回 / 终止 / 实例删除)─▶ CANCELLED
                      └─(进程宕机 / 执行卡死，lock_until 过期)─▶ 重新可被抢占（重启不丢，靠租约恢复）
 ```

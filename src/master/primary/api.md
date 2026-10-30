@@ -101,6 +101,14 @@
 
 条件对象支持实例、定义、节点、事件名、附着任务、事件类型、等待状态与时间区间等组合；默认只查定时类事件。
 
+### 复活已死等待记录（2.1.1 起）
+`WorkflowResult reviveEvent(ReviveEventCommand command)`：把一条 `DEAD` 等待记录置回 `WAITING`。
+- eventWaitId: 等待记录主键 [必传]
+
+复活后重试计数归零、清空重试时间与租约，定时类事件按触发器从当前时间重排期；`last_error` 保留死亡原因。
+只允许 `DEAD → WAITING`：`CANCELLED` 不开放，`TIMER_START` 也不支持（改用重新发布或挂起后激活定义）。
+复活前会校验实例存在且激活、未越过该事件节点，边界事件还要求附着待办仍存在。详见[流程事件与内置定时器](../advanced/event.md)第 11 节。
+
 ### 返回结果 WorkflowResult
 - success: 本次操作是否成功
 - operation: 操作名称，如start、complete、reject

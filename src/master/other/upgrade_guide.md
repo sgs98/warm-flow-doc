@@ -12,6 +12,8 @@
 
 :::
 ### v2.1.1
+- **新增能力（事件等待复活）**：`WorkflowService#reviveEvent(ReviveEventCommand)` / `EventWaitService#revive(Long id)` 只把 `DEAD` 置回 `WAITING`——重试计数归零、清空 `retry_at` / 租约，定时类事件按触发器从当前时间重排期，`last_error` 保留死亡原因；`CANCELLED` 与 `TIMER_START` 不支持复活（后者请重新发布或挂起后激活定义）。
+- **自定义 ORM 适配需要留意**：`FlowEventWaitDao#revive(id, version, now, nextTriggerAt)` 提供默认实现，未适配的实现在调用复活时抛「未适配事件等待复活」，其余定时 / 消息 / 错误事件功能不受影响；自实现 DAO 请按 `id + version + status = DEAD` 条件补齐。
 - **只改 jar 版本号即可**：`2.1.0` → `2.1.1`，无公共 API 签名、实体字段与表结构变更，**不需要执行任何 SQL 脚本**。
 - **行为变更（任务状态维度收口）**：新建待办的 `flow_task.flow_status` 不再跟随实例状态。此前定时启动等「实例已进入 `waiting`、同时创建首个待办」的链路会把实例码 `waiting` 直接写进待办行，现只按任务维度推导，普通审批节点的待办固定 `pending`；审批留痕 `flow_his_task.flow_status` 同理，只记任务维度编码，不再回落实例状态。
 - **查询口径要改**：按 `flow_status = 'waiting'` 查待办或已办的宿主 SQL，改查 `pending`；实例进展一律读 `flow_instance.flow_status`。
