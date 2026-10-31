@@ -187,8 +187,8 @@
 `Instance start(businessId, flowCode, context)`：传入业务id和流程编码，开启流程实例。context为[WorkflowContext](#流程执行上下文-workflowcontext)，包含如下字段：
 - handler: 办理人唯一标识，如用户id，用于记录到实例表和历史表 [按需传输]；如果实现了[办理人权限处理器](./permission_handler.md)可不用传
 - permissions: 办理人权限标识，比如用户，角色，部门等 [按需传输]
-- ignorePermission: 是否忽略权限校验 [按需传输]
-- ignore: 是否忽略权限校验、会签/票签协作规则 [按需传输]
+- ignorePermission: 是否忽略权限校验 [按需传输]。true 时不再拉取 `permissions`，但仍会补操作人身份（取不到登录人时回落 `warm-flow.system-handler`）
+- ignore: 是否忽略权限校验、会签/票签协作规则 [按需传输]。true 时完全不访问 `PermissionHandler`，`handler` 未传则回落 `warm-flow.system-handler`——**任务补偿 / 定时推进这类无登录态的系统调用用这个**
 - variables: 流程变量 [按需传输]
 - flowStatus: 流程实例状态，自定义流程状态 [按需传输]
 - taskStatus: 历史任务状态，自定义流程状态 [按需传输]

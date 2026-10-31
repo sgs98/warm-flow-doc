@@ -38,7 +38,7 @@ warm-flow:
   chart-status-color-mimic: []
   # 事件能力总开关（定时 / 消息 / 错误事件），默认 false，需先建 flow_event_wait 表，详见[流程事件与内置定时器](../advanced/event.md)
   timer-enabled: false
-  # 定时 / 消息触发时的系统操作人（实例、历史 createBy 的兜底身份），默认 system
+  # 系统操作人：定时 / 消息触发、以及 ignore 系统调用未传操作人时的兜底身份（写入实例 createBy、历史 approver），默认 system
   system-handler: system
   # 定时器执行线程池大小，默认 2
   timer-pool-size: 2

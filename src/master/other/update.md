@@ -27,6 +27,10 @@
 - update：Demo 定时任务页对 `DEAD` 记录提供「复活」操作，接口 `POST /api/event-waits/{id}/revive`
 - 注意：定时任务转 `DEAD` 的口径是「同一条记录失败次数超过 `timer-max-retry-count`（默认 3，即第 4 次失败）」，`RUNNING` 租约过期同样按一次失败计入；重复型事件成功重排期不清零 `retry_count`，属于累计失败，耗尽后可用上述复活接口恢复
 - docs：新增「定时任务 `DEAD` 判定与救活」（事件章节 11.2）与常见问题「定时任务显示已死（DEAD）怎么办」
+- fix：撤回发起人校验补判 `ignore`——系统调用 / 超管代撤销不再因「非发起人」被拒，与 `ignorePermission` 口径一致
+- fix：跳过权限不再强制访问 `PermissionHandler`——`ignore` 完全不接触处理器、`ignorePermission` 只跳过权限集合；未传操作人时回落 `warm-flow.system-handler`，修复任务补偿 / 定时推进的历史审批人为空
+- fix：重复型定时事件成功重排期时清零 `retry_count`，不再把历史上的零散失败累加成 `DEAD`
+- docs：事件章节 11.2 补充 `DEAD` / `CANCELLED` 终态记录的清理 SQL（含各方言时间条件）
 - fix：新建待办的 `flow_task.flow_status` 不再跟随实例状态——定时启动等「实例已进入 `waiting`、同时创建首个待办」的链路，此前会把实例码 `waiting` 直接写进待办行，现只按任务维度推导（普通审批节点为 `pending`）
 - fix：审批留痕 `flow_his_task.flow_status` 只记任务维度编码（办理 / 转办 / 委派 / 加签减签 / 会签票签），不再回落实例状态
 - fix：事件中断附着任务、终止归档不再把任务状态写进上下文的实例状态字段

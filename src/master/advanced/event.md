@@ -867,6 +867,15 @@ SELECT status, COUNT(*) FROM flow_event_wait GROUP BY status;
 
 ::: tip `DEAD` / `CANCELLED` 不会被引擎自动清理
 只有一次性事件成功后才会删除记录。`DEAD` 与 `CANCELLED` 需要宿主按保留期自行清理；重新发布 `TIMER_START` 会取消旧记录并新建，旧行仍留在表里，所以 `GROUP BY status` 看到多条同一流程的记录属正常。
+
+```sql
+-- MySQL：清理 30 天前的终态记录，保留期按审计要求调整
+DELETE FROM flow_event_wait
+ WHERE status IN ('DEAD', 'CANCELLED')
+   AND update_time < DATE_SUB(NOW(), INTERVAL 30 DAY);
+```
+
+其他方言把时间条件换成 `SYSTIMESTAMP - INTERVAL '30' DAY`（Oracle）、`NOW() - INTERVAL '30 days'`（PostgreSQL）、`DATEADD(DAY, -30, GETDATE())`（SQL Server）。逻辑删除开启时该语句写 `del_flag = '1'`，物理回收再按宿主的清理策略处理。
 :::
 
 ## 12、发布校验与常见报错
